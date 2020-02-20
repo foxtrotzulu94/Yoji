@@ -1,2 +1,3 @@
-# Yoji
-A Python GameBoy Emulator
+# Yōji
+
+A Python GameBoy Emulator - TBD
