@@ -14,9 +14,6 @@ class CPU:
         return (self.__registers[1] & (1 << bit_offset)) == (1 << bit_offset)
 
     def __set_flag(self, value, bit_offset):
-        if type(value) is int:
-            value = True if value > 0 else False
-
         if value:
             self.__registers[1] = self.__registers[1] | 1 << bit_offset
         else:
@@ -88,10 +85,10 @@ class CPU:
     HL = property(_generate_get_register(6,2), _generate_set_register(6,2), None, "General purpose 16-bit register")
 
     ## Flags ##
-    Z = property(_generate_get_flag(7), _generate_set_flag(7), None, "The Zero bit flag")
-    N = property(_generate_get_flag(6), _generate_set_flag(6), None, "The Subtract bit flag")
-    H = property(_generate_get_flag(5), _generate_set_flag(5), None, "The Half Carry bit flag")
-    C = property(_generate_get_flag(4), _generate_set_flag(4), None, "The Carry bit flag")
+    z = property(_generate_get_flag(7), _generate_set_flag(7), None, "The Zero bit flag")
+    n = property(_generate_get_flag(6), _generate_set_flag(6), None, "The Subtract bit flag")
+    h = property(_generate_get_flag(5), _generate_set_flag(5), None, "The Half Carry bit flag")
+    c = property(_generate_get_flag(4), _generate_set_flag(4), None, "The Carry bit flag")
 
     # TODO: Instructions
 
