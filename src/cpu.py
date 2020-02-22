@@ -1,3 +1,6 @@
+from .cpu_types import *
+from .instructions import Instruction
+
 class CPU:
     """
     Emulates the Sharp LR35902 by instruction interpretation
@@ -70,25 +73,25 @@ class CPU:
 
     ## Registers ##
     # 8-BIT WIDTH #
-    A = property(_generate_get_register(0), _generate_set_register(0), None, "The 8-bit Accumulator register")
-    F = property(_generate_get_register(1), _generate_set_register(1), None, "The Flag register")
-    B = property(_generate_get_register(2), _generate_set_register(2), None, "General purpose 8-bit register")
-    C = property(_generate_get_register(3), _generate_set_register(3), None, "General purpose 8-bit register")
-    D = property(_generate_get_register(4), _generate_set_register(4), None, "General purpose 8-bit register")
-    E = property(_generate_get_register(5), _generate_set_register(5), None, "General purpose 8-bit register")
-    H = property(_generate_get_register(6), _generate_set_register(6), None, "General purpose 8-bit register")
-    L = property(_generate_get_register(7), _generate_set_register(7), None, "General purpose 8-bit register")
+    A = property(_generate_get_register(Registers.A), _generate_set_register(Registers.A), None, "The 8-bit Accumulator register")
+    F = property(_generate_get_register(Registers.F), _generate_set_register(Registers.F), None, "The Flag register")
+    B = property(_generate_get_register(Registers.B), _generate_set_register(Registers.B), None, "General purpose 8-bit register")
+    C = property(_generate_get_register(Registers.C), _generate_set_register(Registers.C), None, "General purpose 8-bit register")
+    D = property(_generate_get_register(Registers.D), _generate_set_register(Registers.D), None, "General purpose 8-bit register")
+    E = property(_generate_get_register(Registers.E), _generate_set_register(Registers.E), None, "General purpose 8-bit register")
+    H = property(_generate_get_register(Registers.H), _generate_set_register(Registers.H), None, "General purpose 8-bit register")
+    L = property(_generate_get_register(Registers.L), _generate_set_register(Registers.L), None, "General purpose 8-bit register")
 
     # 16-BIT WIDTH #
-    BC = property(_generate_get_register(2,2), _generate_set_register(2,2), None, "General purpose 16-bit register")
-    DE = property(_generate_get_register(4,2), _generate_set_register(4,2), None, "General purpose 16-bit register")
-    HL = property(_generate_get_register(6,2), _generate_set_register(6,2), None, "General purpose 16-bit register")
+    BC = property(_generate_get_register(Registers.B,2), _generate_set_register(Registers.B,2), None, "General purpose 16-bit register")
+    DE = property(_generate_get_register(Registers.C,2), _generate_set_register(Registers.D,2), None, "General purpose 16-bit register")
+    HL = property(_generate_get_register(Registers.H,2), _generate_set_register(Registers.H,2), None, "General purpose 16-bit register")
 
     ## Flags ##
-    z = property(_generate_get_flag(7), _generate_set_flag(7), None, "The Zero bit flag")
-    n = property(_generate_get_flag(6), _generate_set_flag(6), None, "The Subtract bit flag")
-    h = property(_generate_get_flag(5), _generate_set_flag(5), None, "The Half Carry bit flag")
-    c = property(_generate_get_flag(4), _generate_set_flag(4), None, "The Carry bit flag")
+    z = property(_generate_get_flag(Flag.z), _generate_set_flag(Flag.z), None, "The Zero bit flag")
+    n = property(_generate_get_flag(Flag.n), _generate_set_flag(Flag.n), None, "The Subtract bit flag")
+    h = property(_generate_get_flag(Flag.h), _generate_set_flag(Flag.h), None, "The Half Carry bit flag")
+    c = property(_generate_get_flag(Flag.c), _generate_set_flag(Flag.c), None, "The Carry bit flag")
 
     # TODO: Instructions
 
