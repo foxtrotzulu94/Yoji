@@ -1,15 +1,22 @@
 from .cpu_types import *
-from .instructions import Instruction
+from .instructions import Instruction, opcode_map
 
 class CPU:
     """
     Emulates the Sharp LR35902 by instruction interpretation
     """
 
-    def __init__(self):
+    def __init__(self, mem_bus):
         self.__program_counter = 0
         self.__stack_ptr = 0
         self.__registers = bytearray(2 * 4)
+
+        self.__memory_bus = mem_bus
+
+        # Technically, we can just use array indices to find it since known_instructions should be implemented as an ordered list
+        # but we haven't really implemented the CB prefixes and this makes it easier to detect what opcodes we're missing since we'd get a KeyError
+        #
+        self.__opcode_map = { x.Opcode: x for x in known_instructions }
     # end init
 
     ### Bit Flag methods ###
@@ -96,3 +103,17 @@ class CPU:
     # TODO: Instructions
 
     # TODO: Tick method
+
+    def Dump(self, move_forward = True):
+        "Dumps the current CPU instruction about to be executed"
+
+        # Instruction Fetch
+        opcode = self.__memory_bus.ReadWorkRAM(self.PC, 1)
+
+        # Decode and dump
+        instruction = self.__opcode_map[int.from_bytes(opcode, 'big')]
+        print(instruction.ToString(self.PC))
+
+        if move_forward:
+            self.PC += instruction.Length + 1
+    #end dump
