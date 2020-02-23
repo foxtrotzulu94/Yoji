@@ -1,5 +1,5 @@
 from .cpu_types import *
-from .instructions import Instruction, opcode_map
+from .instructions import Instruction, known_instructions
 
 class CPU:
     """
