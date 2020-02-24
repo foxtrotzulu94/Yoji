@@ -1,4 +1,146 @@
+from enum import Enum
 from .cpu_types import *
+
+class Addressing(Enum):
+    """Enum for establishing the instruction operand Addressing mode"""
+    Immediate = 'I'
+    Register = 'R'
+    RegisterIndirect = 'Ri'
+    Direct = 'D'
+    Indirect = 'i'
+#end bits
+
+class Operand:
+    """
+    Internal representation of an instruction operand
+    This is used both for binding (get/set) and debugging purposes
+    """
+
+    def __init__(self, reg, width, addressing_mode):
+        self.width = width
+        self._mode = addressing_mode
+        self._register = reg
+
+    @staticmethod
+    def reg(reg, width=1, addressing_mode = Addressing.Register):
+        return Operand(reg, width, addressing_mode)
+
+    @staticmethod
+    def regi(reg, width=1, addressing_mode = Addressing.RegisterIndirect):
+        return Operand(reg, width, addressing_mode)
+
+    @staticmethod
+    def imm(width):
+        return Operand(None, width, Addressing.Immediate)
+
+    @staticmethod
+    def mem(width=1, addressing_mode = Addressing.Direct):
+        return Operand(reg, width, addressing_mode)
+
+    def get_value(self, cpu, mem_bus, location):
+        "Gets the value of the operand"
+
+        # Methods that will get the value
+        def immediate():
+            return mem_bus.ReadWorkRAM(location, self.width)
+        def register():
+            if self._register < 0:
+                return cpu.SP if self._register == Registers.SP else cpu.PC
+            return cpu.get_register(self._register, self.width)
+        def reg_indirect():
+            return mem_bus.ReadWorkRAM(register(), self.width)
+        def direct():
+            return mem_bus.ReadWorkRAM(immediate(), self.width)
+        def indirect():
+            return mem_bus.ReadWorkRAM(direct(), self.width)
+
+        value_map = {
+            Addressing.Immediate: immediate,
+            Addressing.Register: register,
+            Addressing.RegisterIndirect: reg_indirect,
+            Addressing.Direct: direct,
+            Addressing.Indirect: indirect}
+
+        retVal = value_map[self._mode]()
+        if type(retVal) is bytearray:
+            retVal = int.from_bytes(retVal, 'big')
+        return retVal
+    #end get_value
+
+    def set_value(self, cpu, mem_bus, location, value):
+        "Sets the value of the operand. Use for writeback step"
+        # Methods that will get the value
+        def immediate():
+            raise ValueError("An immediate mode operand cannot be written to!")
+        def register():
+            if self._register < 0:
+                if self._register == Registers.SP:
+                    cpu.SP = value
+                else:
+                    cpu.PC = value
+            else:
+                cpu.set_register(value, self._register, self.width)
+        def reg_indirect():
+            mem_bus.WriteWorkRAM(register(), value)
+        def direct():
+            mem_bus.WriteWorkRAM(location, value)
+        def indirect():
+            indirect_loc = mem_bus.ReadWorkRAM(location, self.width)
+            return mem_bus.ReadWorkRAM(indirect_loc, self.width)
+
+        value_map = {
+            Addressing.Immediate: immediate,
+            Addressing.Register: register,
+            Addressing.RegisterIndirect: reg_indirect,
+            Addressing.Direct: direct,
+            Addressing.Indirect: indirect}
+
+        value_map[self._mode]()
+    #end set_value
+
+    def ToString(self, mem_bus, address):
+        """
+        Returns a string that can be better read alongside similar strings for reading
+        """
+        # Returns something like "A", "(BC)", "imm"
+        if self._mode != Addressing.Direct and self._mode != Addressing.Immediate:
+            return self.__str__()
+
+        formatter = "0x{0:02X}" if self.width == 1 else "0x{0:04X}"
+        val = int.from_bytes(mem_bus.ReadWorkRAM(address, self.width), 'big')
+        base = formatter.format(val)
+        return base if self._mode == Addressing.Immediate else ("(%s) => %s" % base, int.from_bytes(mem_bus.ReadWorkRAM(val, self.width), 'big'))
+    #end
+
+    def __str__(self):
+        """
+        String that describes the operand.
+        Returns something like "A", "(BC)", "imm"
+        """
+        if self._mode == Addressing.Immediate:
+            return "imm"
+        elif self._mode == Addressing.Register:
+            return GetRegisterName(self._register, self.width)
+        elif self._mode == Addressing.RegisterIndirect:
+            return "(%s)" % GetRegisterName(self._register, self.width)
+        elif self._mode == Addressing.Direct:
+            return "(addr)"
+
+        return "Unsupported addressing mode operand"
+    #end
+
+    def __repr__(self):
+        """
+        Debugging representation of the operand
+        Returns something like
+        "<Operand '(HL)' at 0x7f0ff7d6b100>"
+        """
+        return "<Operand '{0}' at {1}>".format(
+            str(self),
+            hex(id(self))
+        )
+    #end
+#end operand
 
 class Instruction:
     """
@@ -18,16 +160,16 @@ class Instruction:
         # TODO: in the interest of building something quick, we'll allow this to always be None by default
         self._action = executor
         self._operands = operands
-        self._writeback = store
+        #self._writeback = store
     #end
 
     def _get_operands(self, cpu, mem_bus, location):
         if self._operands is None:
             return (None, None)
 
-        get_dest, get_src = self._operands
-        dest = None if get_dest is None else int.from_bytes(get_dest(self._result_size, cpu, mem_bus, location), 'big')
-        src = None if get_src is None else int.from_bytes(get_src(self._result_size, cpu, mem_bus, location), 'big')
+        dest_op, src_op = self._operands
+        dest = None if dest_op is None else dest_op.get_value(cpu, mem_bus, location)
+        src = None if src_op is None else src_op.get_value(cpu, mem_bus, location)
         return (dest, src)
 
     def _set_flags(self, cpu, raw_result, result, destination, source):
@@ -56,7 +198,7 @@ class Instruction:
 
         for flag, status in self._flags_affected.items():
             if status is Bit.Calculate:
-                cpu.set_flag(results[flag], flag)
+                cpu.set_flag(results[flag](), flag)
             elif status is not None:
                 cpu.set_flag(status == Bit.Set, flag)
         #end for
@@ -81,8 +223,9 @@ class Instruction:
         return result
     #end execute
 
-    def writeback(self, cpu, mem_bus, result):
-        self._writeback(self._result_size, cpu, mem_bus, result)
+    def writeback(self, cpu, mem_bus, location, result):
+        self._operands[0].set_value(cpu, mem_bus, location, result)
+        #self._writeback(self._result_size, cpu, mem_bus, result)
     #end writeback
 
     @property
@@ -93,34 +236,43 @@ class Instruction:
     @property
     def Mnemonic(self):
         """ Readable shorthand of the instruction """
-        return self._mnemonic
+        return self._get_mnemonic()
 
     @property
     def Length(self):
         """ Gets the length of the instruction in bytes """
         return self._size
 
-    def ToString(self, address):
+    def _get_mnemonic(self, mem_bus = None, addr = None):
+        fmt = self._mnemonic.split(' ')
+        base = fmt[0]
+        dst = str(self._operands[0]) if mem_bus is None else self._operands[0].ToString(mem_bus, addr)
+        src = str(self._operands[1]) if mem_bus is None else self._operands[1].ToString(mem_bus, addr)
+
+        # TODO: handle mnemonics like "DEC C", "POP BC"
+        return "{} {},{}".format(base, dst, src)
+
+    def ToString(self, mem_bus, address):
         """
         Returns a string that can be better read alongside similar strings for reading
         """
         # Returns something like
-        # "0x0D  DEC C      2byte, 4cycle"
+        # "0x0D  LD SP,d16      2byte, 4cycle"
         return "0x{0:04X} 0x{1:<8X}   {2:12}".format(
             address,
             self._opcode,
-            self._mnemonic
+            self._get_mnemonic(mem_bus, address)
         )
 
     def __str__(self):
         """
         String that describes the CPU instruction
         Returns something like
-        "0x0D  DEC C      2byte, 4cycle"
+        "0x0D  LD SP,d16      2byte, 4cycle"
         """
         return "0x{0:02X}   {1:12} {2}byte, {3}cycle".format(
             self._opcode,
-            self._mnemonic,
+            self._get_mnemonic(),
             self._size,
             self._cycles
         )
@@ -133,7 +285,7 @@ class Instruction:
         """
         return "<Instruction 0x{0:02X} '{1}' at {2}>".format(
             self._opcode,
-            self._mnemonic,
+            self._get_mnemonic(),
             hex(id(self))
         )
 # end Instruction class

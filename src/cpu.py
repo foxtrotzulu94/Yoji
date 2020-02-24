@@ -45,9 +45,11 @@ class CPU:
 
     ### Register Flag methods ###
     def get_register(self, offset, length):
+        """ Get method for regular registers """
         return self.__registers[offset : offset+length]
 
     def set_register(self, value, offset, length):
+        """ Set method for regular registers """
         if type(value) is int:
             value = bytearray(value.to_bytes(length, 'big'))
         self.__registers[offset : offset+length] = value
@@ -112,10 +114,11 @@ class CPU:
         self._curr_inst = self.__opcode_map[int.from_bytes(opcode, 'big')]
 
         # Instruction Execute
-        self._curr_result = self._curr_inst.execute(self, self.__memory_bus, self.PC + 1)
+        location = self.PC + 1
+        self._curr_result = self._curr_inst.execute(self, self.__memory_bus, location)
 
         # Writeback
-        self._curr_inst.writeback(self, self.__memory_bus, self._curr_result)
+        self._curr_inst.writeback(self, self.__memory_bus, location, self._curr_result)
         self.PC += self._curr_inst.Length + 1
     #end Step
 
@@ -129,7 +132,7 @@ class CPU:
 
         # Decode and dump
         instruction = self.__opcode_map[int.from_bytes(opcode, 'big')]
-        print(instruction.ToString(self.PC))
+        print(instruction.ToString(self.__memory_bus, self.PC+1))
 
         if move_forward:
             self.PC += instruction.Length + 1

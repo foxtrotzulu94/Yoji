@@ -16,8 +16,8 @@ known_instructions = [
         0x01, "LD BC,d16", bus_width=2,
         byte_size=3, cycles=12,
         flags=None,
-        operands = (gen_cpu_operand(Registers.B), gen_immediate_operand()),
-        executor = Load, store = gen_cpu_callback(Registers.B)),
+        operands = ( Operand.reg(Registers.BC, 2), Operand.imm(2) ),
+        executor = Load),
 
     Instruction(
         0x02, "LD (BC),A", bus_width=1,
@@ -2557,8 +2557,8 @@ known_instructions = [
         0x31, "LD SP,d16", bus_width=2,
         byte_size=2, cycles=13,
         flags=None,
-        operands = (None, gen_immediate_operand()),
-        executor = Load, store = gen_cpu_callback('SP')),
+        operands = ( Operand.reg(Registers.SP, 2), Operand.imm(2) ),
+        executor = Load),
 
     Instruction(
         0x81, "ADD A,C", bus_width=1,
