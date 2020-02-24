@@ -1,5 +1,6 @@
 from .cpu_types import *
-from .instructions import Instruction, known_instructions
+from .instructions import Instruction
+from .known_instructions import known_instructions
 
 class CPU:
     """
@@ -13,6 +14,9 @@ class CPU:
 
         self.__memory_bus = mem_bus
 
+        self._curr_inst = None
+        self._curr_result = None
+
         # Technically, we can just use array indices to find it since known_instructions should be implemented as an ordered list
         # but we haven't really implemented the CB prefixes and this makes it easier to detect what opcodes we're missing since we'd get a KeyError
         #
@@ -20,10 +24,10 @@ class CPU:
     # end init
 
     ### Bit Flag methods ###
-    def __get_flag(self, bit_offset):
+    def get_flag(self, bit_offset):
         return (self.__registers[1] & (1 << bit_offset)) == (1 << bit_offset)
 
-    def __set_flag(self, value, bit_offset):
+    def set_flag(self, value, bit_offset):
         if value:
             self.__registers[1] = self.__registers[1] | 1 << bit_offset
         else:
@@ -31,31 +35,31 @@ class CPU:
 
     def _generate_get_flag(bit_offset):
         def gen(self):
-            return self.__get_flag(bit_offset)
+            return self.get_flag(bit_offset)
         return gen
 
     def _generate_set_flag(bit_offset):
         def gen(self, value):
-            return self.__set_flag(value, bit_offset)
+            return self.set_flag(value, bit_offset)
         return gen
 
     ### Register Flag methods ###
-    def __get_register(self, offset, length):
+    def get_register(self, offset, length):
         return self.__registers[offset : offset+length]
 
-    def __set_register(self, value, offset, length):
+    def set_register(self, value, offset, length):
         if type(value) is int:
             value = bytearray(value.to_bytes(length, 'big'))
         self.__registers[offset : offset+length] = value
 
     def _generate_get_register(offset, length = 1):
         def gen(self):
-            return self.__get_register(offset, length)
+            return self.get_register(offset, length)
         return gen
 
     def _generate_set_register(offset, length = 1):
         def gen(self, value):
-            return self.__set_register(value, offset, length)
+            return self.set_register(value, offset, length)
         return gen
 
     ### Properties ###
@@ -75,7 +79,7 @@ class CPU:
         return self.__stack_ptr
 
     @SP.setter
-    def F(self, value):
+    def SP(self, value):
         self.__stack_ptr = value
 
     ## Registers ##
@@ -100,7 +104,20 @@ class CPU:
     h = property(_generate_get_flag(Flag.h), _generate_set_flag(Flag.h), None, "The Half Carry bit flag")
     c = property(_generate_get_flag(Flag.c), _generate_set_flag(Flag.c), None, "The Carry bit flag")
 
-    # TODO: Instructions
+    def Step(self):
+        "Executes the next instruction and stores the result"
+
+        # Instruction Fetch, Decode
+        opcode = self.__memory_bus.ReadWorkRAM(self.PC, 1)
+        self._curr_inst = self.__opcode_map[int.from_bytes(opcode, 'big')]
+
+        # Instruction Execute
+        self._curr_result = self._curr_inst.execute(self, self.__memory_bus, self.PC + 1)
+
+        # Writeback
+        self._curr_inst.writeback(self, self.__memory_bus, self._curr_result)
+        self.PC += self._curr_inst.Length + 1
+    #end Step
 
     # TODO: Tick method
 

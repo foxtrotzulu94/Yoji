@@ -11,7 +11,6 @@ class MemoryBus:
 
     def WriteWorkRAM(self, offset, data):
         "WIP"
-        import binascii
         self._work_ram[offset:len(data)] = data
 
     def EmplaceROMData(self, data):

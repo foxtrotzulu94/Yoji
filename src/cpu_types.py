@@ -23,7 +23,7 @@ class Registers(IntEnum):
 class Bit(Enum):
     """Enum for determining what to do when setting a bit flag"""
     Set = 1
-    Unset = 0
-    Calculate = None
+    Reset = 0
+    Calculate = -1
     Ignore = None
 #end bits
