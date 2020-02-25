@@ -15,7 +15,7 @@ known_instructions = [
         executor = NoOp),
         
     Instruction(
-        0x01, "LD BC,d16", bus_width=1,
+        0x01, "LD BC,d16", bus_width=2,
         byte_size=3, cycles=12,
         flags=None,
         operands = ( Operand.reg(Registers.BC, 2), Operand.imm(2) ),
@@ -29,7 +29,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x03, "INC BC", bus_width=1,
+        0x03, "INC BC", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.BC, 2), Operand.reg(Registers.BC, 2) ),
@@ -64,14 +64,14 @@ known_instructions = [
         executor = RotateLeftWithCarry),
         
     Instruction(
-        0x08, "LD (a16),SP", bus_width=1,
+        0x08, "LD (a16),SP", bus_width=2,
         byte_size=3, cycles=20,
         flags=None,
         operands = ( None, Operand.reg(Registers.SP, 2) ),
         executor = Load),
         
     Instruction(
-        0x09, "ADD HL,BC", bus_width=1,
+        0x09, "ADD HL,BC", bus_width=2,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.BC, 2) ),
@@ -85,7 +85,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x0B, "DEC BC", bus_width=1,
+        0x0B, "DEC BC", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.BC, 2), Operand.reg(Registers.BC, 2) ),
@@ -120,14 +120,14 @@ known_instructions = [
         executor = RotateRightWithCarry),
         
     Instruction(
-        0x10, "STOP", bus_width=1,
+        0x10, "STOP 0", bus_width=1,
         byte_size=2, cycles=4,
         flags=None,
-        operands = None,
+        operands = ( None, None ),
         executor = None),
         
     Instruction(
-        0x11, "LD DE,d16", bus_width=1,
+        0x11, "LD DE,d16", bus_width=2,
         byte_size=3, cycles=12,
         flags=None,
         operands = ( Operand.reg(Registers.DE, 2), Operand.imm(2) ),
@@ -141,7 +141,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x13, "INC DE", bus_width=1,
+        0x13, "INC DE", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.DE, 2), Operand.reg(Registers.DE, 2) ),
@@ -183,7 +183,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0x19, "ADD HL,DE", bus_width=1,
+        0x19, "ADD HL,DE", bus_width=2,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.DE, 2) ),
@@ -197,7 +197,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x1B, "DEC DE", bus_width=1,
+        0x1B, "DEC DE", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.DE, 2), Operand.reg(Registers.DE, 2) ),
@@ -239,7 +239,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0x21, "LD HL,d16", bus_width=1,
+        0x21, "LD HL,d16", bus_width=2,
         byte_size=3, cycles=12,
         flags=None,
         operands = ( Operand.reg(Registers.HL, 2), Operand.imm(2) ),
@@ -253,7 +253,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x23, "INC HL", bus_width=1,
+        0x23, "INC HL", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.HL, 2) ),
@@ -295,7 +295,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0x29, "ADD HL,HL", bus_width=1,
+        0x29, "ADD HL,HL", bus_width=2,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.HL, 2) ),
@@ -309,7 +309,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x2B, "DEC HL", bus_width=1,
+        0x2B, "DEC HL", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.HL, 2) ),
@@ -351,7 +351,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0x31, "LD SP,d16", bus_width=1,
+        0x31, "LD SP,d16", bus_width=2,
         byte_size=3, cycles=12,
         flags=None,
         operands = ( Operand.reg(Registers.SP, 2), Operand.imm(2) ),
@@ -365,7 +365,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x33, "INC SP", bus_width=1,
+        0x33, "INC SP", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.SP, 2), Operand.reg(Registers.SP, 2) ),
@@ -407,7 +407,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0x39, "ADD HL,SP", bus_width=1,
+        0x39, "ADD HL,SP", bus_width=2,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.SP, 2) ),
@@ -421,7 +421,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0x3B, "DEC SP", bus_width=1,
+        0x3B, "DEC SP", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.SP, 2), Operand.reg(Registers.SP, 2) ),
@@ -1359,7 +1359,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0xC1, "POP BC", bus_width=1,
+        0xC1, "POP BC", bus_width=2,
         byte_size=1, cycles=12,
         flags=None,
         operands = ( Operand.reg(Registers.BC, 2), Operand.reg(Registers.BC, 2) ),
@@ -1387,7 +1387,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0xC5, "PUSH BC", bus_width=1,
+        0xC5, "PUSH BC", bus_width=2,
         byte_size=1, cycles=16,
         flags=None,
         operands = ( Operand.reg(Registers.BC, 2), Operand.reg(Registers.BC, 2) ),
@@ -1471,7 +1471,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0xD1, "POP DE", bus_width=1,
+        0xD1, "POP DE", bus_width=2,
         byte_size=1, cycles=12,
         flags=None,
         operands = ( Operand.reg(Registers.DE, 2), Operand.reg(Registers.DE, 2) ),
@@ -1499,7 +1499,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0xD5, "PUSH DE", bus_width=1,
+        0xD5, "PUSH DE", bus_width=2,
         byte_size=1, cycles=16,
         flags=None,
         operands = ( Operand.reg(Registers.DE, 2), Operand.reg(Registers.DE, 2) ),
@@ -1583,7 +1583,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0xE1, "POP HL", bus_width=1,
+        0xE1, "POP HL", bus_width=2,
         byte_size=1, cycles=12,
         flags=None,
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.HL, 2) ),
@@ -1611,7 +1611,7 @@ known_instructions = [
         executor = InvalidInstruction),
         
     Instruction(
-        0xE5, "PUSH HL", bus_width=1,
+        0xE5, "PUSH HL", bus_width=2,
         byte_size=1, cycles=16,
         flags=None,
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.HL, 2) ),
@@ -1632,7 +1632,7 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0xE8, "ADD SP,r8", bus_width=1,
+        0xE8, "ADD SP,r8", bus_width=2,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.SP, 2), Operand.imm(1) ),
@@ -1695,7 +1695,7 @@ known_instructions = [
         executor = Load),
         
     Instruction(
-        0xF1, "POP AF", bus_width=1,
+        0xF1, "POP AF", bus_width=2,
         byte_size=1, cycles=12,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Calculate, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.AF, 2), Operand.reg(Registers.AF, 2) ),
@@ -1723,7 +1723,7 @@ known_instructions = [
         executor = InvalidInstruction),
         
     Instruction(
-        0xF5, "PUSH AF", bus_width=1,
+        0xF5, "PUSH AF", bus_width=2,
         byte_size=1, cycles=16,
         flags=None,
         operands = ( Operand.reg(Registers.AF, 2), Operand.reg(Registers.AF, 2) ),
@@ -1744,14 +1744,14 @@ known_instructions = [
         executor = None),
         
     Instruction(
-        0xF8, "LD HL,SP+r8", bus_width=1,
+        0xF8, "LD HL,SP+r8", bus_width=2,
         byte_size=2, cycles=12,
         flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), None ),
         executor = Load),
         
     Instruction(
-        0xF9, "LD SP,HL", bus_width=1,
+        0xF9, "LD SP,HL", bus_width=2,
         byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.SP, 2), Operand.reg(Registers.HL, 2) ),

@@ -133,6 +133,10 @@ def translate_operands(instr):
         # now translate the operands
         dst_text = translate_operand(dst)
         src_text = translate_operand(src)
+
+        if dst_text == 'None' and src_text == dst_text:
+            return 'None'
+
         return '( {}, {} )'.format(dst_text, src_text)
     #end else
 #end
@@ -145,7 +149,7 @@ def translate_mnemonic(instr):
 def create_instruction(instr, file_handle):
     file_handle.write('    Instruction(\n')
     # TODO: parse bus_width from instruction source?
-    file_handle.write('        0x{0:02X}, "{1}", bus_width=1,\n'.format(instr.opcode, instr.mnemonic))
+    file_handle.write('        0x{0:02X}, "{1}", bus_width={2},\n'.format(instr.opcode, instr.mnemonic, instr.width))
     file_handle.write('        byte_size={}, cycles={},\n'.format(instr.bytes, instr.cycles))
     file_handle.write('        flags={},\n'.format(translate_flags(instr)))
     file_handle.write('        operands = {},\n'.format(translate_operands(instr)))

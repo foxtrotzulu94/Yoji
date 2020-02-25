@@ -14,6 +14,9 @@ class HTMLOpcodesInstructions(HTMLParser):
             self.parsing_td = True
             assert(self.curr_inst is None)
             self.curr_inst = TextInstruction(len(self.data))
+            for key, val in attrs:
+                if key == 'bgcolor' and (val == '#ccffcc' or val == '#ffcccc'):
+                    self.curr_inst.width = 2
 
     def handle_endtag(self, tag):
         if(tag=='td'):
