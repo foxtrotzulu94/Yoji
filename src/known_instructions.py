@@ -38,14 +38,14 @@ known_instructions = [
     Instruction(
         0x04, "INC B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = Increment),
         
     Instruction(
         0x05, "DEC B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = Decrement),
         
@@ -59,7 +59,7 @@ known_instructions = [
     Instruction(
         0x07, "RLCA", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
         executor = RotateLeftWithCarry),
         
@@ -73,7 +73,7 @@ known_instructions = [
     Instruction(
         0x09, "ADD HL,BC", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.BC, 2) ),
         executor = Add),
         
@@ -94,14 +94,14 @@ known_instructions = [
     Instruction(
         0x0C, "INC C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = Increment),
         
     Instruction(
         0x0D, "DEC C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = Decrement),
         
@@ -115,7 +115,7 @@ known_instructions = [
     Instruction(
         0x0F, "RRCA", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
         executor = RotateRightWithCarry),
         
@@ -150,14 +150,14 @@ known_instructions = [
     Instruction(
         0x14, "INC D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = Increment),
         
     Instruction(
         0x15, "DEC D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = Decrement),
         
@@ -171,7 +171,7 @@ known_instructions = [
     Instruction(
         0x17, "RLA", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
         executor = RotateLeft),
         
@@ -185,7 +185,7 @@ known_instructions = [
     Instruction(
         0x19, "ADD HL,DE", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.DE, 2) ),
         executor = Add),
         
@@ -206,14 +206,14 @@ known_instructions = [
     Instruction(
         0x1C, "INC E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = Increment),
         
     Instruction(
         0x1D, "DEC E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = Decrement),
         
@@ -227,7 +227,7 @@ known_instructions = [
     Instruction(
         0x1F, "RRA", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
         executor = RotateRight),
         
@@ -262,14 +262,14 @@ known_instructions = [
     Instruction(
         0x24, "INC H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = Increment),
         
     Instruction(
         0x25, "DEC H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = Decrement),
         
@@ -283,7 +283,7 @@ known_instructions = [
     Instruction(
         0x27, "DAA", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Ignore, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
         executor = None),
         
@@ -297,7 +297,7 @@ known_instructions = [
     Instruction(
         0x29, "ADD HL,HL", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.HL, 2) ),
         executor = Add),
         
@@ -318,14 +318,14 @@ known_instructions = [
     Instruction(
         0x2C, "INC L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = Increment),
         
     Instruction(
         0x2D, "DEC L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = Decrement),
         
@@ -339,7 +339,7 @@ known_instructions = [
     Instruction(
         0x2F, "CPL", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Set, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = None,
         executor = None),
         
@@ -374,14 +374,14 @@ known_instructions = [
     Instruction(
         0x34, "INC (HL)", bus_width=1,
         byte_size=1, cycles=12,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = Increment),
         
     Instruction(
         0x35, "DEC (HL)", bus_width=1,
         byte_size=1, cycles=12,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = Decrement),
         
@@ -395,7 +395,7 @@ known_instructions = [
     Instruction(
         0x37, "SCF", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Set },
         operands = None,
         executor = None),
         
@@ -409,7 +409,7 @@ known_instructions = [
     Instruction(
         0x39, "ADD HL,SP", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), Operand.reg(Registers.SP, 2) ),
         executor = Add),
         
@@ -430,14 +430,14 @@ known_instructions = [
     Instruction(
         0x3C, "INC A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = Increment),
         
     Instruction(
         0x3D, "DEC A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = Decrement),
         
@@ -451,7 +451,7 @@ known_instructions = [
     Instruction(
         0x3F, "CCF", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
         executor = None),
         
@@ -906,448 +906,448 @@ known_instructions = [
     Instruction(
         0x80, "ADD A,B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.B, 1) ),
         executor = Add),
         
     Instruction(
         0x81, "ADD A,C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.C, 1) ),
         executor = Add),
         
     Instruction(
         0x82, "ADD A,D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.D, 1) ),
         executor = Add),
         
     Instruction(
         0x83, "ADD A,E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.E, 1) ),
         executor = Add),
         
     Instruction(
         0x84, "ADD A,H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.H, 1) ),
         executor = Add),
         
     Instruction(
         0x85, "ADD A,L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.L, 1) ),
         executor = Add),
         
     Instruction(
         0x86, "ADD A,(HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), None ),
         executor = Add),
         
     Instruction(
         0x87, "ADD A,A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = Add),
         
     Instruction(
         0x88, "ADC A,B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.B, 1) ),
         executor = AddWithCarry),
         
     Instruction(
         0x89, "ADC A,C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.C, 1) ),
         executor = AddWithCarry),
         
     Instruction(
         0x8A, "ADC A,D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.D, 1) ),
         executor = AddWithCarry),
         
     Instruction(
         0x8B, "ADC A,E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.E, 1) ),
         executor = AddWithCarry),
         
     Instruction(
         0x8C, "ADC A,H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.H, 1) ),
         executor = AddWithCarry),
         
     Instruction(
         0x8D, "ADC A,L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.L, 1) ),
         executor = AddWithCarry),
         
     Instruction(
         0x8E, "ADC A,(HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), None ),
         executor = AddWithCarry),
         
     Instruction(
         0x8F, "ADC A,A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = AddWithCarry),
         
     Instruction(
         0x90, "SUB B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = Subtract),
         
     Instruction(
         0x91, "SUB C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = Subtract),
         
     Instruction(
         0x92, "SUB D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = Subtract),
         
     Instruction(
         0x93, "SUB E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = Subtract),
         
     Instruction(
         0x94, "SUB H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = Subtract),
         
     Instruction(
         0x95, "SUB L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = Subtract),
         
     Instruction(
         0x96, "SUB (HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = Subtract),
         
     Instruction(
         0x97, "SUB A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = Subtract),
         
     Instruction(
         0x98, "SBC A,B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.B, 1) ),
         executor = SubWithCarry),
         
     Instruction(
         0x99, "SBC A,C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.C, 1) ),
         executor = SubWithCarry),
         
     Instruction(
         0x9A, "SBC A,D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.D, 1) ),
         executor = SubWithCarry),
         
     Instruction(
         0x9B, "SBC A,E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.E, 1) ),
         executor = SubWithCarry),
         
     Instruction(
         0x9C, "SBC A,H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.H, 1) ),
         executor = SubWithCarry),
         
     Instruction(
         0x9D, "SBC A,L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.L, 1) ),
         executor = SubWithCarry),
         
     Instruction(
         0x9E, "SBC A,(HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), None ),
         executor = SubWithCarry),
         
     Instruction(
         0x9F, "SBC A,A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = SubWithCarry),
         
     Instruction(
         0xA0, "AND B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = BinAnd),
         
     Instruction(
         0xA1, "AND C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = BinAnd),
         
     Instruction(
         0xA2, "AND D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = BinAnd),
         
     Instruction(
         0xA3, "AND E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = BinAnd),
         
     Instruction(
         0xA4, "AND H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = BinAnd),
         
     Instruction(
         0xA5, "AND L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = BinAnd),
         
     Instruction(
         0xA6, "AND (HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( None, None ),
         executor = BinAnd),
         
     Instruction(
         0xA7, "AND A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = BinAnd),
         
     Instruction(
         0xA8, "XOR B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = BinXor),
         
     Instruction(
         0xA9, "XOR C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = BinXor),
         
     Instruction(
         0xAA, "XOR D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = BinXor),
         
     Instruction(
         0xAB, "XOR E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = BinXor),
         
     Instruction(
         0xAC, "XOR H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = BinXor),
         
     Instruction(
         0xAD, "XOR L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = BinXor),
         
     Instruction(
         0xAE, "XOR (HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( None, None ),
         executor = BinXor),
         
     Instruction(
         0xAF, "XOR A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = BinXor),
         
     Instruction(
         0xB0, "OR B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = BinOr),
         
     Instruction(
         0xB1, "OR C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = BinOr),
         
     Instruction(
         0xB2, "OR D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = BinOr),
         
     Instruction(
         0xB3, "OR E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = BinOr),
         
     Instruction(
         0xB4, "OR H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = BinOr),
         
     Instruction(
         0xB5, "OR L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = BinOr),
         
     Instruction(
         0xB6, "OR (HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( None, None ),
         executor = BinOr),
         
     Instruction(
         0xB7, "OR A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = BinOr),
         
     Instruction(
         0xB8, "CP B", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = Compare),
         
     Instruction(
         0xB9, "CP C", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = Compare),
         
     Instruction(
         0xBA, "CP D", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = Compare),
         
     Instruction(
         0xBB, "CP E", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = Compare),
         
     Instruction(
         0xBC, "CP H", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = Compare),
         
     Instruction(
         0xBD, "CP L", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = Compare),
         
     Instruction(
         0xBE, "CP (HL)", bus_width=1,
         byte_size=1, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = Compare),
         
     Instruction(
         0xBF, "CP A", bus_width=1,
         byte_size=1, cycles=4,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = Compare),
         
@@ -1396,7 +1396,7 @@ known_instructions = [
     Instruction(
         0xC6, "ADD A,d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.imm(1) ),
         executor = Add),
         
@@ -1452,7 +1452,7 @@ known_instructions = [
     Instruction(
         0xCE, "ADC A,d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.imm(1) ),
         executor = AddWithCarry),
         
@@ -1508,7 +1508,7 @@ known_instructions = [
     Instruction(
         0xD6, "SUB d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.imm(1), Operand.imm(1) ),
         executor = Subtract),
         
@@ -1564,7 +1564,7 @@ known_instructions = [
     Instruction(
         0xDE, "SBC A,d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.imm(1) ),
         executor = SubWithCarry),
         
@@ -1620,7 +1620,7 @@ known_instructions = [
     Instruction(
         0xE6, "AND d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
         operands = ( Operand.imm(1), Operand.imm(1) ),
         executor = BinAnd),
         
@@ -1634,7 +1634,7 @@ known_instructions = [
     Instruction(
         0xE8, "ADD SP,r8", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.SP, 2), Operand.imm(1) ),
         executor = Add),
         
@@ -1676,7 +1676,7 @@ known_instructions = [
     Instruction(
         0xEE, "XOR d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.imm(1), Operand.imm(1) ),
         executor = BinXor),
         
@@ -1697,7 +1697,7 @@ known_instructions = [
     Instruction(
         0xF1, "POP AF", bus_width=1,
         byte_size=1, cycles=12,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Calculate, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.AF, 2), Operand.reg(Registers.AF, 2) ),
         executor = None),
         
@@ -1732,7 +1732,7 @@ known_instructions = [
     Instruction(
         0xF6, "OR d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.imm(1), Operand.imm(1) ),
         executor = BinOr),
         
@@ -1746,7 +1746,7 @@ known_instructions = [
     Instruction(
         0xF8, "LD HL,SP+r8", bus_width=1,
         byte_size=2, cycles=12,
-        flags=None,
+        flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.HL, 2), None ),
         executor = Load),
         
@@ -1788,7 +1788,7 @@ known_instructions = [
     Instruction(
         0xFE, "CP d8", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
         operands = ( Operand.imm(1), Operand.imm(1) ),
         executor = Compare),
         
@@ -1805,896 +1805,896 @@ cb_prefix = [
     Instruction(
         0x00, "RLC B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x01, "RLC C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x02, "RLC D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x03, "RLC E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x04, "RLC H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x05, "RLC L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x06, "RLC (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x07, "RLC A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
         0x08, "RRC B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x09, "RRC C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x0A, "RRC D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x0B, "RRC E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x0C, "RRC H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x0D, "RRC L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x0E, "RRC (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x0F, "RRC A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
         0x10, "RL B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = RotateLeft),
         
     Instruction(
         0x11, "RL C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = RotateLeft),
         
     Instruction(
         0x12, "RL D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = RotateLeft),
         
     Instruction(
         0x13, "RL E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = RotateLeft),
         
     Instruction(
         0x14, "RL H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = RotateLeft),
         
     Instruction(
         0x15, "RL L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = RotateLeft),
         
     Instruction(
         0x16, "RL (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = RotateLeft),
         
     Instruction(
         0x17, "RL A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateLeft),
         
     Instruction(
         0x18, "RR B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x19, "RR C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x1A, "RR D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x1B, "RR E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x1C, "RR H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x1D, "RR L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x1E, "RR (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = RotateRight),
         
     Instruction(
         0x1F, "RR A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x20, "SLA B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x21, "SLA C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x22, "SLA D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x23, "SLA E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x24, "SLA H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x25, "SLA L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x26, "SLA (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x27, "SLA A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x28, "SRA B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x29, "SRA C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x2A, "SRA D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x2B, "SRA E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x2C, "SRA H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x2D, "SRA L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x2E, "SRA (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x2F, "SRA A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x30, "SWAP B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x31, "SWAP C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x32, "SWAP D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x33, "SWAP E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x34, "SWAP H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x35, "SWAP L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x36, "SWAP (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x37, "SWAP A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x38, "SRL B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x39, "SRL C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x3A, "SRL D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x3B, "SRL E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x3C, "SRL H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x3D, "SRL L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x3E, "SRL (HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x3F, "SRL A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x40, "BIT 0,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x41, "BIT 0,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x42, "BIT 0,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x43, "BIT 0,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x44, "BIT 0,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x45, "BIT 0,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x46, "BIT 0,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x47, "BIT 0,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x48, "BIT 1,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x49, "BIT 1,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x4A, "BIT 1,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x4B, "BIT 1,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x4C, "BIT 1,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x4D, "BIT 1,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x4E, "BIT 1,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x4F, "BIT 1,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x50, "BIT 2,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x51, "BIT 2,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x52, "BIT 2,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x53, "BIT 2,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x54, "BIT 2,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x55, "BIT 2,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x56, "BIT 2,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x57, "BIT 2,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x58, "BIT 3,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x59, "BIT 3,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x5A, "BIT 3,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x5B, "BIT 3,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x5C, "BIT 3,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x5D, "BIT 3,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x5E, "BIT 3,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x5F, "BIT 3,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x60, "BIT 4,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x61, "BIT 4,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x62, "BIT 4,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x63, "BIT 4,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x64, "BIT 4,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x65, "BIT 4,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x66, "BIT 4,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x67, "BIT 4,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x68, "BIT 5,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x69, "BIT 5,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x6A, "BIT 5,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x6B, "BIT 5,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x6C, "BIT 5,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x6D, "BIT 5,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x6E, "BIT 5,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x6F, "BIT 5,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x70, "BIT 6,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x71, "BIT 6,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x72, "BIT 6,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x73, "BIT 6,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x74, "BIT 6,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x75, "BIT 6,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x76, "BIT 6,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x77, "BIT 6,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         
     Instruction(
         0x78, "BIT 7,B", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.B, 1) ),
         executor = None),
         
     Instruction(
         0x79, "BIT 7,C", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = None),
         
     Instruction(
         0x7A, "BIT 7,D", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.D, 1) ),
         executor = None),
         
     Instruction(
         0x7B, "BIT 7,E", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.E, 1) ),
         executor = None),
         
     Instruction(
         0x7C, "BIT 7,H", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.H, 1) ),
         executor = None),
         
     Instruction(
         0x7D, "BIT 7,L", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.L, 1) ),
         executor = None),
         
     Instruction(
         0x7E, "BIT 7,(HL)", bus_width=1,
         byte_size=2, cycles=16,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, None ),
         executor = None),
         
     Instruction(
         0x7F, "BIT 7,A", bus_width=1,
         byte_size=2, cycles=8,
-        flags=None,
+        flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = None),
         

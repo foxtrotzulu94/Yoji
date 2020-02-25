@@ -12,6 +12,14 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Instruction Generator",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/generate_instructions.py",
+            "cwd": "${workspaceFolder}/tools",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Instruction Scraper",
             "type": "python",
             "request": "launch",

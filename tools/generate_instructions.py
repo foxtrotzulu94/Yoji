@@ -52,25 +52,57 @@ mnemonic_map = {
 
 immediate_operands = {'d8', 'd16', 'a8', 'a16', 'r8'}
 register_operands = {'A', 'F', 'B', 'C', 'D', 'E', 'H', 'L', 'AF', 'BC', 'DE', 'HL', 'SP', 'PC'}
+unary_map = {
+    'AND': 'A',
+    'OR': 'A',
+    'XOR': 'A',
+    'RRA': 'A',
+    'RRCA': 'A',
+    'RLA': 'A',
+    'RLCA': 'A',
+}
 
 def translate_flags(instr):
-    # for now
-    return 'None'
+    if instr.flags is None:
+        return 'None'
+
+    if all(x == '-' for x in instr.flags):
+        # No flags are affected
+        return 'None'
+
+    flags = { 'Flag.z':instr.flags[0], 'Flag.n':instr.flags[1], 'Flag.h':instr.flags[2], 'Flag.c':instr.flags[3] }
+    translation = []
+    for bit, val in flags.items():
+        actual_val = 'Bit.Calculate'
+        if val == '-':
+            actual_val = 'Bit.Ignore'
+        elif val.isdigit():
+            actual_val = 'Bit.Set' if val == '1' else 'Bit.Reset'
+
+        translation.append("{}:{}".format(bit, actual_val))
+
+    flag_string= "{ %s }" % ", ".join(translation)
+    return flag_string
+#end
 
 def translate_operand(operand):
     if operand is None:
         return 'None'
 
     is_memory_access = '(' in operand and ')' in operand
-    is_special_case = "SP" in operand and "+" in operand
+    is_special_case = "SP" in operand and "+" in operand and not is_memory_access
+    is_constant = (operand.isdigit() and len(operand) == 1) or (operand.endswith('H') and len(operand) > 1)
 
-    if operand in immediate_operands:
+    if is_constant:
+        # TODO: Handle constants!
+        return 'None'
+    elif operand in immediate_operands:
         # bit of a hack ;)
         byte_length = len(operand) - 1
         op_txt = "Operand.mem({})" if is_memory_access else "Operand.imm({})"
         return op_txt.format(byte_length)
     elif operand in register_operands:
-        if is_special_case and not is_memory_access:
+        if is_special_case:
             # this is a pretty special operand that we'd rather deal with separately
             return "Operand.regI(Registers.SP)"
 

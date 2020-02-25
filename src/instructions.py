@@ -65,6 +65,10 @@ class Operand:
     def mem(width):
         return Operand(reg, width, Addressing.Direct)
 
+    def can_set_value(self):
+        """Checks if this operand can be used to set value"""
+        return self._mode != Addressing.Immediate and self._mode != Addressing.RegisterPlusImmediate
+
     def get_value(self, cpu, mem_bus, location):
         "Gets the value of the operand"
 
@@ -282,8 +286,11 @@ class Instruction:
     #end execute
 
     def writeback(self, cpu, mem_bus, location, result):
+        if self._operands is None or self._operands[0] is None:
+            # write back would be illegal
+            return
+
         self._operands[0].set_value(cpu, mem_bus, location, result)
-        #self._writeback(self._result_size, cpu, mem_bus, result)
     #end writeback
 
     @property
@@ -438,9 +445,9 @@ BinXor = _from_operator(operator.xor)
 BinAnd = _from_operator(operator.and_)
 
 def Increment(cpu, destination, source):
-    return destination + 1
+    return source + 1
 def Decrement(cpu, destination, source):
-    return destination - 1
+    return source - 1
 #end
 
 def RotateLeft(cpu, destination, source):
