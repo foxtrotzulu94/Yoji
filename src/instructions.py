@@ -3,6 +3,12 @@ from .cpu_types import *
 
 class Addressing(Enum):
     """Enum for establishing the instruction operand Addressing mode"""
+    # Operand is a constant value (which is *not* immediate)
+    Constant = 'c'
+
+    # Operand is CPU bit value
+    Bit = 'b'
+
     # Operand value is in the instruction
     Immediate = 'I'
 
@@ -156,6 +162,14 @@ class Operand:
         return base if self._mode == Addressing.Immediate else ("(%s) => %s" % base, int.from_bytes(mem_bus.ReadWorkRAM(val, self.width), 'big'))
     #end
 
+    def __eq__(self, other):
+        # Two operands are equal if they are operating on registers with the same mode and have the same width
+        # We can't say memory operands are equal without binding to the address
+        return self._mode == other._mode and\
+             (self._mode != Addressing.Immediate and self._mode != Addressing.Direct)\
+                  and self.width == other.width and self._register == other._register
+
+
     def __str__(self):
         """
         String that describes the operand.
@@ -287,14 +301,23 @@ class Instruction:
         """ Gets the length of the instruction in bytes """
         return self._size
 
+    def is_complete(self):
+        return self._action is not None
+
     def _get_mnemonic(self, mem_bus = None, addr = None):
+        if self._operands is None:
+            return self._mnemonic
+
         fmt = self._mnemonic.split(' ')
         base = fmt[0]
-        dst = str(self._operands[0]) if mem_bus is None else self._operands[0].ToString(mem_bus, addr)
-        src = str(self._operands[1]) if mem_bus is None else self._operands[1].ToString(mem_bus, addr)
+        src = dst = None
+        if self._operands[0] is not None:
+            dst = str(self._operands[0]) if mem_bus is None else self._operands[0].ToString(mem_bus, addr)
+        if self._operands[1] is not None:
+            src = str(self._operands[1]) if mem_bus is None else self._operands[1].ToString(mem_bus, addr)
 
         # TODO: handle mnemonics like "DEC C", "POP BC"
-        return "{} {},{}".format(base, dst, src)
+        return "{} {}".format(base, dst) if dst == src else "{} {},{}".format(base, dst, src)
 
     def ToString(self, mem_bus, address):
         """
