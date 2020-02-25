@@ -67,7 +67,8 @@ class Operand:
 
     def can_set_value(self):
         """Checks if this operand can be used to set value"""
-        return self._mode != Addressing.Immediate and self._mode != Addressing.RegisterPlusImmediate
+        return self._mode != Addressing.Immediate and self._mode != Addressing.RegisterPlusImmediate \
+            and self._mode != Addressing.Bit and self._mode != Addressing.Constant
 
     def get_value(self, cpu, mem_bus, location):
         "Gets the value of the operand"
@@ -286,7 +287,7 @@ class Instruction:
     #end execute
 
     def writeback(self, cpu, mem_bus, location, result):
-        if self._operands is None or self._operands[0] is None:
+        if self._operands is None or self._operands[0] is None or not self._operands[0].can_set_value():
             # write back would be illegal
             return
 
@@ -363,47 +364,6 @@ class Instruction:
             hex(id(self))
         )
 # end Instruction class
-
-# HACK: the generators below work, but are not the best to use
-#       for now, let's make sure the instructions work
-#       and then ideally we can make an Operands class that knows how to Get/Set
-#       that would also allow us to eliminate the need for an explicit "writeback" method
-
-def gen_cpu_operand(reg):
-    def gen(size, cpu, mem_bus, location):
-        return cpu.get_register(reg, size)
-    return gen
-
-def gen_immediate_operand():
-    def gen(size, cpu, mem_bus, location):
-        return mem_bus.ReadWorkRAM(location, size)
-    return gen
-
-def gen_memory_operand(reg=None):
-    def gen(size, cpu, mem_bus, location):
-        mem_address = cpu.get_register(reg) if reg is not None else mem_bus.ReadWorkRAM(location, size)
-        return mem_bus.ReadWorkRAM(mem_address, size)
-    return gen
-
-def gen_cpu_callback(reg):
-    if type(reg) is str:
-        if reg == 'SP':
-            def gen(size, cpu, mem_bus, result):
-                cpu.SP = result
-            return gen
-        elif reg == 'PC':
-            def gen(size, cpu, mem_bus, result):
-                cpu.PC = result
-            return gen
-    else:
-        def gen(size, cpu, mem_bus, result):
-            cpu.set_register(result, reg, size)
-    return gen
-
-def gen_mem_callback(addr):
-    def gen(size, cpu, mem_bus, result):
-        mem_bus.WriteWorkRAM(addr, result)
-    return gen
 
 # High-level logic for instructions is implemented below.
 # Where applicable, comments have been added for clarity

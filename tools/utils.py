@@ -16,6 +16,7 @@ class TextInstruction:
         self.bytes = -1
         self.cycles = -1
         self.flags = None
+        self.width = 1
 
     def __str__(self):
         return "{} {} {} {}".format(self.mnemonic, self.bytes, self.cycles, self.flags)
