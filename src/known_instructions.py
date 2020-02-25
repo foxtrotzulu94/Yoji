@@ -10,7 +10,7 @@ known_instructions = [
         0x00, "NOP", bus_width=1,
         byte_size=1, cycles=4,
         flags=None,
-        operands = None, executor = None, store = None),
+        operands = None, executor = None),
 
     Instruction(
         0x01, "LD BC,d16", bus_width=2,
