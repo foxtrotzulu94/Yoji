@@ -12,6 +12,7 @@ class Registers(IntEnum):
     """Enum for refering to the CPU Registers"""
     A = 0
     F = 1
+    AF = 0
 
     B = 2
     C = 3

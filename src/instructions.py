@@ -3,10 +3,28 @@ from .cpu_types import *
 
 class Addressing(Enum):
     """Enum for establishing the instruction operand Addressing mode"""
+    # Operand value is in the instruction
     Immediate = 'I'
+
+    # Uses a CPU register as value
     Register = 'R'
+
+    # Uses value and does R+1
+    RegisterIncrement = 'R+'
+    # Uses value and does R-1
+    RegisterDecrement = 'R-'
+
+    # Uses the Register + what is given by the operand
+    RegisterPlusImmediate = 'RI'
+
+    # Uses the register as an indirection for the value
     RegisterIndirect = 'Ri'
+
+    # Operand location is in the instruction
+    # Value is obtained by dereferencing
     Direct = 'D'
+
+    # Operand pointer is at location
     Indirect = 'i'
 #end bits
 
@@ -22,20 +40,24 @@ class Operand:
         self._register = reg
 
     @staticmethod
-    def reg(reg, width=1, addressing_mode = Addressing.Register):
-        return Operand(reg, width, addressing_mode)
+    def reg(reg, width=1):
+        return Operand(reg, width, Addressing.Register)
 
     @staticmethod
-    def regi(reg, width=1, addressing_mode = Addressing.RegisterIndirect):
-        return Operand(reg, width, addressing_mode)
+    def regi(reg, width=1):
+        return Operand(reg, width, Addressing.RegisterIndirect)
+
+    @staticmethod
+    def regI(reg):
+        return Operand(reg, 1, Addressing.RegisterPlusImmediate)
 
     @staticmethod
     def imm(width):
         return Operand(None, width, Addressing.Immediate)
 
     @staticmethod
-    def mem(width=1, addressing_mode = Addressing.Direct):
-        return Operand(reg, width, addressing_mode)
+    def mem(width):
+        return Operand(reg, width, Addressing.Direct)
 
     def get_value(self, cpu, mem_bus, location):
         "Gets the value of the operand"
@@ -47,6 +69,13 @@ class Operand:
             if self._register < 0:
                 return cpu.SP if self._register == Registers.SP else cpu.PC
             return cpu.get_register(self._register, self.width)
+        def register_post():
+            value = register()
+            # the set will increment/decrement as needed
+            self.set_value(cpu, mem_bus, location, value)
+            return value
+        def register_w_immediate():
+            return register() + immediate()
         def reg_indirect():
             return mem_bus.ReadWorkRAM(register(), self.width)
         def direct():
@@ -57,6 +86,9 @@ class Operand:
         value_map = {
             Addressing.Immediate: immediate,
             Addressing.Register: register,
+            Addressing.RegisterIncrement: register_post,
+            Addressing.RegisterDecrement: register_post,
+            Addressing.RegisterPlusImmediate: register_w_immediate,
             Addressing.RegisterIndirect: reg_indirect,
             Addressing.Direct: direct,
             Addressing.Indirect: indirect}
@@ -80,6 +112,15 @@ class Operand:
                     cpu.PC = value
             else:
                 cpu.set_register(value, self._register, self.width)
+        def register_post():
+            new_value = value + 1 if self._mode == Addressing.RegisterIncrement else value - 1
+            if self._register < 0:
+                if self._register == Registers.SP:
+                    cpu.SP = new_value
+                else:
+                    cpu.PC = new_value
+            else:
+                cpu.set_register(new_value, self._register, self.width)
         def reg_indirect():
             mem_bus.WriteWorkRAM(register(), value)
         def direct():
@@ -91,6 +132,9 @@ class Operand:
         value_map = {
             Addressing.Immediate: immediate,
             Addressing.Register: register,
+            Addressing.RegisterIncrement: register_post,
+            Addressing.RegisterDecrement: register_post,
+            Addressing.RegisterPlusImmediate: immediate,
             Addressing.RegisterIndirect: reg_indirect,
             Addressing.Direct: direct,
             Addressing.Indirect: indirect}
@@ -336,7 +380,15 @@ def gen_mem_callback(addr):
 # See http://z80-heaven.wikidot.com/ for more detailed info
 
 def NoOp(cpu, destination, source):
+    return None
+def Reset(cpu, destination, source):
     return 0
+#end
+
+def InvalidInstruction(cpu, destination, source):
+    raise SystemError()
+def NotImplementedYet(cpu, destination, source):
+    raise NotImplementedError()
 #end
 
 import operator
