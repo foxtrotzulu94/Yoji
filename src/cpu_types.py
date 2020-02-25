@@ -33,6 +33,7 @@ class Registers(IntEnum):
 #end
 
 _double_registers_name={
+    Registers.A: 'AF',
     Registers.BC: 'BC',
     Registers.B: 'BC',
     Registers.DE: 'DE',

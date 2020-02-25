@@ -193,7 +193,7 @@
     },
     {
         "opcode": 16,
-        "mnemonic": "STOP 0",
+        "mnemonic": "STOP",
         "bytes": "2",
         "cycles": "4",
         "flags": [

@@ -4,6 +4,12 @@ class TextInstruction:
         def default(self, o):
             return o.__dict__
 
+    @staticmethod
+    def from_json(data):
+        obj = TextInstruction(0)
+        obj.__dict__ = data
+        return obj
+
     def __init__(self, opcode):
         self.opcode = opcode
         self.mnemonic = "INVALID"
