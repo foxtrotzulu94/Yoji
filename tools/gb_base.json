@@ -1,0 +1,3019 @@
+[
+    {
+        "opcode": 0,
+        "mnemonic": "NOP",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 1,
+        "mnemonic": "LD BC,d16",
+        "bytes": "3",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 2,
+        "mnemonic": "LD (BC),A",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 3,
+        "mnemonic": "INC BC",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 4,
+        "mnemonic": "INC B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 5,
+        "mnemonic": "DEC B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 6,
+        "mnemonic": "LD B,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 7,
+        "mnemonic": "RLCA",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "0",
+            "0",
+            "0",
+            "C"
+        ]
+    },
+    {
+        "opcode": 8,
+        "mnemonic": "LD (a16),SP",
+        "bytes": "3",
+        "cycles": "20",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 9,
+        "mnemonic": "ADD HL,BC",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 10,
+        "mnemonic": "LD A,(BC)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 11,
+        "mnemonic": "DEC BC",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 12,
+        "mnemonic": "INC C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 13,
+        "mnemonic": "DEC C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 14,
+        "mnemonic": "LD C,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 15,
+        "mnemonic": "RRCA",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "0",
+            "0",
+            "0",
+            "C"
+        ]
+    },
+    {
+        "opcode": 16,
+        "mnemonic": "STOP 0",
+        "bytes": "2",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 17,
+        "mnemonic": "LD DE,d16",
+        "bytes": "3",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 18,
+        "mnemonic": "LD (DE),A",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 19,
+        "mnemonic": "INC DE",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 20,
+        "mnemonic": "INC D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 21,
+        "mnemonic": "DEC D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 22,
+        "mnemonic": "LD D,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 23,
+        "mnemonic": "RLA",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "0",
+            "0",
+            "0",
+            "C"
+        ]
+    },
+    {
+        "opcode": 24,
+        "mnemonic": "JR r8",
+        "bytes": "2",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 25,
+        "mnemonic": "ADD HL,DE",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 26,
+        "mnemonic": "LD A,(DE)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 27,
+        "mnemonic": "DEC DE",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 28,
+        "mnemonic": "INC E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 29,
+        "mnemonic": "DEC E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 30,
+        "mnemonic": "LD E,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 31,
+        "mnemonic": "RRA",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "0",
+            "0",
+            "0",
+            "C"
+        ]
+    },
+    {
+        "opcode": 32,
+        "mnemonic": "JR NZ,r8",
+        "bytes": "2",
+        "cycles": "12/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 33,
+        "mnemonic": "LD HL,d16",
+        "bytes": "3",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 34,
+        "mnemonic": "LD (HL+),A",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 35,
+        "mnemonic": "INC HL",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 36,
+        "mnemonic": "INC H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 37,
+        "mnemonic": "DEC H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 38,
+        "mnemonic": "LD H,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 39,
+        "mnemonic": "DAA",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "-",
+            "0",
+            "C"
+        ]
+    },
+    {
+        "opcode": 40,
+        "mnemonic": "JR Z,r8",
+        "bytes": "2",
+        "cycles": "12/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 41,
+        "mnemonic": "ADD HL,HL",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 42,
+        "mnemonic": "LD A,(HL+)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 43,
+        "mnemonic": "DEC HL",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 44,
+        "mnemonic": "INC L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 45,
+        "mnemonic": "DEC L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 46,
+        "mnemonic": "LD L,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 47,
+        "mnemonic": "CPL",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "1",
+            "1",
+            "-"
+        ]
+    },
+    {
+        "opcode": 48,
+        "mnemonic": "JR NC,r8",
+        "bytes": "2",
+        "cycles": "12/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 49,
+        "mnemonic": "LD SP,d16",
+        "bytes": "3",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 50,
+        "mnemonic": "LD (HL-),A",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 51,
+        "mnemonic": "INC SP",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 52,
+        "mnemonic": "INC (HL)",
+        "bytes": "1",
+        "cycles": "12",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 53,
+        "mnemonic": "DEC (HL)",
+        "bytes": "1",
+        "cycles": "12",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 54,
+        "mnemonic": "LD (HL),d8",
+        "bytes": "2",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 55,
+        "mnemonic": "SCF",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "0",
+            "0",
+            "1"
+        ]
+    },
+    {
+        "opcode": 56,
+        "mnemonic": "JR C,r8",
+        "bytes": "2",
+        "cycles": "12/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 57,
+        "mnemonic": "ADD HL,SP",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 58,
+        "mnemonic": "LD A,(HL-)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 59,
+        "mnemonic": "DEC SP",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 60,
+        "mnemonic": "INC A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 61,
+        "mnemonic": "DEC A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "-"
+        ]
+    },
+    {
+        "opcode": 62,
+        "mnemonic": "LD A,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 63,
+        "mnemonic": "CCF",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "0",
+            "0",
+            "C"
+        ]
+    },
+    {
+        "opcode": 64,
+        "mnemonic": "LD B,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 65,
+        "mnemonic": "LD B,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 66,
+        "mnemonic": "LD B,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 67,
+        "mnemonic": "LD B,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 68,
+        "mnemonic": "LD B,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 69,
+        "mnemonic": "LD B,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 70,
+        "mnemonic": "LD B,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 71,
+        "mnemonic": "LD B,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 72,
+        "mnemonic": "LD C,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 73,
+        "mnemonic": "LD C,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 74,
+        "mnemonic": "LD C,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 75,
+        "mnemonic": "LD C,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 76,
+        "mnemonic": "LD C,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 77,
+        "mnemonic": "LD C,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 78,
+        "mnemonic": "LD C,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 79,
+        "mnemonic": "LD C,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 80,
+        "mnemonic": "LD D,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 81,
+        "mnemonic": "LD D,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 82,
+        "mnemonic": "LD D,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 83,
+        "mnemonic": "LD D,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 84,
+        "mnemonic": "LD D,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 85,
+        "mnemonic": "LD D,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 86,
+        "mnemonic": "LD D,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 87,
+        "mnemonic": "LD D,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 88,
+        "mnemonic": "LD E,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 89,
+        "mnemonic": "LD E,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 90,
+        "mnemonic": "LD E,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 91,
+        "mnemonic": "LD E,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 92,
+        "mnemonic": "LD E,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 93,
+        "mnemonic": "LD E,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 94,
+        "mnemonic": "LD E,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 95,
+        "mnemonic": "LD E,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 96,
+        "mnemonic": "LD H,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 97,
+        "mnemonic": "LD H,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 98,
+        "mnemonic": "LD H,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 99,
+        "mnemonic": "LD H,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 100,
+        "mnemonic": "LD H,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 101,
+        "mnemonic": "LD H,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 102,
+        "mnemonic": "LD H,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 103,
+        "mnemonic": "LD H,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 104,
+        "mnemonic": "LD L,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 105,
+        "mnemonic": "LD L,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 106,
+        "mnemonic": "LD L,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 107,
+        "mnemonic": "LD L,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 108,
+        "mnemonic": "LD L,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 109,
+        "mnemonic": "LD L,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 110,
+        "mnemonic": "LD L,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 111,
+        "mnemonic": "LD L,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 112,
+        "mnemonic": "LD (HL),B",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 113,
+        "mnemonic": "LD (HL),C",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 114,
+        "mnemonic": "LD (HL),D",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 115,
+        "mnemonic": "LD (HL),E",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 116,
+        "mnemonic": "LD (HL),H",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 117,
+        "mnemonic": "LD (HL),L",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 118,
+        "mnemonic": "HALT",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 119,
+        "mnemonic": "LD (HL),A",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 120,
+        "mnemonic": "LD A,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 121,
+        "mnemonic": "LD A,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 122,
+        "mnemonic": "LD A,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 123,
+        "mnemonic": "LD A,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 124,
+        "mnemonic": "LD A,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 125,
+        "mnemonic": "LD A,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 126,
+        "mnemonic": "LD A,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 127,
+        "mnemonic": "LD A,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 128,
+        "mnemonic": "ADD A,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 129,
+        "mnemonic": "ADD A,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 130,
+        "mnemonic": "ADD A,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 131,
+        "mnemonic": "ADD A,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 132,
+        "mnemonic": "ADD A,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 133,
+        "mnemonic": "ADD A,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 134,
+        "mnemonic": "ADD A,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 135,
+        "mnemonic": "ADD A,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 136,
+        "mnemonic": "ADC A,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 137,
+        "mnemonic": "ADC A,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 138,
+        "mnemonic": "ADC A,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 139,
+        "mnemonic": "ADC A,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 140,
+        "mnemonic": "ADC A,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 141,
+        "mnemonic": "ADC A,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 142,
+        "mnemonic": "ADC A,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 143,
+        "mnemonic": "ADC A,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 144,
+        "mnemonic": "SUB B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 145,
+        "mnemonic": "SUB C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 146,
+        "mnemonic": "SUB D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 147,
+        "mnemonic": "SUB E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 148,
+        "mnemonic": "SUB H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 149,
+        "mnemonic": "SUB L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 150,
+        "mnemonic": "SUB (HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 151,
+        "mnemonic": "SUB A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 152,
+        "mnemonic": "SBC A,B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 153,
+        "mnemonic": "SBC A,C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 154,
+        "mnemonic": "SBC A,D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 155,
+        "mnemonic": "SBC A,E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 156,
+        "mnemonic": "SBC A,H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 157,
+        "mnemonic": "SBC A,L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 158,
+        "mnemonic": "SBC A,(HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 159,
+        "mnemonic": "SBC A,A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 160,
+        "mnemonic": "AND B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 161,
+        "mnemonic": "AND C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 162,
+        "mnemonic": "AND D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 163,
+        "mnemonic": "AND E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 164,
+        "mnemonic": "AND H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 165,
+        "mnemonic": "AND L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 166,
+        "mnemonic": "AND (HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 167,
+        "mnemonic": "AND A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 168,
+        "mnemonic": "XOR B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 169,
+        "mnemonic": "XOR C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 170,
+        "mnemonic": "XOR D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 171,
+        "mnemonic": "XOR E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 172,
+        "mnemonic": "XOR H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 173,
+        "mnemonic": "XOR L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 174,
+        "mnemonic": "XOR (HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 175,
+        "mnemonic": "XOR A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 176,
+        "mnemonic": "OR B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 177,
+        "mnemonic": "OR C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 178,
+        "mnemonic": "OR D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 179,
+        "mnemonic": "OR E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 180,
+        "mnemonic": "OR H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 181,
+        "mnemonic": "OR L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 182,
+        "mnemonic": "OR (HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 183,
+        "mnemonic": "OR A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 184,
+        "mnemonic": "CP B",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 185,
+        "mnemonic": "CP C",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 186,
+        "mnemonic": "CP D",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 187,
+        "mnemonic": "CP E",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 188,
+        "mnemonic": "CP H",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 189,
+        "mnemonic": "CP L",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 190,
+        "mnemonic": "CP (HL)",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 191,
+        "mnemonic": "CP A",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 192,
+        "mnemonic": "RET NZ",
+        "bytes": "1",
+        "cycles": "20/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 193,
+        "mnemonic": "POP BC",
+        "bytes": "1",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 194,
+        "mnemonic": "JP NZ,a16",
+        "bytes": "3",
+        "cycles": "16/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 195,
+        "mnemonic": "JP a16",
+        "bytes": "3",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 196,
+        "mnemonic": "CALL NZ,a16",
+        "bytes": "3",
+        "cycles": "24/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 197,
+        "mnemonic": "PUSH BC",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 198,
+        "mnemonic": "ADD A,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 199,
+        "mnemonic": "RST 00H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 200,
+        "mnemonic": "RET Z",
+        "bytes": "1",
+        "cycles": "20/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 201,
+        "mnemonic": "RET",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 202,
+        "mnemonic": "JP Z,a16",
+        "bytes": "3",
+        "cycles": "16/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 203,
+        "mnemonic": "PREFIX CB",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 204,
+        "mnemonic": "CALL Z,a16",
+        "bytes": "3",
+        "cycles": "24/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 205,
+        "mnemonic": "CALL a16",
+        "bytes": "3",
+        "cycles": "24",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 206,
+        "mnemonic": "ADC A,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 207,
+        "mnemonic": "RST 08H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 208,
+        "mnemonic": "RET NC",
+        "bytes": "1",
+        "cycles": "20/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 209,
+        "mnemonic": "POP DE",
+        "bytes": "1",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 210,
+        "mnemonic": "JP NC,a16",
+        "bytes": "3",
+        "cycles": "16/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 211,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 212,
+        "mnemonic": "CALL NC,a16",
+        "bytes": "3",
+        "cycles": "24/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 213,
+        "mnemonic": "PUSH DE",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 214,
+        "mnemonic": "SUB d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 215,
+        "mnemonic": "RST 10H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 216,
+        "mnemonic": "RET C",
+        "bytes": "1",
+        "cycles": "20/8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 217,
+        "mnemonic": "RETI",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 218,
+        "mnemonic": "JP C,a16",
+        "bytes": "3",
+        "cycles": "16/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 219,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 220,
+        "mnemonic": "CALL C,a16",
+        "bytes": "3",
+        "cycles": "24/12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 221,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 222,
+        "mnemonic": "SBC A,d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 223,
+        "mnemonic": "RST 18H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 224,
+        "mnemonic": "LDH (a8),A",
+        "bytes": "2",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 225,
+        "mnemonic": "POP HL",
+        "bytes": "1",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 226,
+        "mnemonic": "LD (C),A",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 227,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 228,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 229,
+        "mnemonic": "PUSH HL",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 230,
+        "mnemonic": "AND d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "1",
+            "0"
+        ]
+    },
+    {
+        "opcode": 231,
+        "mnemonic": "RST 20H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 232,
+        "mnemonic": "ADD SP,r8",
+        "bytes": "2",
+        "cycles": "16",
+        "flags": [
+            "0",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 233,
+        "mnemonic": "JP (HL)",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 234,
+        "mnemonic": "LD (a16),A",
+        "bytes": "3",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 235,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 236,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 237,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 238,
+        "mnemonic": "XOR d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 239,
+        "mnemonic": "RST 28H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 240,
+        "mnemonic": "LDH A,(a8)",
+        "bytes": "2",
+        "cycles": "12",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 241,
+        "mnemonic": "POP AF",
+        "bytes": "1",
+        "cycles": "12",
+        "flags": [
+            "Z",
+            "N",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 242,
+        "mnemonic": "LD A,(C)",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 243,
+        "mnemonic": "DI",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 244,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 245,
+        "mnemonic": "PUSH AF",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 246,
+        "mnemonic": "OR d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "0",
+            "0",
+            "0"
+        ]
+    },
+    {
+        "opcode": 247,
+        "mnemonic": "RST 30H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 248,
+        "mnemonic": "LD HL,SP+r8",
+        "bytes": "2",
+        "cycles": "12",
+        "flags": [
+            "0",
+            "0",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 249,
+        "mnemonic": "LD SP,HL",
+        "bytes": "1",
+        "cycles": "8",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 250,
+        "mnemonic": "LD A,(a16)",
+        "bytes": "3",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 251,
+        "mnemonic": "EI",
+        "bytes": "1",
+        "cycles": "4",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    },
+    {
+        "opcode": 252,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 253,
+        "mnemonic": "INVALID",
+        "bytes": -1,
+        "cycles": -1,
+        "flags": null
+    },
+    {
+        "opcode": 254,
+        "mnemonic": "CP d8",
+        "bytes": "2",
+        "cycles": "8",
+        "flags": [
+            "Z",
+            "1",
+            "H",
+            "C"
+        ]
+    },
+    {
+        "opcode": 255,
+        "mnemonic": "RST 38H",
+        "bytes": "1",
+        "cycles": "16",
+        "flags": [
+            "-",
+            "-",
+            "-",
+            "-"
+        ]
+    }
+]
