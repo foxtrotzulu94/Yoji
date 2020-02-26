@@ -58,12 +58,20 @@ class Operand:
         return Operand(reg, 1, Addressing.RegisterPlusImmediate)
 
     @staticmethod
+    def regInc(reg, width=1):
+        return Operand(reg, width, Addressing.RegisterIncrement)
+
+    @staticmethod
+    def regDec(reg, width=1):
+        return Operand(reg, width, Addressing.RegisterDecrement)
+
+    @staticmethod
     def imm(width):
         return Operand(None, width, Addressing.Immediate)
 
     @staticmethod
     def mem(width):
-        return Operand(reg, width, Addressing.Direct)
+        return Operand(None, width, Addressing.Direct)
 
     def can_set_value(self):
         """Checks if this operand can be used to set value"""
@@ -133,8 +141,10 @@ class Operand:
             else:
                 cpu.set_register(new_value, self._register, self.width)
         def reg_indirect():
+            #TODO: handle sign extension for self.width==1
             mem_bus.WriteWorkRAM(register(), value)
         def direct():
+            #TODO: handle sign extension for self.width==1
             mem_bus.WriteWorkRAM(location, value)
         def indirect():
             indirect_loc = mem_bus.ReadWorkRAM(location, self.width)
@@ -164,7 +174,7 @@ class Operand:
         formatter = "0x{0:02X}" if self.width == 1 else "0x{0:04X}"
         val = int.from_bytes(mem_bus.ReadWorkRAM(address, self.width), 'big')
         base = formatter.format(val)
-        return base if self._mode == Addressing.Immediate else ("(%s) => %s" % base, int.from_bytes(mem_bus.ReadWorkRAM(val, self.width), 'big'))
+        return base if self._mode == Addressing.Immediate else ("({})".format(base))
     #end
 
     def __eq__(self, other):
@@ -186,6 +196,9 @@ class Operand:
             return GetRegisterName(self._register, self.width)
         elif self._mode == Addressing.RegisterIndirect:
             return "(%s)" % GetRegisterName(self._register, self.width)
+        elif self._mode == Addressing.RegisterDecrement or self._mode == Addressing.RegisterIncrement:
+            symbol = '+' if Addressing.RegisterIncrement else '-'
+            return "({}{})".format(GetRegisterName(self._register, self.width), symbol)
         elif self._mode == Addressing.Direct:
             return "(addr)"
 
@@ -234,6 +247,16 @@ class Instruction:
         dest = None if dest_op is None else dest_op.get_value(cpu, mem_bus, location)
         src = None if src_op is None else src_op.get_value(cpu, mem_bus, location)
         return (dest, src)
+    #end
+
+    def _get_operand(self, index, cpu, mem_bus, location):
+        if self._operands is None or self._operands[index] is None:
+            return None
+        val = self._operands[index].get_value(cpu, mem_bus, location)
+        # this only works because of little-endian implementation, specifically:
+        # if the lowest memory address was mapped to the LSB, then if we expect only 1 byte-width, but retrieved 2, we'll get the data address we expect
+        return (val & 0xFF) if self._result_size == 1 else (val & 0xFFFF)
+    #end
 
     def _set_flags(self, cpu, raw_result, result, destination, source):
         """Internally sets the CPU flags """
@@ -274,7 +297,8 @@ class Instruction:
             return None
 
         #Get the operands
-        dest, source = self._get_operands(cpu, mem_bus, location)
+        get_operands = lambda idx: self._get_operand(idx, cpu, mem_bus, location)
+        dest, source = get_operands(0), get_operands(1)
 
         # Do the thing and box the result!
         raw_result = self._action(cpu, dest, source)
@@ -305,9 +329,14 @@ class Instruction:
         return self._get_mnemonic()
 
     @property
-    def Length(self):
+    def Size(self):
         """ Gets the length of the instruction in bytes """
         return self._size
+
+    @property
+    def Cycles(self):
+        """ Gets the cycle count for the instruction """
+        return self._cycles
 
     def is_complete(self):
         return self._action is not None
@@ -333,10 +362,10 @@ class Instruction:
         """
         # Returns something like
         # "0x0D  LD SP,d16      2byte, 4cycle"
-        return "0x{0:04X} 0x{1:<8X}   {2:12}".format(
+        return "0x{0:04X}    0x{1:<4X}   {2:12}".format(
             address,
             self._opcode,
-            self._get_mnemonic(mem_bus, address)
+            self._get_mnemonic(mem_bus, address+1)
         )
 
     def __str__(self):

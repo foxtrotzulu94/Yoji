@@ -89,9 +89,18 @@ def translate_operand(operand):
     if operand is None:
         return 'None'
 
+    # if '(' in operand:
+    #     print(operand)
+
     is_memory_access = '(' in operand and ')' in operand
     is_special_case = "SP" in operand and "+" in operand and not is_memory_access
+    is_post_increment = is_memory_access and "+" in operand
+    is_post_decrement = is_memory_access and "-" in operand
     is_constant = (operand.isdigit() and len(operand) == 1) or (operand.endswith('H') and len(operand) > 1)
+
+    # strip characters out
+    remove_map = str.maketrans({x:None for x in '()+-'})
+    operand = operand.translate(remove_map)
 
     if is_constant:
         # TODO: Handle constants!
@@ -106,8 +115,14 @@ def translate_operand(operand):
             # this is a pretty special operand that we'd rather deal with separately
             return "Operand.regI(Registers.SP)"
 
-        # General case:
-        op_txt = "Operand.regi(Registers.{}, {})" if is_memory_access else "Operand.reg(Registers.{}, {})"
+        # General case: Register Addressing
+        op_txt = "Operand.reg(Registers.{}, {})"
+        if is_post_increment:
+            op_txt = "Operand.regInc(Registers.{}, {})"
+        elif is_post_decrement:
+            op_txt = "Operand.regDec(Registers.{}, {})"
+        elif is_memory_access:
+            op_txt = "Operand.regi(Registers.{}, {})"
         return op_txt.format(operand, len(operand))
 #end
 

@@ -1,6 +1,6 @@
 from .cpu_types import *
 from .instructions import Instruction
-from .known_instructions import known_instructions
+from .known_instructions import known_instructions, cb_prefix
 
 class CPU:
     """
@@ -16,11 +16,11 @@ class CPU:
 
         self._curr_inst = None
         self._curr_result = None
+        self._cycles_left = -1
 
         # Technically, we can just use array indices to find it since known_instructions should be implemented as an ordered list
-        # but we haven't really implemented the CB prefixes and this makes it easier to detect what opcodes we're missing since we'd get a KeyError
-        #
         self.__opcode_map = { x.Opcode: x for x in known_instructions }
+        self.__opcode_map[0xCB] = { x.Opcode: x for x in cb_prefix }
     # end init
 
     ### Bit Flag methods ###
@@ -106,12 +106,26 @@ class CPU:
     h = property(_generate_get_flag(Flag.h), _generate_set_flag(Flag.h), None, "The Half Carry bit flag")
     c = property(_generate_get_flag(Flag.c), _generate_set_flag(Flag.c), None, "The Carry bit flag")
 
+    def _get_next_instruction(self):
+        opcode = self.__memory_bus.ReadWorkRAM(self.PC, 1)
+        instr = self.__opcode_map[int.from_bytes(opcode, 'big')]
+        if type(instr) is not Instruction:
+            opcode = self.__memory_bus.ReadWorkRAM(self.PC+1, 1)
+            instr = instr[int.from_bytes(opcode, 'big')]
+
+        self._curr_inst = instr
+    #end
+
+    def _execute_instruction(self):
+        location = self.PC + 1
+        self._curr_result = self._curr_inst.execute(self, self.__memory_bus, location)
+    #end
+
     def Step(self):
-        "Executes the next instruction and stores the result"
+        "Executes the next instruction immediately"
 
         # Instruction Fetch, Decode
-        opcode = self.__memory_bus.ReadWorkRAM(self.PC, 1)
-        self._curr_inst = self.__opcode_map[int.from_bytes(opcode, 'big')]
+        self._get_next_instruction()
 
         # Instruction Execute
         location = self.PC + 1
@@ -119,21 +133,38 @@ class CPU:
 
         # Writeback
         self._curr_inst.writeback(self, self.__memory_bus, location, self._curr_result)
-        self.PC += self._curr_inst.Length + 1
+        self.PC += self._curr_inst.Size
     #end Step
+
+    def Tick(self):
+        "Executes instructions to the tick of a clock"
+
+        self._cycles_left -= 1
+        if self._cycles_left > 0:
+            return
+
+        # 3. Writeback
+        if self._cycles_left == 0 and self._curr_inst is not None:
+            # If we have an instruction, do the writeback step in the last possible cycle
+            # this is to avoid any weird timing issues w.r.t the Memory bus
+            self._curr_inst.writeback(self, self.__memory_bus, self.PC + 1, self._curr_result)
+            self.PC += self._curr_inst.Size
+
+        self._get_next_instruction() # 1. Instruction Fetch, Decode
+        self._execute_instruction()  # 2. Execute
+
+        self._cycles_left = self._curr_inst.Cycles - 1
+    #end Tick
 
     # TODO: Tick method
 
     def Dump(self, move_forward = True):
         "Dumps the current CPU instruction about to be executed"
 
-        # Instruction Fetch
-        opcode = self.__memory_bus.ReadWorkRAM(self.PC, 1)
-
-        # Decode and dump
-        instruction = self.__opcode_map[int.from_bytes(opcode, 'big')]
-        print(instruction.ToString(self.__memory_bus, self.PC+1))
+        # Fetch, Decode and dump
+        self._get_next_instruction()
+        print(self._curr_inst.ToString(self.__memory_bus, self.PC))
 
         if move_forward:
-            self.PC += instruction.Length + 1
+            self.PC += max(self._curr_inst.Size, 1)
     #end dump
