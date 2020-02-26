@@ -349,7 +349,7 @@ known_instructions = [
         flags=None,
         operands = ( None, Operand.imm(1) ),
         executor = None),
-        
+
     Instruction(
         0x31, "LD SP,d16", bus_width=2,
         byte_size=3, cycles=12,
@@ -2634,7 +2634,7 @@ cb_prefix = [
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
         operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
-        
+
     Instruction(
         0x77, "BIT 6,A", bus_width=1,
         byte_size=2, cycles=8,

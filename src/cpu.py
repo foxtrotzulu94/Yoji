@@ -51,7 +51,7 @@ class CPU:
     def set_register(self, value, offset, length):
         """ Set method for regular registers """
         if type(value) is int:
-            value = bytearray(value.to_bytes(length, 'big'))
+            value = bytearray(value.to_bytes(length, 'little'))
         self.__registers[offset : offset+length] = value
 
     def _generate_get_register(offset, length = 1):
@@ -123,6 +123,8 @@ class CPU:
 
     def Step(self):
         "Executes the next instruction immediately"
+
+        self.Dump(False)
 
         # Instruction Fetch, Decode
         self._get_next_instruction()

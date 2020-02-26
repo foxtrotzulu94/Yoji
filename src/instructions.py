@@ -78,6 +78,11 @@ class Operand:
         return self._mode != Addressing.Immediate and self._mode != Addressing.RegisterPlusImmediate \
             and self._mode != Addressing.Bit and self._mode != Addressing.Constant
 
+    def _get_register(self, cpu):
+        if self._register < 0:
+            return cpu.SP if self._register == Registers.SP else cpu.PC
+        return cpu.get_register(self._register, self.width)
+
     def get_value(self, cpu, mem_bus, location):
         "Gets the value of the operand"
 
@@ -85,13 +90,23 @@ class Operand:
         def immediate():
             return mem_bus.ReadWorkRAM(location, self.width)
         def register():
-            if self._register < 0:
-                return cpu.SP if self._register == Registers.SP else cpu.PC
-            return cpu.get_register(self._register, self.width)
+            return self._get_register(cpu)
         def register_post():
             value = register()
-            # the set will increment/decrement as needed
-            self.set_value(cpu, mem_bus, location, value)
+            if type(value) is bytearray:
+                value = int.from_bytes(value,'little')
+
+            #Set the new value immediately
+            new_value = value + 1 if self._mode == Addressing.RegisterIncrement else value - 1
+            if self._register < 0:
+                if self._register == Registers.SP:
+                    cpu.SP = new_value
+                else:
+                    cpu.PC = new_value
+            else:
+                cpu.set_register(new_value, self._register, self.width)
+            #end if-else
+
             return value
         def register_w_immediate():
             return register() + immediate()
@@ -114,7 +129,7 @@ class Operand:
 
         retVal = value_map[self._mode]()
         if type(retVal) is bytearray:
-            retVal = int.from_bytes(retVal, 'big')
+            retVal = int.from_bytes(retVal, 'little')
         return retVal
     #end get_value
 
@@ -131,18 +146,15 @@ class Operand:
                     cpu.PC = value
             else:
                 cpu.set_register(value, self._register, self.width)
-        def register_post():
-            new_value = value + 1 if self._mode == Addressing.RegisterIncrement else value - 1
-            if self._register < 0:
-                if self._register == Registers.SP:
-                    cpu.SP = new_value
-                else:
-                    cpu.PC = new_value
-            else:
-                cpu.set_register(new_value, self._register, self.width)
         def reg_indirect():
             #TODO: handle sign extension for self.width==1
-            mem_bus.WriteWorkRAM(register(), value)
+            wb_v = value
+            if type(wb_v) is int:
+                # Note that it seems all register indirect instructions write a single byte back to memory
+                # only LD (a16),SP seems to ever write 2 bytes in an indirection to memory
+                wb_v = value.to_bytes(1, 'little')
+
+            mem_bus.WriteWorkRAM(self._get_register(cpu), wb_v)
         def direct():
             #TODO: handle sign extension for self.width==1
             mem_bus.WriteWorkRAM(location, value)
@@ -153,8 +165,8 @@ class Operand:
         value_map = {
             Addressing.Immediate: immediate,
             Addressing.Register: register,
-            Addressing.RegisterIncrement: register_post,
-            Addressing.RegisterDecrement: register_post,
+            Addressing.RegisterIncrement: reg_indirect,
+            Addressing.RegisterDecrement: reg_indirect,
             Addressing.RegisterPlusImmediate: immediate,
             Addressing.RegisterIndirect: reg_indirect,
             Addressing.Direct: direct,
@@ -172,7 +184,7 @@ class Operand:
             return self.__str__()
 
         formatter = "0x{0:02X}" if self.width == 1 else "0x{0:04X}"
-        val = int.from_bytes(mem_bus.ReadWorkRAM(address, self.width), 'big')
+        val = int.from_bytes(mem_bus.ReadWorkRAM(address, self.width), 'little')
         base = formatter.format(val)
         return base if self._mode == Addressing.Immediate else ("({})".format(base))
     #end
@@ -197,7 +209,7 @@ class Operand:
         elif self._mode == Addressing.RegisterIndirect:
             return "(%s)" % GetRegisterName(self._register, self.width)
         elif self._mode == Addressing.RegisterDecrement or self._mode == Addressing.RegisterIncrement:
-            symbol = '+' if Addressing.RegisterIncrement else '-'
+            symbol = '+' if self._mode == Addressing.RegisterIncrement else '-'
             return "({}{})".format(GetRegisterName(self._register, self.width), symbol)
         elif self._mode == Addressing.Direct:
             return "(addr)"
@@ -294,6 +306,7 @@ class Instruction:
         """ Runs the instruction action on the known operands and returns the result """
         # quick check
         if self._action is None:
+            raise NotImplementedError("The instruction is not implemented yet!\n\t{}".format(self.ToString(mem_bus, location-1)))
             return None
 
         #Get the operands

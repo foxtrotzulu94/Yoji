@@ -11,7 +11,11 @@ class MemoryBus:
 
     def WriteWorkRAM(self, offset, data):
         "WIP"
-        self._work_ram[offset:len(data)] = data
+        if type(offset) is bytearray:
+            offset = int.from_bytes(offset, 'little')
+
+        length = len(data)
+        self._work_ram[offset:length] = data
 
     def EmplaceROMData(self, data):
         """[Temporary]"""
