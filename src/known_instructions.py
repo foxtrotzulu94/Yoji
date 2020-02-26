@@ -34,7 +34,7 @@ known_instructions = [
         flags=None,
         operands = ( Operand.reg(Registers.BC, 2), Operand.reg(Registers.BC, 2) ),
         executor = Increment),
-        
+
     Instruction(
         0x04, "INC B", bus_width=1,
         byte_size=1, cycles=4,
@@ -120,10 +120,10 @@ known_instructions = [
         executor = RotateRightWithCarry),
         
     Instruction(
-        0x10, "STOP 0", bus_width=1,
-        byte_size=2, cycles=4,
+        0x10, "STOP", bus_width=1,
+        byte_size=1, cycles=4,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1404,7 +1404,7 @@ known_instructions = [
         0xC7, "RST 00H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1460,7 +1460,7 @@ known_instructions = [
         0xCF, "RST 08H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1516,7 +1516,7 @@ known_instructions = [
         0xD7, "RST 10H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1572,7 +1572,7 @@ known_instructions = [
         0xDF, "RST 18H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1591,7 +1591,7 @@ known_instructions = [
         
     Instruction(
         0xE2, "LD (C),A", bus_width=1,
-        byte_size=2, cycles=8,
+        byte_size=1, cycles=8,
         flags=None,
         operands = ( None, Operand.reg(Registers.A, 1) ),
         executor = Load),
@@ -1628,7 +1628,7 @@ known_instructions = [
         0xE7, "RST 20H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1684,7 +1684,7 @@ known_instructions = [
         0xEF, "RST 28H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1703,7 +1703,7 @@ known_instructions = [
         
     Instruction(
         0xF2, "LD A,(C)", bus_width=1,
-        byte_size=2, cycles=8,
+        byte_size=1, cycles=8,
         flags=None,
         operands = ( Operand.reg(Registers.A, 1), None ),
         executor = Load),
@@ -1740,7 +1740,7 @@ known_instructions = [
         0xF7, "RST 30H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
     Instruction(
@@ -1796,7 +1796,7 @@ known_instructions = [
         0xFF, "RST 38H", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = None,
         executor = None),
         
 ]

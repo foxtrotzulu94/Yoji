@@ -209,8 +209,8 @@
     },
     {
         "opcode": 16,
-        "mnemonic": "STOP 0",
-        "bytes": "2",
+        "mnemonic": "STOP",
+        "bytes": "1",
         "cycles": "4",
         "flags": [
             "-",
@@ -2925,7 +2925,7 @@
     {
         "opcode": 226,
         "mnemonic": "LD (C),A",
-        "bytes": "2",
+        "bytes": "1",
         "cycles": "8",
         "flags": [
             "-",
@@ -3108,7 +3108,7 @@
     {
         "opcode": 242,
         "mnemonic": "LD A,(C)",
-        "bytes": "2",
+        "bytes": "1",
         "cycles": "8",
         "flags": [
             "-",
