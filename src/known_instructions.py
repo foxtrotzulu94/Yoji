@@ -25,7 +25,7 @@ known_instructions = [
         0x02, "LD (BC),A", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.regi(Registers.BC, 2), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -67,7 +67,7 @@ known_instructions = [
         0x08, "LD (a16),SP", bus_width=2,
         byte_size=3, cycles=20,
         flags=None,
-        operands = ( None, Operand.reg(Registers.SP, 2) ),
+        operands = ( Operand.mem(2), Operand.reg(Registers.SP, 2) ),
         executor = Load),
         
     Instruction(
@@ -81,7 +81,7 @@ known_instructions = [
         0x0A, "LD A,(BC)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regi(Registers.BC, 2) ),
         executor = Load),
         
     Instruction(
@@ -137,7 +137,7 @@ known_instructions = [
         0x12, "LD (DE),A", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.regi(Registers.DE, 2), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -193,7 +193,7 @@ known_instructions = [
         0x1A, "LD A,(DE)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regi(Registers.DE, 2) ),
         executor = Load),
         
     Instruction(
@@ -249,7 +249,7 @@ known_instructions = [
         0x22, "LD (HL+),A", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.regInc(Registers.HL, 2), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -305,7 +305,7 @@ known_instructions = [
         0x2A, "LD A,(HL+)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regInc(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -361,7 +361,7 @@ known_instructions = [
         0x32, "LD (HL-),A", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.regDec(Registers.HL, 2), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -375,21 +375,21 @@ known_instructions = [
         0x34, "INC (HL)", bus_width=1,
         byte_size=1, cycles=12,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = Increment),
         
     Instruction(
         0x35, "DEC (HL)", bus_width=1,
         byte_size=1, cycles=12,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = Decrement),
         
     Instruction(
         0x36, "LD (HL),d8", bus_width=1,
         byte_size=2, cycles=12,
         flags=None,
-        operands = ( None, Operand.imm(1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.imm(1) ),
         executor = Load),
         
     Instruction(
@@ -417,7 +417,7 @@ known_instructions = [
         0x3A, "LD A,(HL-)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regDec(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -501,7 +501,7 @@ known_instructions = [
         0x46, "LD B,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.B, 1), None ),
+        operands = ( Operand.reg(Registers.B, 1), Operand.regi(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -557,7 +557,7 @@ known_instructions = [
         0x4E, "LD C,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.C, 1), None ),
+        operands = ( Operand.reg(Registers.C, 1), Operand.regi(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -613,7 +613,7 @@ known_instructions = [
         0x56, "LD D,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.D, 1), None ),
+        operands = ( Operand.reg(Registers.D, 1), Operand.regi(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -669,7 +669,7 @@ known_instructions = [
         0x5E, "LD E,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.E, 1), None ),
+        operands = ( Operand.reg(Registers.E, 1), Operand.regi(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -725,7 +725,7 @@ known_instructions = [
         0x66, "LD H,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.H, 1), None ),
+        operands = ( Operand.reg(Registers.H, 1), Operand.regi(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -781,7 +781,7 @@ known_instructions = [
         0x6E, "LD L,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.L, 1), None ),
+        operands = ( Operand.reg(Registers.L, 1), Operand.regi(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -795,42 +795,42 @@ known_instructions = [
         0x70, "LD (HL),B", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.B, 1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.reg(Registers.B, 1) ),
         executor = Load),
         
     Instruction(
         0x71, "LD (HL),C", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.C, 1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.reg(Registers.C, 1) ),
         executor = Load),
         
     Instruction(
         0x72, "LD (HL),D", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.D, 1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.reg(Registers.D, 1) ),
         executor = Load),
         
     Instruction(
         0x73, "LD (HL),E", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.E, 1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.reg(Registers.E, 1) ),
         executor = Load),
         
     Instruction(
         0x74, "LD (HL),H", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.H, 1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.reg(Registers.H, 1) ),
         executor = Load),
         
     Instruction(
         0x75, "LD (HL),L", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.L, 1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.reg(Registers.L, 1) ),
         executor = Load),
         
     Instruction(
@@ -844,7 +844,7 @@ known_instructions = [
         0x77, "LD (HL),A", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -893,7 +893,7 @@ known_instructions = [
         0x7E, "LD A,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regi(Registers.HL, 2) ),
         executor = Load),
         
     Instruction(
@@ -949,7 +949,7 @@ known_instructions = [
         0x86, "ADD A,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regi(Registers.HL, 2) ),
         executor = Add),
         
     Instruction(
@@ -1005,7 +1005,7 @@ known_instructions = [
         0x8E, "ADC A,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regi(Registers.HL, 2) ),
         executor = AddWithCarry),
         
     Instruction(
@@ -1061,7 +1061,7 @@ known_instructions = [
         0x96, "SUB (HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = Subtract),
         
     Instruction(
@@ -1117,7 +1117,7 @@ known_instructions = [
         0x9E, "SBC A,(HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regi(Registers.HL, 2) ),
         executor = SubWithCarry),
         
     Instruction(
@@ -1173,7 +1173,7 @@ known_instructions = [
         0xA6, "AND (HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Reset },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = BinAnd),
         
     Instruction(
@@ -1229,7 +1229,7 @@ known_instructions = [
         0xAE, "XOR (HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = BinXor),
         
     Instruction(
@@ -1285,7 +1285,7 @@ known_instructions = [
         0xB6, "OR (HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = BinOr),
         
     Instruction(
@@ -1341,7 +1341,7 @@ known_instructions = [
         0xBE, "CP (HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = Compare),
         
     Instruction(
@@ -1579,7 +1579,7 @@ known_instructions = [
         0xE0, "LDH (a8),A", bus_width=1,
         byte_size=2, cycles=12,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.mem(1), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -1593,7 +1593,7 @@ known_instructions = [
         0xE2, "LD (C),A", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.regi(Registers.C, 1), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -1642,14 +1642,14 @@ known_instructions = [
         0xE9, "JP (HL)", bus_width=1,
         byte_size=1, cycles=4,
         flags=None,
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
         0xEA, "LD (a16),A", bus_width=1,
         byte_size=3, cycles=16,
         flags=None,
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.mem(2), Operand.reg(Registers.A, 1) ),
         executor = Load),
         
     Instruction(
@@ -1691,7 +1691,7 @@ known_instructions = [
         0xF0, "LDH A,(a8)", bus_width=1,
         byte_size=2, cycles=12,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.mem(1) ),
         executor = Load),
         
     Instruction(
@@ -1705,7 +1705,7 @@ known_instructions = [
         0xF2, "LD A,(C)", bus_width=1,
         byte_size=1, cycles=8,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.regi(Registers.C, 1) ),
         executor = Load),
         
     Instruction(
@@ -1761,7 +1761,7 @@ known_instructions = [
         0xFA, "LD A,(a16)", bus_width=1,
         byte_size=3, cycles=16,
         flags=None,
-        operands = ( Operand.reg(Registers.A, 1), None ),
+        operands = ( Operand.reg(Registers.A, 1), Operand.mem(2) ),
         executor = Load),
         
     Instruction(
@@ -1848,7 +1848,7 @@ cb_prefix = [
         0x06, "RLC (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
@@ -1904,7 +1904,7 @@ cb_prefix = [
         0x0E, "RRC (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = RotateRightWithCarry),
         
     Instruction(
@@ -1960,7 +1960,7 @@ cb_prefix = [
         0x16, "RL (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = RotateLeft),
         
     Instruction(
@@ -2016,7 +2016,7 @@ cb_prefix = [
         0x1E, "RR (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = RotateRight),
         
     Instruction(
@@ -2072,7 +2072,7 @@ cb_prefix = [
         0x26, "SLA (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2128,7 +2128,7 @@ cb_prefix = [
         0x2E, "SRA (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2184,7 +2184,7 @@ cb_prefix = [
         0x36, "SWAP (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2240,7 +2240,7 @@ cb_prefix = [
         0x3E, "SRL (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = ( None, None ),
+        operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2296,7 +2296,7 @@ cb_prefix = [
         0x46, "BIT 0,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2352,7 +2352,7 @@ cb_prefix = [
         0x4E, "BIT 1,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2408,7 +2408,7 @@ cb_prefix = [
         0x56, "BIT 2,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2464,7 +2464,7 @@ cb_prefix = [
         0x5E, "BIT 3,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2520,7 +2520,7 @@ cb_prefix = [
         0x66, "BIT 4,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2576,7 +2576,7 @@ cb_prefix = [
         0x6E, "BIT 5,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2632,7 +2632,7 @@ cb_prefix = [
         0x76, "BIT 6,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2688,7 +2688,7 @@ cb_prefix = [
         0x7E, "BIT 7,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Set, Flag.c:Bit.Ignore },
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -2744,7 +2744,7 @@ cb_prefix = [
         0x86, "RES 0,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -2800,7 +2800,7 @@ cb_prefix = [
         0x8E, "RES 1,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -2856,7 +2856,7 @@ cb_prefix = [
         0x96, "RES 2,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -2912,7 +2912,7 @@ cb_prefix = [
         0x9E, "RES 3,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -2968,7 +2968,7 @@ cb_prefix = [
         0xA6, "RES 4,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -3024,7 +3024,7 @@ cb_prefix = [
         0xAE, "RES 5,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -3080,7 +3080,7 @@ cb_prefix = [
         0xB6, "RES 6,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -3136,7 +3136,7 @@ cb_prefix = [
         0xBE, "RES 7,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = Reset),
         
     Instruction(
@@ -3192,7 +3192,7 @@ cb_prefix = [
         0xC6, "SET 0,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -3248,7 +3248,7 @@ cb_prefix = [
         0xCE, "SET 1,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -3304,7 +3304,7 @@ cb_prefix = [
         0xD6, "SET 2,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -3360,7 +3360,7 @@ cb_prefix = [
         0xDE, "SET 3,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -3416,7 +3416,7 @@ cb_prefix = [
         0xE6, "SET 4,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -3472,7 +3472,7 @@ cb_prefix = [
         0xEE, "SET 5,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -3528,7 +3528,7 @@ cb_prefix = [
         0xF6, "SET 6,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
@@ -3584,7 +3584,7 @@ cb_prefix = [
         0xFE, "SET 7,(HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags=None,
-        operands = ( None, None ),
+        operands = ( None, Operand.regi(Registers.HL, 2) ),
         executor = None),
         
     Instruction(
