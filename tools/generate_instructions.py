@@ -50,18 +50,41 @@ mnemonic_map = {
     'XOR':'BinXor',
 }
 
+# Key is instructions, Value is writeback register
+# When none, Writeback scenario is not supported
+# When key==value, writeback to location
+unary_instructions = {
+    'ADC': 'A',
+    'ADD': 'A',
+    'AND': 'A',
+    'CALL': None,
+    'CP': None,
+    'DEC': 'DEC',
+    'INC': 'INC',
+    'JP': None,
+    'JR': None,
+    'OR': 'A',
+    'POP': 'POP',
+    'PREFIX': None,
+    'PUSH': None,
+    'RET': None,
+    'RL': 'RL',
+    'RLC': 'RLC',
+    'RR': 'RR',
+    'RRC': 'RRC',
+    'RST': None,
+    'SBC': 'SBC',
+    'SLA': 'SLA',
+    'SRA': 'SRA',
+    'SRL': 'SRL',
+    'SUB': 'A',
+    'SWAP': 'SWAP',
+    'XOR': 'A',
+}
+
 flag_operands = { 'NZ', 'Z', 'NC', 'C' }
 immediate_operands = {'d8', 'd16', 'a8', 'a16', 'r8'}
 register_operands = {'A', 'F', 'B', 'C', 'D', 'E', 'H', 'L', 'AF', 'BC', 'DE', 'HL', 'SP', 'PC'}
-unary_map = {
-    'AND': 'A',
-    'OR': 'A',
-    'XOR': 'A',
-    'RRA': 'A',
-    'RRCA': 'A',
-    'RLA': 'A',
-    'RLCA': 'A',
-}
 
 def translate_flags(instr):
     if instr.flags is None:
@@ -131,7 +154,7 @@ def translate_operand(operand):
         # this is a pretty special operand that I'd rather deal with as a one-off
         return "Operand.regI(Registers.SP)"
     elif operand == 'CB':
-        return None
+        return 'None'
 
     raise NotImplementedError("Operand {} is not implemented!".format(operand))
 #end
@@ -152,8 +175,16 @@ def translate_operands(instr):
             dst, src = op_tks.split(',')
         else:
             # Unary instruction
-            # TODO:this is where we need to check if destination is accumulator or the source!
-            dst = src = op_tks
+            base = tokens[0]
+            assert(base in unary_instructions)
+
+            writeback_reg = unary_instructions[base]
+            if writeback_reg == base:
+                dst = src = op_tks
+            else:
+                dst = writeback_reg
+                src = op_tks
+        #end if-else
 
         # now translate the operands
         dst_text = translate_operand(dst)
