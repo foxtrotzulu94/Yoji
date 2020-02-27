@@ -10,6 +10,7 @@ class CPU:
     def __init__(self, mem_bus):
         self.__program_counter = 0
         self.__stack_ptr = 0
+        self.__stack_size = 0
         self.__registers = bytearray(2 * 4)
 
         self.__memory_bus = mem_bus
@@ -83,6 +84,27 @@ class CPU:
     @SP.setter
     def SP(self, value):
         self.__stack_ptr = value
+
+    # HACK: The stack operations need access to memory
+    # Right now, the way this fits in the instruction machinery makes it complicated and wrong
+    # but when executing instructions, we have a handle back to the CPU, so just use it here directly.
+    def PushStack(self, value):
+        self.__memory_bus.WriteWorkRAM(self.SP, value.to_bytes(2, 'little'))
+        self.__stack_size += 1
+        self.SP -= 2
+    def PeekStack(self):
+        if self.__stack_size == 0:
+            return 0
+
+        return self.__memory_bus.ReadWorkRAM(self.SP+2, 2)
+    def PopStack(self):
+        assert(self.__stack_size > 0)
+        top = self.PeekStack()
+        self.SP += 2
+        self.__stack_size -= 1
+        return int.from_bytes(top, 'little')
+    #end
+
 
     ## Registers ##
     # 8-BIT WIDTH #
@@ -158,8 +180,6 @@ class CPU:
         self._cycles_left = self._curr_inst.Cycles - 1
     #end Tick
 
-    # TODO: Tick method
-
     def Dump(self, move_forward = True):
         "Dumps the current CPU instruction about to be executed"
 
@@ -170,3 +190,31 @@ class CPU:
         if move_forward:
             self.PC += max(self._curr_inst.Size, 1)
     #end dump
+
+    def executeArbitraryInstruction(self, opcode):
+        """ solely for debugging purposes """
+        instr = None
+
+        # Instruction decode
+        if type(opcode) is int:
+            instr = self.__opcode_map[opcode]
+            if (opcode & 0xFF00) == 0xCB00:
+                opcode = (opcode >> 8)
+                instr = self.__opcode_map[0xcb][opcode]
+        elif type(opcode) is str:
+            # This is pretty darn slow...
+            matching = [ x for x in known_instructions+cb_prefix if x.Mnemonic == opcode ]
+            if len(matching) < 1:
+                raise KeyError("Mnemonic not found!")
+            instr = matching[0]
+        #end
+
+        # Instruction Execute
+        location = self.PC + 1
+        print(instr.ToString(self.__memory_bus, self.PC))
+        result = instr.execute(self, self.__memory_bus, location)
+
+        # Writeback
+        instr.writeback(self, self.__memory_bus, location, result)
+    #end
+

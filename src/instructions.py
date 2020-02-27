@@ -179,13 +179,12 @@ class Operand:
             else:
                 cpu.set_register(value, self._register, self.width)
         def reg_indirect():
-            #TODO: handle sign extension for self.width==1
             wb_v = value
             if type(wb_v) is int:
-                # Note that it seems all register indirect instructions write a single byte back to memory
-                # only LD (a16),SP seems to ever write 2 bytes in an indirection to memory
-                wb_v = value.to_bytes(1, 'little')
+                num_bytes = 1 if self._register != Registers.SP else 2
+                wb_v = value.to_bytes(num_bytes, 'little')
 
+            #TODO: handle sign extension for self.width==1
             mem_bus.WriteWorkRAM(self._get_register(cpu), wb_v)
         def direct():
             #TODO: handle sign extension for self.width==1
@@ -243,7 +242,7 @@ class Operand:
         elif self._mode == Addressing.Direct:
             return "(addr)"
         elif self._mode == Addressing.Constant:
-            return "{:X}H".format(self._register)
+            return "{:X}H".format(self._register) if self._register > 7 else str(self._register)
         elif self._mode == Addressing.Bit:
             name = self._register.name.upper()
             return name if self._bit_state == Bit.Set else "N"+name
@@ -446,7 +445,7 @@ class Instruction:
 # See http://z80-heaven.wikidot.com/ for more detailed info
 
 def NoOp(cpu, destination, source):
-    return None
+    return 0
 def Reset(cpu, destination, source):
     return 0
 #end
@@ -480,27 +479,27 @@ BinOr = _from_operator(operator.or_)
 BinXor = _from_operator(operator.xor)
 BinAnd = _from_operator(operator.and_)
 
-def Increment(cpu, destination, source):
+def Increment(cpu, unused, source):
     return source + 1
-def Decrement(cpu, destination, source):
+def Decrement(cpu, unused, source):
     return source - 1
 #end
 
-def RotateLeft(cpu, destination, source):
+def RotateLeft(cpu, unused, source):
     """ From z80 Heaven:
     9-bit rotation to the left, the register's bits are shifted left.
     The carry value is put into 0th bit of the register, and the leaving 7th bit is put into the carry.
     """
     # Note: in our implementation Carry is set if the 9th bit (bit 8) is set
     return (source << 1) | cpu.C
-def RotateLeftWithCarry(cpu, destination, source):
+def RotateLeftWithCarry(cpu, unused, source):
     """ From z80 Heaven:
     8-bit rotation to the left. The bit leaving on the left is copied into the carry, and to bit 0.
     """
     return (source << 1) | (source >> 7)
 #end
 
-def RotateRight(cpu, destination, source):
+def RotateRight(cpu, unused, source):
     """ From z80 Heaven:
     9-bit rotation to the right.
     The carry is copied into bit 7, and the bit leaving on the right is copied into the carry.
@@ -511,7 +510,7 @@ def RotateRight(cpu, destination, source):
     # B: Move the least signifcant bit up to the bit 8. This will ensure to set/reset the carry bit later in Instructions._set_flags method
     # C: Put the carry bit in bit 7
     return (source >> 1) | ((source & 1) << 8) | (cpu.C << 7)
-def RotateRightWithCarry(cpu, destination, source):
+def RotateRightWithCarry(cpu, unused, source):
     """ From z80 Heaven:
     8-bit rotation to the right. the bit leaving on the right is copied into the carry, and into bit 7.
     """
@@ -519,10 +518,26 @@ def RotateRightWithCarry(cpu, destination, source):
     return (source >> 1) | ((source & 1) << 8) | ((source & 1) << 7)
 #end
 
-def Load(cpu, destination, source):
+def Load(cpu, unused, source):
     # Just return the source, what matters for this one is the Write callback onto destination
     return source
 #end
+
+def CheckBit(cpu, bit, source):
+    return (source & (1 << bit)) == 1 << bit
+def SetBit(cpu, source, bit):
+    return source | (1 << bit)
+#
+
+def ComplementA(cpu, *unused):
+    # Fairly specific
+    cpu.A = (cpu.A ^ 0xFF) & 0xFF
+    return cpu.A
+def Push(cpu, unused, val):
+    cpu.PushStack(val)
+    return 0
+def Pop(cpu, *unused):
+    return cpu.PopStack()
 
 # TODO: implement rest of instructions (JP, Call, Push, Pop)
 def InstructionPrototype(cpu, destination, source):

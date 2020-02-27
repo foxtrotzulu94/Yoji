@@ -5,11 +5,11 @@ mnemonic_map = {
     'ADC':'AddWithCarry',
     'ADD':'Add',
     'AND':'BinAnd',
-    'BIT':None,
+    'BIT':'CheckBit',
     'CALL':None,
     'CCF':None,
     'CP':'Compare',
-    'CPL':None,
+    'CPL':'ComplementA',
     'DAA':None,
     'DEC':'Decrement',
     'DI':None,
@@ -23,9 +23,9 @@ mnemonic_map = {
     'LDH':'Load',
     'NOP':'NoOp',
     'OR':'BinOr',
-    'POP':None,
+    'POP':'Pop',
     'PREFIX':'InvalidInstruction',
-    'PUSH':None,
+    'PUSH':'Push',
     'RES':'Reset',
     'RET':None,
     'RETI':None,
@@ -40,7 +40,7 @@ mnemonic_map = {
     'RST':None,
     'SBC':'SubWithCarry',
     'SCF':None,
-    'SET':None,
+    'SET':'SetBit',
     'SLA':None,
     'SRA':None,
     'SRL':None,
@@ -85,6 +85,8 @@ unary_instructions = {
 flag_operands = { 'NZ', 'Z', 'NC', 'C' }
 immediate_operands = {'d8', 'd16', 'a8', 'a16', 'r8'}
 register_operands = {'A', 'F', 'B', 'C', 'D', 'E', 'H', 'L', 'AF', 'BC', 'DE', 'HL', 'SP', 'PC'}
+
+swap_operands = {'SET'}
 
 def translate_flags(instr):
     if instr.flags is None:
@@ -169,13 +171,13 @@ def translate_operands(instr):
         # No operands, just return None
         return 'None'
     else:
+        base = tokens[0]
         op_tks = tokens[1]
         src = dst = None
         if ',' in op_tks:
             dst, src = op_tks.split(',')
         else:
             # Unary instruction
-            base = tokens[0]
             assert(base in unary_instructions)
 
             writeback_reg = unary_instructions[base]
@@ -192,6 +194,11 @@ def translate_operands(instr):
 
         if dst_text == 'None' and src_text == dst_text:
             return 'None'
+
+        if base in swap_operands:
+            # A bit of a hack so we can have writeback
+            src_text, dst_text = dst_text, src_text
+
 
         return '( {}, {} )'.format(dst_text, src_text)
     #end else
