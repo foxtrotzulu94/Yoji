@@ -47,7 +47,7 @@ class CPU:
     ### Register Flag methods ###
     def get_register(self, offset, length):
         """ Get method for regular registers """
-        return self.__registers[offset : offset+length]
+        return int.from_bytes(self.__registers[offset : offset+length], 'little')
 
     def set_register(self, value, offset, length):
         """ Set method for regular registers """
@@ -89,14 +89,15 @@ class CPU:
     # Right now, the way this fits in the instruction machinery makes it complicated and wrong
     # but when executing instructions, we have a handle back to the CPU, so just use it here directly.
     def PushStack(self, value):
-        self.__memory_bus.WriteWorkRAM(self.SP, value.to_bytes(2, 'little'))
-        self.__stack_size += 1
+        converted = value.to_bytes(2, 'little')
         self.SP -= 2
+        self.__memory_bus.WriteWorkRAM(self.SP, converted)
+        self.__stack_size += 1
     def PeekStack(self):
         if self.__stack_size == 0:
             return 0
 
-        return self.__memory_bus.ReadWorkRAM(self.SP+2, 2)
+        return self.__memory_bus.ReadWorkRAM(self.SP, 2)
     def PopStack(self):
         assert(self.__stack_size > 0)
         top = self.PeekStack()
@@ -203,7 +204,7 @@ class CPU:
                 instr = self.__opcode_map[0xcb][opcode]
         elif type(opcode) is str:
             # This is pretty darn slow...
-            matching = [ x for x in known_instructions+cb_prefix if x.Mnemonic == opcode ]
+            matching = [ x for x in known_instructions+cb_prefix if x._mnemonic == opcode ]
             if len(matching) < 1:
                 raise KeyError("Mnemonic not found!")
             instr = matching[0]

@@ -118,8 +118,6 @@ class Operand:
             return self._get_register(cpu)
         def register_post():
             value = register()
-            if type(value) is bytearray:
-                value = int.from_bytes(value,'little')
 
             #Set the new value immediately
             new_value = value + 1 if self._mode == Addressing.RegisterIncrement else value - 1
