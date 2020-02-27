@@ -243,9 +243,10 @@ class Operand:
         elif self._mode == Addressing.Direct:
             return "(addr)"
         elif self._mode == Addressing.Constant:
-            return "%s H" % self._register
+            return "{:X}H".format(self._register)
         elif self._mode == Addressing.Bit:
-            return "%s" % self._register.name
+            name = self._register.name.upper()
+            return name if self._bit_state == Bit.Set else "N"+name
 
         return "Unsupported addressing mode operand"
     #end
@@ -400,7 +401,7 @@ class Instruction:
             src = str(self._operands[1]) if mem_bus is None else self._operands[1].ToString(mem_bus, addr)
 
         # TODO: handle mnemonics like "DEC C", "POP BC"
-        return "{} {}".format(base, dst) if dst == src else "{} {},{}".format(base, dst, src)
+        return "{} {}".format(base, src) if dst == src or dst is None else "{} {},{}".format(base, dst, src)
 
     def ToString(self, mem_bus, address):
         """
