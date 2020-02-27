@@ -50,6 +50,7 @@ mnemonic_map = {
     'XOR':'BinXor',
 }
 
+flag_operands = { 'NZ', 'Z', 'NC', 'C' }
 immediate_operands = {'d8', 'd16', 'a8', 'a16', 'r8'}
 register_operands = {'A', 'F', 'B', 'C', 'D', 'E', 'H', 'L', 'AF', 'BC', 'DE', 'HL', 'SP', 'PC'}
 unary_map = {
@@ -89,32 +90,30 @@ def translate_operand(operand):
     if operand is None:
         return 'None'
 
-    # if '(' in operand:
-    #     print(operand)
-
     is_memory_access = '(' in operand and ')' in operand
     is_special_case = "SP" in operand and "+" in operand and not is_memory_access
     is_post_increment = is_memory_access and "+" in operand
     is_post_decrement = is_memory_access and "-" in operand
-    is_constant = (operand.isdigit() and len(operand) == 1) or (operand.endswith('H') and len(operand) > 1)
+    is_constant = (operand.isdigit() and len(operand) == 1) or (operand.endswith('H') and len(operand) == 3)
 
     # strip characters out
     remove_map = str.maketrans({x:None for x in '()+-'})
     operand = operand.translate(remove_map)
 
     if is_constant:
-        # TODO: Handle constants!
-        return 'None'
+        # Hex constants like 00H
+        if operand.endswith('H'):
+            operand = operand[:-1]
+            return "Operand.const(0x{})".format(operand)
+
+        # Bit constant, which are just digits
+        return "Operand.const({})".format(operand)
     elif operand in immediate_operands:
         # bit of a hack ;)
         byte_length = len(operand) - 1
         op_txt = "Operand.mem({})" if is_memory_access else "Operand.imm({})"
         return op_txt.format(byte_length)
     elif operand in register_operands:
-        if is_special_case:
-            # this is a pretty special operand that we'd rather deal with separately
-            return "Operand.regI(Registers.SP)"
-
         # General case: Register Addressing
         op_txt = "Operand.reg(Registers.{}, {})"
         if is_post_increment:
@@ -124,6 +123,17 @@ def translate_operand(operand):
         elif is_memory_access:
             op_txt = "Operand.regi(Registers.{}, {})"
         return op_txt.format(operand, len(operand))
+    elif operand in flag_operands:
+        bit = operand[-1].lower()
+        state = "Bit.Set" if len(operand) == 1 else "Bit.Reset"
+        return "Operand.bit(Flag.{}, {})".format(bit, state)
+    elif is_special_case:
+        # this is a pretty special operand that I'd rather deal with as a one-off
+        return "Operand.regI(Registers.SP)"
+    elif operand == 'CB':
+        return None
+
+    raise NotImplementedError("Operand {} is not implemented!".format(operand))
 #end
 
 def translate_operands(instr):

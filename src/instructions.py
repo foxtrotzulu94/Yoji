@@ -41,9 +41,27 @@ class Operand:
     """
 
     def __init__(self, reg, width, addressing_mode):
-        self.width = width
+        # Always used
         self._mode = addressing_mode
+        self.width = width # 1 or 2 bytes
+
+        # used when operands constants, bits, register enums
         self._register = reg
+
+        # only used when bits are used to determine if we're checking set or reset bits
+        # which is why we provide a default value
+        self._bit_state = Bit.Ignore
+    #end
+
+    @staticmethod
+    def bit(offset, state):
+        op = Operand(offset, 1, Addressing.Bit)
+        op._bit_state = state
+        return op
+
+    @staticmethod
+    def const(value):
+        return Operand(value, 1, Addressing.Constant)
 
     @staticmethod
     def reg(reg, width=1):
@@ -86,7 +104,14 @@ class Operand:
     def get_value(self, cpu, mem_bus, location):
         "Gets the value of the operand"
 
+        # if we're retrieving a constant, just return immediately
+        if self._mode == Addressing.Constant:
+            return self._register
+
         # Methods that will get the value
+        def bit():
+            a_bit = cpu.get_flag(self._register)
+            return a_bit if self._bit_state == Bit.Set else (not a_bit)
         def immediate():
             return mem_bus.ReadWorkRAM(location, self.width)
         def register():
@@ -135,9 +160,16 @@ class Operand:
 
     def set_value(self, cpu, mem_bus, location, value):
         "Sets the value of the operand. Use for writeback step"
-        # Methods that will get the value
-        def immediate():
+
+        # Throw exception now so we know
+        if self._mode == Addressing.Immediate or self._mode == Addressing.RegisterPlusImmediate:
             raise ValueError("An immediate mode operand cannot be written to!")
+        elif self._mode == Addressing.Constant:
+            raise ValueError("A constant-value operand cannot be written to!")
+        elif self._mode == Addressing.Bit:
+            raise ValueError("A bit operand should not be written to directly!")
+
+        # Methods that will get the value
         def register():
             if self._register < 0:
                 if self._register == Registers.SP:
@@ -163,11 +195,9 @@ class Operand:
             return mem_bus.ReadWorkRAM(indirect_loc, self.width)
 
         value_map = {
-            Addressing.Immediate: immediate,
             Addressing.Register: register,
             Addressing.RegisterIncrement: reg_indirect,
             Addressing.RegisterDecrement: reg_indirect,
-            Addressing.RegisterPlusImmediate: immediate,
             Addressing.RegisterIndirect: reg_indirect,
             Addressing.Direct: direct,
             Addressing.Indirect: indirect}
@@ -196,7 +226,6 @@ class Operand:
              (self._mode != Addressing.Immediate and self._mode != Addressing.Direct)\
                   and self.width == other.width and self._register == other._register
 
-
     def __str__(self):
         """
         String that describes the operand.
@@ -213,6 +242,10 @@ class Operand:
             return "({}{})".format(GetRegisterName(self._register, self.width), symbol)
         elif self._mode == Addressing.Direct:
             return "(addr)"
+        elif self._mode == Addressing.Constant:
+            return "%s H" % self._register
+        elif self._mode == Addressing.Bit:
+            return "%s" % self._register.name
 
         return "Unsupported addressing mode operand"
     #end
