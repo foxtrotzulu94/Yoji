@@ -346,6 +346,8 @@ class Instruction:
 
         # Do the thing and box the result!
         raw_result = self._action(cpu, dest, source)
+        if raw_result is None:
+            raw_result = 0
         result = (raw_result & 0xFF) if self._result_size == 1 else (raw_result & 0xFFFF)
 
         # Check the flag status
@@ -442,15 +444,15 @@ class Instruction:
 # Where applicable, comments have been added for clarity
 # See http://z80-heaven.wikidot.com/ for more detailed info
 
-def NoOp(cpu, destination, source):
-    return 0
-def Reset(cpu, destination, source):
+def NoOp(*unused):
+    return None
+def Reset(*unused):
     return 0
 #end
 
-def InvalidInstruction(cpu, destination, source):
+def InvalidInstruction(*unused):
     raise SystemError()
-def NotImplementedYet(cpu, destination, source):
+def NotImplementedYet(*unused):
     raise NotImplementedError()
 #end
 
@@ -536,6 +538,28 @@ def Push(cpu, unused, val):
     return 0
 def Pop(cpu, *unused):
     return cpu.PopStack()
+#end
+
+def Call(cpu, condition, location):
+    # Call into a routine
+    # Push the location of the next instruction onto the stack
+    Push(cpu, None, cpu.PC + 3)
+
+    # and just set the PC on condition
+    if condition:
+        cpu.PC = location
+def Return(cpu, condition, unused):
+    # Short circuit here. Note that None is not False
+    if condition is False:
+        return
+
+    cpu.PC = Pop(cpu, None)
+ReturnInterrupt = Return # For now...
+def Restart(cpu, unused, source):
+    # Calls into the GameBoy's Restart and Interrupt vector location
+    Push(cpu, None, cpu.PC +3)
+    cpu.PC = source & 0xFF
+#end
 
 # TODO: implement rest of instructions (JP, Call, Push, Pop)
 def InstructionPrototype(cpu, destination, source):

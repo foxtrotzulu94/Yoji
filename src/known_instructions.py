@@ -1356,7 +1356,7 @@ known_instructions = [
         byte_size=1, cycles=20/8,
         flags=None,
         operands = ( None, Operand.bit(Flag.z, Bit.Reset) ),
-        executor = None),
+        executor = Return),
         
     Instruction(
         0xC1, "POP BC", bus_width=2,
@@ -1384,7 +1384,7 @@ known_instructions = [
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(2) ),
-        executor = None),
+        executor = Call),
         
     Instruction(
         0xC5, "PUSH BC", bus_width=2,
@@ -1405,21 +1405,21 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x00) ),
-        executor = None),
+        executor = Restart),
         
     Instruction(
         0xC8, "RET Z", bus_width=1,
         byte_size=1, cycles=20/8,
         flags=None,
         operands = ( None, Operand.bit(Flag.z, Bit.Set) ),
-        executor = None),
+        executor = Return),
         
     Instruction(
         0xC9, "RET", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
         operands = None,
-        executor = None),
+        executor = Return),
         
     Instruction(
         0xCA, "JP Z,a16", bus_width=1,
@@ -1440,14 +1440,14 @@ known_instructions = [
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(2) ),
-        executor = None),
+        executor = Call),
         
     Instruction(
         0xCD, "CALL a16", bus_width=1,
         byte_size=3, cycles=24,
         flags=None,
         operands = ( None, Operand.imm(2) ),
-        executor = None),
+        executor = Call),
         
     Instruction(
         0xCE, "ADC A,d8", bus_width=1,
@@ -1461,14 +1461,14 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x08) ),
-        executor = None),
+        executor = Restart),
         
     Instruction(
         0xD0, "RET NC", bus_width=1,
         byte_size=1, cycles=20/8,
         flags=None,
         operands = ( None, Operand.bit(Flag.c, Bit.Reset) ),
-        executor = None),
+        executor = Return),
         
     Instruction(
         0xD1, "POP DE", bus_width=2,
@@ -1496,7 +1496,7 @@ known_instructions = [
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(2) ),
-        executor = None),
+        executor = Call),
         
     Instruction(
         0xD5, "PUSH DE", bus_width=2,
@@ -1517,21 +1517,21 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x10) ),
-        executor = None),
+        executor = Restart),
         
     Instruction(
         0xD8, "RET C", bus_width=1,
         byte_size=1, cycles=20/8,
         flags=None,
         operands = ( None, Operand.reg(Registers.C, 1) ),
-        executor = None),
+        executor = Return),
         
     Instruction(
         0xD9, "RETI", bus_width=1,
         byte_size=1, cycles=16,
         flags=None,
         operands = None,
-        executor = None),
+        executor = ReturnInterrupt),
         
     Instruction(
         0xDA, "JP C,a16", bus_width=1,
@@ -1552,7 +1552,7 @@ known_instructions = [
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(2) ),
-        executor = None),
+        executor = Call),
         
     Instruction(
         0xDD, "INVALID", bus_width=1,
@@ -1573,7 +1573,7 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x18) ),
-        executor = None),
+        executor = Restart),
         
     Instruction(
         0xE0, "LDH (a8),A", bus_width=1,
@@ -1629,7 +1629,7 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x20) ),
-        executor = None),
+        executor = Restart),
         
     Instruction(
         0xE8, "ADD SP,r8", bus_width=2,
@@ -1685,7 +1685,7 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x28) ),
-        executor = None),
+        executor = Restart),
         
     Instruction(
         0xF0, "LDH A,(a8)", bus_width=1,
@@ -1741,7 +1741,7 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x30) ),
-        executor = None),
+        executor = Restart),
         
     Instruction(
         0xF8, "LD HL,SP+r8", bus_width=2,
@@ -1797,7 +1797,7 @@ known_instructions = [
         byte_size=1, cycles=16,
         flags=None,
         operands = ( None, Operand.const(0x38) ),
-        executor = None),
+        executor = Restart),
         
 ]
 
