@@ -397,7 +397,7 @@ known_instructions = [
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Set },
         operands = None,
-        executor = None),
+        executor = SetCarry),
         
     Instruction(
         0x38, "JR C,r8", bus_width=1,
@@ -453,7 +453,7 @@ known_instructions = [
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Ignore, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
-        executor = None),
+        executor = InvertCarry),
         
     Instruction(
         0x40, "LD B,B", bus_width=1,

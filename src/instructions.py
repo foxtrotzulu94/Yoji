@@ -104,6 +104,13 @@ class Operand:
             return cpu.SP if self._register == Registers.SP else cpu.PC
         return cpu.get_register(self._register, self.width)
 
+    def _translate_address(self, address):
+        if self.width == 1:
+            if type(address) is bytearray:
+                address = address[0]
+            address = address | 0xFF00
+        return address
+
     def get_value(self, cpu, mem_bus, location):
         "Gets the value of the operand"
 
@@ -137,11 +144,11 @@ class Operand:
         def register_w_immediate():
             return register() + immediate()
         def reg_indirect():
-            return mem_bus.ReadWorkRAM(register(), self.width)
+            return mem_bus.ReadWorkRAM(self._translate_address(register()), self.width)
         def direct():
-            return mem_bus.ReadWorkRAM(immediate(), self.width)
+            return mem_bus.ReadWorkRAM(self._translate_address(immediate()), self.width)
         def indirect():
-            return mem_bus.ReadWorkRAM(direct(), self.width)
+            return mem_bus.ReadWorkRAM(self._translate_address(direct()), self.width)
 
         value_map = {
             Addressing.Bit: bit,
@@ -185,15 +192,12 @@ class Operand:
             if type(wb_v) is int:
                 num_bytes = 1 if self._register != Registers.SP else 2
                 wb_v = value.to_bytes(num_bytes, 'little')
-
-            #TODO: handle sign extension for self.width==1
-            mem_bus.WriteWorkRAM(self._get_register(cpu), wb_v)
+            mem_bus.WriteWorkRAM(self._translate_address(self._get_register(cpu)), wb_v)
         def direct():
-            #TODO: handle sign extension for self.width==1
-            mem_bus.WriteWorkRAM(location, value)
+            mem_bus.WriteWorkRAM(self._translate_address(location), value)
         def indirect():
             indirect_loc = mem_bus.ReadWorkRAM(location, self.width)
-            return mem_bus.ReadWorkRAM(indirect_loc, self.width)
+            return mem_bus.ReadWorkRAM(self._translate_address(indirect_loc), self.width)
 
         value_map = {
             Addressing.Register: register,
@@ -272,7 +276,7 @@ class Instruction:
     all of the info needed to execute when combined with the current location, the CPU and the memory bus
     """
 
-    def __init__(self, opcode, shorthand, bus_width, byte_size, cycles, flags, operands = (None,None), executor = None, store = None):
+    def __init__(self, opcode, shorthand, bus_width, byte_size, cycles, flags, operands, executor):
         self._opcode = opcode
         self._mnemonic = shorthand
         self._result_size = bus_width
@@ -280,10 +284,8 @@ class Instruction:
         self._cycles = cycles
         self._flags_affected = flags
 
-        # TODO: in the interest of building something quick, we'll allow this to always be None by default
         self._action = executor
         self._operands = operands
-        #self._writeback = store
     #end
 
     def _get_operands(self, cpu, mem_bus, location):
@@ -406,7 +408,6 @@ class Instruction:
         if self._operands[1] is not None:
             src = str(self._operands[1]) if mem_bus is None else self._operands[1].ToString(mem_bus, addr)
 
-        # TODO: handle mnemonics like "DEC C", "POP BC"
         return "{} {}".format(base, src) if dst == src or dst is None else "{} {},{}".format(base, dst, src)
 
     def ToString(self, mem_bus, address):
@@ -534,6 +535,11 @@ def CheckBit(_, bit, source):
     return (source & (1 << bit)) == 1 << bit
 def SetBit(_, source, bit):
     return source | (1 << bit)
+def SetCarry(cpu, *unused):
+    # Carry is set in bit 8
+    return 1 << 8
+def InvertCarry(cpu,*unused):
+    return 0 if cpu.c else SetCarry(cpu)
 #end
 
 def ComplementA(cpu, *unused):

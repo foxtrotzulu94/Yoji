@@ -6,6 +6,13 @@ def main():
     bus = MemoryBus()
     cpu = CPU(bus)
 
+    cpu.executeArbitraryInstruction("CCF")
+    assert(cpu.c)
+    cpu.executeArbitraryInstruction("CCF")
+    assert(not cpu.c)
+    cpu.executeArbitraryInstruction("SCF")
+    assert(cpu.c)
+
     val = cpu.SP = 0xfffe
     cpu.BC = 0xbeef
     assert(cpu.BC == 0xbeef)
