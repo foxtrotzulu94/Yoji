@@ -1299,56 +1299,56 @@ known_instructions = [
         0xB8, "CP B", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.reg(Registers.B, 1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.reg(Registers.B, 1) ),
         executor = Compare),
         
     Instruction(
         0xB9, "CP C", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.reg(Registers.C, 1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.reg(Registers.C, 1) ),
         executor = Compare),
         
     Instruction(
         0xBA, "CP D", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.reg(Registers.D, 1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.reg(Registers.D, 1) ),
         executor = Compare),
         
     Instruction(
         0xBB, "CP E", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.reg(Registers.E, 1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.reg(Registers.E, 1) ),
         executor = Compare),
         
     Instruction(
         0xBC, "CP H", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.reg(Registers.H, 1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.reg(Registers.H, 1) ),
         executor = Compare),
         
     Instruction(
         0xBD, "CP L", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.reg(Registers.L, 1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.reg(Registers.L, 1) ),
         executor = Compare),
         
     Instruction(
         0xBE, "CP (HL)", bus_width=1,
         byte_size=1, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.regi(Registers.HL, 2) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.regi(Registers.HL, 2) ),
         executor = Compare),
         
     Instruction(
         0xBF, "CP A", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.reg(Registers.A, 1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.reg(Registers.A, 1) ),
         executor = Compare),
         
     Instruction(
@@ -1789,7 +1789,7 @@ known_instructions = [
         0xFE, "CP d8", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Set, Flag.h:Bit.Calculate, Flag.c:Bit.Calculate },
-        operands = ( None, Operand.imm(1) ),
+        operands = ( Operand.reg(Registers.A, throwaway = True), Operand.imm(1) ),
         executor = Compare),
         
     Instruction(

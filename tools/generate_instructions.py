@@ -58,7 +58,7 @@ unary_instructions = {
     'ADD': 'A',
     'AND': 'A',
     'CALL': None,
-    'CP': None,
+    'CP': None, # this is a bit of a lie, we write that it has a first operand but throwaway the result
     'DEC': 'DEC',
     'INC': 'INC',
     'JP': None,
@@ -185,6 +185,10 @@ def translate_operands(instr):
         else:
             # Unary instruction
             assert(base in unary_instructions)
+
+            # Special case, compare instruction
+            if base == 'CP':
+                return "( Operand.reg(Registers.A, throwaway = True), {} )".format(translate_operand(op_tks))
 
             writeback_reg = unary_instructions[base]
             if writeback_reg == base:

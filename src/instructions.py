@@ -47,6 +47,7 @@ class Operand:
 
         # used when operands constants, bits, register enums
         self._register = reg
+        self._throwaway = False
 
         # only used when bits are used to determine if we're checking set or reset bits
         # which is why we provide a default value
@@ -64,8 +65,10 @@ class Operand:
         return Operand(value, 1, Addressing.Constant)
 
     @staticmethod
-    def reg(reg, width=1):
-        return Operand(reg, width, Addressing.Register)
+    def reg(reg, width=1, throwaway = False):
+        op = Operand(reg, width, Addressing.Register)
+        op._throwaway = False
+        return op
 
     @staticmethod
     def regi(reg, width=1):
