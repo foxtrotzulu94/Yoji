@@ -9,12 +9,17 @@ class MemoryBus:
 
     def ReadWorkRAM(self, offset, length):
         "WIP"
+        if type(offset) is bytearray:
+            offset = int.from_bytes(offset, 'little')
         return self._mem_map[offset: offset + length]
 
     def WriteWorkRAM(self, offset, data):
         "WIP"
         if type(offset) is bytearray:
             offset = int.from_bytes(offset, 'little')
+        if type(data) is int:
+            # We don't allow longer memory!
+            data = data.to_bytes(1, 'little')
 
         assert(type(data) is bytearray or type(data) is bytes)
         size = len(data)

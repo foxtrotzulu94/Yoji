@@ -60,7 +60,7 @@ known_instructions = [
         0x07, "RLCA", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = None,
+        operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateLeftWithCarry),
         
     Instruction(
@@ -172,7 +172,7 @@ known_instructions = [
         0x17, "RLA", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = None,
+        operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateLeft),
         
     Instruction(

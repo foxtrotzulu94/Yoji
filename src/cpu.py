@@ -148,10 +148,8 @@ class CPU:
     def Step(self):
         "Executes the next instruction immediately"
 
+        # Instruction Fetch, Decode is handled in Dump
         self.Dump(False)
-
-        # Instruction Fetch, Decode
-        self._get_next_instruction()
 
         # Instruction Execute
         location = self.PC + 1

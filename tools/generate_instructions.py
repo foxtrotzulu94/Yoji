@@ -69,7 +69,9 @@ unary_instructions = {
     'PUSH': None,
     'RET': None,
     'RL': 'RL',
+    'RLA': 'A',
     'RLC': 'RLC',
+    'RLCA': 'A',
     'RR': 'RR',
     'RRC': 'RRC',
     'RST': None,
@@ -164,16 +166,20 @@ def translate_operand(operand):
 def translate_operands(instr):
     # Returns something like
     # "( Operand.reg(Registers.SP, 2), Operand.imm(2) )"
-    # TODO: some single operand instructions act on themselves. Others act on the accumulator by definition.
-    #       we need to be able to generate 2 operands here so it becomes unambiguous
+
     tokens = instr.mnemonic.split()
+    base = tokens[0]
+    dst = src = None
     if len(tokens) < 2:
-        # No operands, just return None
-        return 'None'
+        if not base in unary_instructions or unary_instructions[base] is None:
+            # No operands, just return None
+            return 'None'
+
+        # Operand is both source and destination
+        src = dst = unary_instructions[base]
+
     else:
-        base = tokens[0]
         op_tks = tokens[1]
-        src = dst = None
         if ',' in op_tks:
             dst, src = op_tks.split(',')
         else:
@@ -188,19 +194,19 @@ def translate_operands(instr):
                 src = op_tks
         #end if-else
 
-        # now translate the operands
-        dst_text = translate_operand(dst)
-        src_text = translate_operand(src)
+    # now translate the operands
+    dst_text = translate_operand(dst)
+    src_text = translate_operand(src)
 
-        if dst_text == 'None' and src_text == dst_text:
-            return 'None'
+    if dst_text == 'None' and src_text == dst_text:
+        return 'None'
 
-        if base in swap_operands:
-            # A bit of a hack so we can have writeback
-            src_text, dst_text = dst_text, src_text
+    if base in swap_operands:
+        # A bit of a hack so we can have writeback
+        src_text, dst_text = dst_text, src_text
 
 
-        return '( {}, {} )'.format(dst_text, src_text)
+    return '( {}, {} )'.format(dst_text, src_text)
     #end else
 #end
 
