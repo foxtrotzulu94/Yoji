@@ -141,6 +141,7 @@ class Operand:
             return mem_bus.ReadWorkRAM(direct(), self.width)
 
         value_map = {
+            Addressing.Bit: bit,
             Addressing.Immediate: immediate,
             Addressing.Register: register,
             Addressing.RegisterIncrement: register_post,
@@ -296,6 +297,9 @@ class Instruction:
         if self._operands is None or self._operands[index] is None:
             return None
         val = self._operands[index].get_value(cpu, mem_bus, location)
+        if self._operands[index]._mode == Addressing.Bit:
+            return val
+
         # this only works because of little-endian implementation, specifically:
         # if the lowest memory address was mapped to the LSB, then if we expect only 1 byte-width, but retrieved 2, we'll get the data address we expect
         return (val & 0xFF) if self._result_size == 1 else (val & 0xFFFF)
@@ -523,11 +527,11 @@ def Load(cpu, unused, source):
     return source
 #end
 
-def CheckBit(cpu, bit, source):
+def CheckBit(_, bit, source):
     return (source & (1 << bit)) == 1 << bit
-def SetBit(cpu, source, bit):
+def SetBit(_, source, bit):
     return source | (1 << bit)
-#
+#end
 
 def ComplementA(cpu, *unused):
     # Fairly specific
@@ -541,15 +545,14 @@ def Pop(cpu, *unused):
 #end
 
 def Call(cpu, condition, location):
-    # Call into a routine
-    # Push the location of the next instruction onto the stack
-    Push(cpu, None, cpu.PC + 3)
+    # Call into a routine.
+    # Note that None is not False
+    if condition is False:
+        return
 
-    # and just set the PC on condition
-    if condition:
-        cpu.PC = location
+    Push(cpu, None, cpu.PC + 3)
+    cpu.PC = location
 def Return(cpu, condition, unused):
-    # Short circuit here. Note that None is not False
     if condition is False:
         return
 
@@ -560,6 +563,23 @@ def Restart(cpu, unused, source):
     Push(cpu, None, cpu.PC +3)
     cpu.PC = source & 0xFF
 #end
+
+def Jump(cpu, condition, location):
+    if condition is False:
+        return
+    cpu.PC = location
+def NearJump(cpu, condition, signed_value):
+    if condition is False:
+        return
+
+    value = signed_value
+    if CheckBit(None, 7, signed_value):
+        # Convert 2's complement back to integer and add a negative sign
+        value = - (((~value)+1)&0xFF)
+
+    cpu.PC = cpu.PC + value
+#end
+
 
 # TODO: implement rest of instructions (JP, Call, Push, Pop)
 def InstructionPrototype(cpu, destination, source):

@@ -180,7 +180,7 @@ known_instructions = [
         byte_size=2, cycles=12,
         flags=None,
         operands = ( None, Operand.imm(1) ),
-        executor = None),
+        executor = NearJump),
         
     Instruction(
         0x19, "ADD HL,DE", bus_width=2,
@@ -236,7 +236,7 @@ known_instructions = [
         byte_size=2, cycles=12/8,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(1) ),
-        executor = None),
+        executor = NearJump),
         
     Instruction(
         0x21, "LD HL,d16", bus_width=2,
@@ -292,7 +292,7 @@ known_instructions = [
         byte_size=2, cycles=12/8,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(1) ),
-        executor = None),
+        executor = NearJump),
         
     Instruction(
         0x29, "ADD HL,HL", bus_width=2,
@@ -348,7 +348,7 @@ known_instructions = [
         byte_size=2, cycles=12/8,
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(1) ),
-        executor = None),
+        executor = NearJump),
         
     Instruction(
         0x31, "LD SP,d16", bus_width=2,
@@ -404,7 +404,7 @@ known_instructions = [
         byte_size=2, cycles=12/8,
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(1) ),
-        executor = None),
+        executor = NearJump),
         
     Instruction(
         0x39, "ADD HL,SP", bus_width=2,
@@ -1370,14 +1370,14 @@ known_instructions = [
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(2) ),
-        executor = None),
+        executor = Jump),
         
     Instruction(
         0xC3, "JP a16", bus_width=1,
         byte_size=3, cycles=16,
         flags=None,
         operands = ( None, Operand.imm(2) ),
-        executor = None),
+        executor = Jump),
         
     Instruction(
         0xC4, "CALL NZ,a16", bus_width=1,
@@ -1426,7 +1426,7 @@ known_instructions = [
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(2) ),
-        executor = None),
+        executor = Jump),
         
     Instruction(
         0xCB, "PREFIX CB", bus_width=1,
@@ -1482,7 +1482,7 @@ known_instructions = [
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(2) ),
-        executor = None),
+        executor = Jump),
         
     Instruction(
         0xD3, "INVALID", bus_width=1,
@@ -1538,7 +1538,7 @@ known_instructions = [
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(2) ),
-        executor = None),
+        executor = Jump),
         
     Instruction(
         0xDB, "INVALID", bus_width=1,
@@ -1643,7 +1643,7 @@ known_instructions = [
         byte_size=1, cycles=4,
         flags=None,
         operands = ( None, Operand.regi(Registers.HL, 2) ),
-        executor = None),
+        executor = Jump),
         
     Instruction(
         0xEA, "LD (a16),A", bus_width=1,

@@ -45,14 +45,15 @@ class CPU:
         return gen
 
     ### Register Flag methods ###
+    # NOTE they use big endian because the MSB should be stored in the first 8-bit register!
     def get_register(self, offset, length):
         """ Get method for regular registers """
-        return int.from_bytes(self.__registers[offset : offset+length], 'little')
+        return int.from_bytes(self.__registers[offset : offset+length], 'big')
 
     def set_register(self, value, offset, length):
         """ Set method for regular registers """
         if type(value) is int:
-            value = bytearray(value.to_bytes(length, 'little'))
+            value = bytearray(value.to_bytes(length, 'big'))
         self.__registers[offset : offset+length] = value
 
     def _generate_get_register(offset, length = 1):
