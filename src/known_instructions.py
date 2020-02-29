@@ -2087,56 +2087,56 @@ cb_prefix = [
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x29, "SRA C", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x2A, "SRA D", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x2B, "SRA E", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x2C, "SRA H", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x2D, "SRA L", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x2E, "SRA (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x2F, "SRA A", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
-        executor = ShiftRight),
+        executor = ShiftRightArithmetic),
         
     Instruction(
         0x30, "SWAP B", bus_width=1,
@@ -2199,56 +2199,56 @@ cb_prefix = [
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x39, "SRL C", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x3A, "SRL D", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x3B, "SRL E", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x3C, "SRL H", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x3D, "SRL L", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x3E, "SRL (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x3F, "SRL A", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x40, "BIT 0,B", bus_width=1,

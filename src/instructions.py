@@ -510,24 +510,28 @@ def RotateLeftWithCarry(cpu, unused, source):
 #end
 
 def ShiftRight(cpu, unused, source):
+    # Note: in our implementation Carry is set if the 9th bit is set.
     # We need to shift right, and place bit 0 in the carry
     return (source >> 1) | ((source & 1) << 8)
+def ShiftRightArithmetic(cpu, unused, source):
+    # Do the above, but preserving bit 7
+    return (source >> 1) | ((source & 1) << 8) | (source & 0x40)
 def RotateRight(cpu, unused, source):
     """ From z80 Heaven:
     9-bit rotation to the right.
     The carry is copied into bit 7, and the bit leaving on the right is copied into the carry.
     """
-    # Note: in our implementation Carry is set if the 9th bit is set. This Instruction happens as follows
+    # This Instruction happens as follows
     # [section A] | [section B] | [section C]
     # A: Shift source right by 1 (the actual operation)
     # B: Move the least signifcant bit up to the bit 8. This will ensure to set/reset the carry bit later in Instructions._set_flags method
     # C: Put the carry bit in bit 7
-    return (source >> 1) | ((source & 1) << 8) | (cpu.C << 7)
+    return (source >> 1) | ((source & 1) << 8) | (cpu.c << 7)
 def RotateRightWithCarry(cpu, unused, source):
     """ From z80 Heaven:
     8-bit rotation to the right. the bit leaving on the right is copied into the carry, and into bit 7.
     """
-    # Fairly similar to above, but note that the LSB is copied both to bit 7 and 8 (carry set/reset)
+    # Fairly similar to above, but note that bit 0 is copied both to bit 7 and 8 (carry set/reset)
     return (source >> 1) | ((source & 1) << 8) | ((source & 1) << 7)
 #end
 
