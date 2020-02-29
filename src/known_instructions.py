@@ -285,7 +285,7 @@ known_instructions = [
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Ignore, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = None,
-        executor = None),
+        executor = DecimalAdjustAccumulator),
         
     Instruction(
         0x28, "JR Z,r8", bus_width=1,
@@ -1713,7 +1713,7 @@ known_instructions = [
         byte_size=1, cycles=4,
         flags=None,
         operands = None,
-        executor = None),
+        executor = DisableInterrupts),
         
     Instruction(
         0xF4, "INVALID", bus_width=1,
@@ -1769,7 +1769,7 @@ known_instructions = [
         byte_size=1, cycles=4,
         flags=None,
         operands = None,
-        executor = None),
+        executor = EnableInterrupts),
         
     Instruction(
         0xFC, "INVALID", bus_width=1,
@@ -2031,112 +2031,112 @@ cb_prefix = [
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x21, "SLA C", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x22, "SLA D", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x23, "SLA E", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x24, "SLA H", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x25, "SLA L", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x26, "SLA (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x27, "SLA A", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
-        executor = None),
+        executor = ShiftLeft),
         
     Instruction(
         0x28, "SRA B", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x29, "SRA C", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x2A, "SRA D", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x2B, "SRA E", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x2C, "SRA H", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x2D, "SRA L", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x2E, "SRA (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x2F, "SRA A", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
-        executor = None),
+        executor = ShiftRight),
         
     Instruction(
         0x30, "SWAP B", bus_width=1,

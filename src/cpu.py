@@ -14,6 +14,7 @@ class CPU:
         self.__registers = bytearray(2 * 4)
 
         self.__memory_bus = mem_bus
+        self.__interrupts_enabled = True
 
         self._curr_inst = None
         self._curr_result = None
@@ -86,6 +87,9 @@ class CPU:
     def SP(self, value):
         self.__stack_ptr = value
 
+    def EnableInterrupts(self, is_enabled):
+        self.__interrupts_enabled = is_enabled
+
     # HACK: The stack operations need access to memory
     # Right now, the way this fits in the instruction machinery makes it complicated and wrong
     # but when executing instructions, we have a handle back to the CPU, so just use it here directly.
@@ -106,7 +110,6 @@ class CPU:
         self.__stack_size -= 1
         return int.from_bytes(top, 'little')
     #end
-
 
     ## Registers ##
     # 8-BIT WIDTH #
@@ -143,6 +146,11 @@ class CPU:
     def _execute_instruction(self):
         location = self.PC + 1
         self._curr_result = self._curr_inst.execute(self, self.__memory_bus, location)
+    def _check_interrupts(self):
+        if not self.__interrupts_enabled:
+            return
+
+        # TODO: Check for pending interrupts to handle at mem 0xFF0F
     #end
 
     def Step(self):
@@ -151,13 +159,14 @@ class CPU:
         # Instruction Fetch, Decode is handled in Dump
         self.Dump(False)
 
-        # Instruction Execute
-        location = self.PC + 1
-        self._curr_result = self._curr_inst.execute(self, self.__memory_bus, location)
+        # execute
+        self._execute_instruction()
 
         # Writeback
         self._curr_inst.writeback(self, self.__memory_bus, location, self._curr_result)
         self.PC += self._curr_inst.Size
+
+        self._check_interrupts()
     #end Step
 
     def Tick(self):
@@ -173,6 +182,9 @@ class CPU:
             # this is to avoid any weird timing issues w.r.t the Memory bus
             self._curr_inst.writeback(self, self.__memory_bus, self.PC + 1, self._curr_result)
             self.PC += self._curr_inst.Size
+
+            self._check_interrupts()
+        # end if
 
         self._get_next_instruction() # 1. Instruction Fetch, Decode
         self._execute_instruction()  # 2. Execute
@@ -216,5 +228,6 @@ class CPU:
 
         # Writeback
         instr.writeback(self, self.__memory_bus, location, result)
+        self._check_interrupts()
     #end
 

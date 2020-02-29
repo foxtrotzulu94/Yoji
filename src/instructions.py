@@ -493,12 +493,14 @@ def Decrement(cpu, unused, source):
     return source - 1
 #end
 
+def ShiftLeft(_, unused, source):
+    # Note: in our implementation Carry is set if the 9th bit (bit 8) is set
+    return source << 1
 def RotateLeft(cpu, unused, source):
     """ From z80 Heaven:
     9-bit rotation to the left, the register's bits are shifted left.
     The carry value is put into 0th bit of the register, and the leaving 7th bit is put into the carry.
     """
-    # Note: in our implementation Carry is set if the 9th bit (bit 8) is set
     return (source << 1) | cpu.C
 def RotateLeftWithCarry(cpu, unused, source):
     """ From z80 Heaven:
@@ -507,6 +509,9 @@ def RotateLeftWithCarry(cpu, unused, source):
     return (source << 1) | (source >> 7)
 #end
 
+def ShiftRight(cpu, unused, source):
+    # We need to shift right, and place bit 0 in the carry
+    return (source >> 1) | ((source & 1) << 8)
 def RotateRight(cpu, unused, source):
     """ From z80 Heaven:
     9-bit rotation to the right.
@@ -542,17 +547,11 @@ def InvertCarry(cpu,*unused):
     return 0 if cpu.c else SetCarry(cpu)
 #end
 
-def ComplementA(cpu, *unused):
-    # Fairly specific
-    cpu.A = (cpu.A ^ 0xFF) & 0xFF
-    return cpu.A
 def Push(cpu, unused, val):
     cpu.PushStack(val)
     return 0
 def Pop(cpu, *unused):
     return cpu.PopStack()
-#end
-
 def Call(cpu, condition, location):
     # Call into a routine.
     # Note that None is not False
@@ -589,6 +588,32 @@ def NearJump(cpu, condition, signed_value):
     cpu.PC = cpu.PC + value
 #end
 
+def EnableInterrupts(cpu, *unused):
+    cpu.EnableInterrupts(True)
+def DisableInterrupts(cpu, *unused):
+    cpu.EnableInterrupts(False)
+#end
+
+def ComplementA(cpu, *unused):
+    # Fairly specific
+    cpu.A = (cpu.A ^ 0xFF) & 0xFF
+    return cpu.A
+def DecimalAdjustAccumulator(cpu, *unused):
+    """ From z80 heaven:
+    When this instruction is executed, the A register is BCD corrected using the contents of the flags.
+    """
+    # The exact process is the following:
+    # if the least significant four bits of A contain a non-BCD digit (i. e. it is greater than 9) or the H flag is set,
+    # then $06 is added to the register. Then the four most significant bits are checked.
+    # If this more significant digit also happens to be greater than 9 or the C flag is set, then $60 is added.
+    if cpu.h or (cpu.A & 0xF) > 9:
+        cpu.A += 0x6
+
+    if cpu.c or ((cpu.A & 0xF0) >> 4) > 9:
+        cpu.A += 0x60
+
+    return cpu.A
+#end
 
 # TODO: implement rest of instructions (JP, Call, Push, Pop)
 def InstructionPrototype(cpu, destination, source):
