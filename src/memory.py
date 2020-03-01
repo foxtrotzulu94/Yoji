@@ -1,19 +1,19 @@
 # Great resource: http://gameboy.mongenel.com/dmg/asmmemmap.html
 
-class MemoryBus:
+class Memory:
     def __init__(self):
         # hard coding to the DMG for now
         self._mem_map = bytearray(0xFFFF) # Full 16-bit address space
         self._len = len(self._mem_map)
     # end
 
-    def ReadWorkRAM(self, offset, length):
+    def Read(self, offset, length = 1):
         "WIP"
         if type(offset) is bytearray:
             offset = int.from_bytes(offset, 'little')
         return self._mem_map[offset: offset + length]
 
-    def WriteWorkRAM(self, offset, data):
+    def Write(self, offset, data):
         "WIP"
         if type(offset) is bytearray:
             offset = int.from_bytes(offset, 'little')
@@ -27,6 +27,6 @@ class MemoryBus:
             self._mem_map[offset + i] = data[i]
         assert(self._len == len(self._mem_map))
 
-    def EmplaceROMData(self, data):
+    def LoadROM(self, data):
         """[Temporary]"""
-        self.WriteWorkRAM(0x100, data)
+        self.Write(0x100, data)

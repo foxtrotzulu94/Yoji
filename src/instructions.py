@@ -111,7 +111,7 @@ class Operand:
             address = address | 0xFF00
         return address
 
-    def get_value(self, cpu, mem_bus, location):
+    def get_value(self, cpu, mem, location):
         "Gets the value of the operand"
 
         # if we're retrieving a constant, just return immediately
@@ -123,7 +123,7 @@ class Operand:
             a_bit = cpu.get_flag(self._register)
             return a_bit if self._bit_state == Bit.Set else (not a_bit)
         def immediate():
-            return mem_bus.ReadWorkRAM(location, self.width)
+            return mem.Read(location, self.width)
         def register():
             return self._get_register(cpu)
         def register_post():
@@ -144,11 +144,11 @@ class Operand:
         def register_w_immediate():
             return register() + immediate()
         def reg_indirect():
-            return mem_bus.ReadWorkRAM(self._translate_address(register()), self.width)
+            return mem.Read(self._translate_address(register()), self.width)
         def direct():
-            return mem_bus.ReadWorkRAM(self._translate_address(immediate()), self.width)
+            return mem.Read(self._translate_address(immediate()), self.width)
         def indirect():
-            return mem_bus.ReadWorkRAM(self._translate_address(direct()), self.width)
+            return mem.Read(self._translate_address(direct()), self.width)
 
         value_map = {
             Addressing.Bit: bit,
@@ -167,7 +167,7 @@ class Operand:
         return retVal
     #end get_value
 
-    def set_value(self, cpu, mem_bus, location, value):
+    def set_value(self, cpu, mem, location, value):
         "Sets the value of the operand. Use for writeback step"
 
         # Throw exception now so we know
@@ -192,12 +192,12 @@ class Operand:
             if type(wb_v) is int:
                 num_bytes = 1 if self._register != Registers.SP else 2
                 wb_v = value.to_bytes(num_bytes, 'little')
-            mem_bus.WriteWorkRAM(self._translate_address(self._get_register(cpu)), wb_v)
+            mem.Write(self._translate_address(self._get_register(cpu)), wb_v)
         def direct():
-            mem_bus.WriteWorkRAM(self._translate_address(location), value)
+            mem.Write(self._translate_address(location), value)
         def indirect():
-            indirect_loc = mem_bus.ReadWorkRAM(location, self.width)
-            return mem_bus.ReadWorkRAM(self._translate_address(indirect_loc), self.width)
+            indirect_loc = mem.Read(location, self.width)
+            return mem.Read(self._translate_address(indirect_loc), self.width)
 
         value_map = {
             Addressing.Register: register,
@@ -210,7 +210,7 @@ class Operand:
         value_map[self._mode]()
     #end set_value
 
-    def ToString(self, mem_bus, address):
+    def ToString(self, mem, address):
         """
         Returns a string that can be better read alongside similar strings for reading
         """
@@ -219,7 +219,7 @@ class Operand:
             return self.__str__()
 
         formatter = "0x{0:02X}" if self.width == 1 else "0x{0:04X}"
-        val = int.from_bytes(mem_bus.ReadWorkRAM(address, self.width), 'little')
+        val = int.from_bytes(mem.Read(address, self.width), 'little')
         base = formatter.format(val)
         return base if self._mode == Addressing.Immediate else ("({})".format(base))
     #end
@@ -288,20 +288,20 @@ class Instruction:
         self._operands = operands
     #end
 
-    def _get_operands(self, cpu, mem_bus, location):
+    def _get_operands(self, cpu, mem, location):
         if self._operands is None:
             return (None, None)
 
         dest_op, src_op = self._operands
-        dest = None if dest_op is None else dest_op.get_value(cpu, mem_bus, location)
-        src = None if src_op is None else src_op.get_value(cpu, mem_bus, location)
+        dest = None if dest_op is None else dest_op.get_value(cpu, mem, location)
+        src = None if src_op is None else src_op.get_value(cpu, mem, location)
         return (dest, src)
     #end
 
-    def _get_operand(self, index, cpu, mem_bus, location):
+    def _get_operand(self, index, cpu, mem, location):
         if self._operands is None or self._operands[index] is None:
             return None
-        val = self._operands[index].get_value(cpu, mem_bus, location)
+        val = self._operands[index].get_value(cpu, mem, location)
         if self._operands[index]._mode == Addressing.Bit:
             return val
 
@@ -342,15 +342,15 @@ class Instruction:
         #end for
     #end set_flags
 
-    def execute(self, cpu, mem_bus, location):
+    def execute(self, cpu, mem, location):
         """ Runs the instruction action on the known operands and returns the result """
         # quick check
         if self._action is None:
-            raise NotImplementedError("The instruction is not implemented yet!\n\t{}".format(self.ToString(mem_bus, location-1)))
+            raise NotImplementedError("The instruction is not implemented yet!\n\t{}".format(self.ToString(mem, location-1)))
             return None
 
         #Get the operands
-        get_operands = lambda idx: self._get_operand(idx, cpu, mem_bus, location)
+        get_operands = lambda idx: self._get_operand(idx, cpu, mem, location)
         dest, source = get_operands(0), get_operands(1)
 
         # Do the thing and box the result!
@@ -365,12 +365,12 @@ class Instruction:
         return result
     #end execute
 
-    def writeback(self, cpu, mem_bus, location, result):
+    def writeback(self, cpu, mem, location, result):
         if self._operands is None or self._operands[0] is None or not self._operands[0].can_set_value():
             # write back would be illegal
             return
 
-        self._operands[0].set_value(cpu, mem_bus, location, result)
+        self._operands[0].set_value(cpu, mem, location, result)
     #end writeback
 
     @property
@@ -396,7 +396,7 @@ class Instruction:
     def is_complete(self):
         return self._action is not None
 
-    def _get_mnemonic(self, mem_bus = None, addr = None):
+    def _get_mnemonic(self, mem = None, addr = None):
         if self._operands is None:
             return self._mnemonic
 
@@ -404,13 +404,13 @@ class Instruction:
         base = fmt[0]
         src = dst = None
         if self._operands[0] is not None:
-            dst = str(self._operands[0]) if mem_bus is None else self._operands[0].ToString(mem_bus, addr)
+            dst = str(self._operands[0]) if mem is None else self._operands[0].ToString(mem, addr)
         if self._operands[1] is not None:
-            src = str(self._operands[1]) if mem_bus is None else self._operands[1].ToString(mem_bus, addr)
+            src = str(self._operands[1]) if mem is None else self._operands[1].ToString(mem, addr)
 
         return "{} {}".format(base, src) if dst == src or dst is None else "{} {},{}".format(base, dst, src)
 
-    def ToString(self, mem_bus, address):
+    def ToString(self, mem, address):
         """
         Returns a string that can be better read alongside similar strings for reading
         """
@@ -419,7 +419,7 @@ class Instruction:
         return "0x{0:04X}    0x{1:<4X}   {2:12}".format(
             address,
             self._opcode,
-            self._get_mnemonic(mem_bus, address+1)
+            self._get_mnemonic(mem, address+1)
         )
 
     def __str__(self):

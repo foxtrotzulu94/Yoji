@@ -7,13 +7,13 @@ class CPU:
     Emulates the Sharp LR35902 by instruction interpretation
     """
 
-    def __init__(self, mem_bus):
+    def __init__(self, memory):
         self.__program_counter = 0
         self.__stack_ptr = 0
         self.__stack_size = 0
         self.__registers = bytearray(2 * 4)
 
-        self.__memory_bus = mem_bus
+        self.__memory = memory
         self.__interrupts_enabled = True
         self.__suspended = False
 
@@ -100,13 +100,13 @@ class CPU:
     def PushStack(self, value):
         converted = value.to_bytes(2, 'little')
         self.SP -= 2
-        self.__memory_bus.WriteWorkRAM(self.SP, converted)
+        self.__memory.Write(self.SP, converted)
         self.__stack_size += 1
     def PeekStack(self):
         if self.__stack_size == 0:
             return 0
 
-        return self.__memory_bus.ReadWorkRAM(self.SP, 2)
+        return self.__memory.Read(self.SP, 2)
     def PopStack(self):
         assert(self.__stack_size > 0)
         top = self.PeekStack()
@@ -138,17 +138,17 @@ class CPU:
     c = property(_generate_get_flag(Flag.c), _generate_set_flag(Flag.c), None, "The Carry bit flag")
 
     def _get_next_instruction(self):
-        opcode = self.__memory_bus.ReadWorkRAM(self.PC, 1)
+        opcode = self.__memory.Read(self.PC, 1)
         instr = self.__opcode_map[int.from_bytes(opcode, 'big')]
         if type(instr) is not Instruction:
-            opcode = self.__memory_bus.ReadWorkRAM(self.PC+1, 1)
+            opcode = self.__memory.Read(self.PC+1, 1)
             instr = instr[int.from_bytes(opcode, 'big')]
 
         self._curr_inst = instr
     #end
 
     def _execute_instruction(self, location):
-        self._curr_result = self._curr_inst.execute(self, self.__memory_bus, location)
+        self._curr_result = self._curr_inst.execute(self, self.__memory, location)
     def _check_interrupts(self):
         if not self.__interrupts_enabled:
             return
@@ -172,7 +172,7 @@ class CPU:
             self._execute_instruction(location)
 
             # Writeback
-            self._curr_inst.writeback(self, self.__memory_bus, location, self._curr_result)
+            self._curr_inst.writeback(self, self.__memory, location, self._curr_result)
         #end
 
         self._check_interrupts()
@@ -195,7 +195,7 @@ class CPU:
             # this is to avoid any weird timing issues w.r.t the Memory bus
             # TODO: refactor this so that the memory bus can also take into consideration the effects of cycle writeback
             #       that way we can isolate writeback in the instruction machinery
-            self._curr_inst.writeback(self, self.__memory_bus, self.PC + 1, self._curr_result)
+            self._curr_inst.writeback(self, self.__memory, self.PC + 1, self._curr_result)
 
             self._check_interrupts()
         # end if
@@ -212,7 +212,7 @@ class CPU:
 
         # Fetch, Decode and dump
         self._get_next_instruction()
-        print(self._curr_inst.ToString(self.__memory_bus, self.PC))
+        print(self._curr_inst.ToString(self.__memory, self.PC))
 
         if move_forward:
             self.PC += max(self._curr_inst.Size, 1)
@@ -238,11 +238,11 @@ class CPU:
 
         # Instruction Execute
         location = self.PC + 1
-        print(instr.ToString(self.__memory_bus, self.PC))
-        result = instr.execute(self, self.__memory_bus, location)
+        print(instr.ToString(self.__memory, self.PC))
+        result = instr.execute(self, self.__memory, location)
 
         # Writeback
-        instr.writeback(self, self.__memory_bus, location, result)
+        instr.writeback(self, self.__memory, location, result)
         self._check_interrupts()
     #end
 
