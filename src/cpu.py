@@ -147,8 +147,7 @@ class CPU:
         self._curr_inst = instr
     #end
 
-    def _execute_instruction(self):
-        location = self.PC + 1
+    def _execute_instruction(self, location):
         self._curr_result = self._curr_inst.execute(self, self.__memory_bus, location)
     def _check_interrupts(self):
         if not self.__interrupts_enabled:
@@ -168,11 +167,12 @@ class CPU:
 
         if not self.__suspended:
             # execute
-            self._execute_instruction()
+            location = self.PC + 1
+            self.PC += self._curr_inst.Size
+            self._execute_instruction(location)
 
             # Writeback
-            self._curr_inst.writeback(self, self.__memory_bus, self.PC + 1, self._curr_result)
-            self.PC += self._curr_inst.Size
+            self._curr_inst.writeback(self, self.__memory_bus, location, self._curr_result)
         #end
 
         self._check_interrupts()
@@ -196,12 +196,12 @@ class CPU:
             # TODO: refactor this so that the memory bus can also take into consideration the effects of cycle writeback
             #       that way we can isolate writeback in the instruction machinery
             self._curr_inst.writeback(self, self.__memory_bus, self.PC + 1, self._curr_result)
-            self.PC += self._curr_inst.Size
 
             self._check_interrupts()
         # end if
 
         self._get_next_instruction() # 1. Instruction Fetch, Decode
+        self.PC += self._curr_inst.Size
         self._execute_instruction()  # 2. Execute
 
         self._cycles_left = self._curr_inst.Cycles - 1

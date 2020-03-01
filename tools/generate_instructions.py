@@ -239,12 +239,17 @@ def generate_instructions(instruction_list, given_name, file_handle):
     file_handle.write(']\n\n'.format(given_name))
 #end generate
 
+def read_instruction_data(filename):
+    result = None
+    with open(filename, 'r') as a_file:
+        data = json.load(a_file)
+        result = [TextInstruction.from_json(x) for x in data]
+    return result
+#end
+
 def read_and_generate(filename, list_name, file_handle):
     import json
-    instruction_list = None
-    with open(filename, 'r') as instructions:
-        data = json.load(instructions)
-        instruction_list = [TextInstruction.from_json(x) for x in data]
+    instruction_list = read_instruction_data(filename)
     generate_instructions(instruction_list, list_name, file_handle)
 #end read_and_generate
 

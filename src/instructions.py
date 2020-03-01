@@ -562,7 +562,8 @@ def Call(cpu, condition, location):
     if condition is False:
         return
 
-    Push(cpu, None, cpu.PC + 3)
+    # The PC is always pointing at the next instruction now
+    Push(cpu, None, cpu.PC)
     cpu.PC = location
 def Return(cpu, condition, unused):
     if condition is False:
