@@ -15,6 +15,7 @@ class CPU:
 
         self.__memory_bus = mem_bus
         self.__interrupts_enabled = True
+        self.__suspended = False
 
         self._curr_inst = None
         self._curr_result = None
@@ -89,6 +90,9 @@ class CPU:
 
     def EnableInterrupts(self, is_enabled):
         self.__interrupts_enabled = is_enabled
+    def Halt(self):
+        self.__suspended = True
+    #end
 
     # HACK: The stack operations need access to memory
     # Right now, the way this fits in the instruction machinery makes it complicated and wrong
@@ -151,6 +155,9 @@ class CPU:
             return
 
         # TODO: Check for pending interrupts to handle at mem 0xFF0F
+
+        # TODO: When an interrupt is available, before dealing with it, set
+        self.__suspended = False
     #end
 
     def Step(self):
@@ -159,12 +166,14 @@ class CPU:
         # Instruction Fetch, Decode is handled in Dump
         self.Dump(False)
 
-        # execute
-        self._execute_instruction()
+        if not self.__suspended:
+            # execute
+            self._execute_instruction()
 
-        # Writeback
-        self._curr_inst.writeback(self, self.__memory_bus, location, self._curr_result)
-        self.PC += self._curr_inst.Size
+            # Writeback
+            self._curr_inst.writeback(self, self.__memory_bus, self.PC + 1, self._curr_result)
+            self.PC += self._curr_inst.Size
+        #end
 
         self._check_interrupts()
     #end Step
@@ -172,14 +181,20 @@ class CPU:
     def Tick(self):
         "Executes instructions to the tick of a clock"
 
-        self._cycles_left -= 1
+        self._cycles_left = max(self._cycles_left - 1, 0)
         if self._cycles_left > 0:
+            return
+
+        if self.__suspended:
+            self._check_interrupts()
             return
 
         # 3. Writeback
         if self._cycles_left == 0 and self._curr_inst is not None:
             # If we have an instruction, do the writeback step in the last possible cycle
             # this is to avoid any weird timing issues w.r.t the Memory bus
+            # TODO: refactor this so that the memory bus can also take into consideration the effects of cycle writeback
+            #       that way we can isolate writeback in the instruction machinery
             self._curr_inst.writeback(self, self.__memory_bus, self.PC + 1, self._curr_result)
             self.PC += self._curr_inst.Size
 

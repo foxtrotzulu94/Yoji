@@ -573,7 +573,9 @@ ReturnInterrupt = Return # For now...
 def Restart(cpu, unused, source):
     # Calls into the GameBoy's Restart and Interrupt vector location
     Push(cpu, None, cpu.PC +3)
-    cpu.PC = source & 0xFF
+    cpu.PC = source & 0x00FF
+def Halt(cpu, *unused):
+    cpu.Halt()
 #end
 
 def Jump(cpu, condition, location):

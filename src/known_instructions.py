@@ -838,7 +838,7 @@ known_instructions = [
         byte_size=1, cycles=4,
         flags=None,
         operands = None,
-        executor = None),
+        executor = Halt),
         
     Instruction(
         0x77, "LD (HL),A", bus_width=1,

@@ -14,7 +14,7 @@ mnemonic_map = {
     'DEC':'Decrement',
     'DI':'DisableInterrupts',
     'EI':'EnableInterrupts',
-    'HALT':None,
+    'HALT':'Halt',
     'INC':'Increment',
     'INVALID':'InvalidInstruction',
     'JP':'Jump',
