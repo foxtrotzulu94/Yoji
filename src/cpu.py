@@ -2,7 +2,8 @@ from typing import *
 from .cpu_types import Registers, Flag
 from .memory import Memory
 from .instructions import Instruction
-from .known_instructions import known_instructions, cb_prefix
+from .base_instructions import base_instructions
+from .cb_prefix_instructions import cb_prefix
 
 class CPU:
     """
@@ -25,8 +26,8 @@ class CPU:
 
         # Technically, we can just use array indices to find it since known_instructions should be implemented as an ordered list
         # TODO: Change to list for faster access through index offset
-        self.__opcode_map = { x.Opcode: x for x in known_instructions }
-        self.__opcode_map[0xCB] = { x.Opcode: x for x in cb_prefix }
+        self.__base_opcodes = base_instructions
+        self.__cb_opcodes = cb_prefix
     # end init
 
     ### Bit Flag methods ###
@@ -143,11 +144,11 @@ class CPU:
     #end
 
     def _get_next_instruction(self):
-        opcode = self.__memory.Read(self.PC)
-        instr = self.__opcode_map[int.from_bytes(opcode, 'big')]
-        if type(instr) is not Instruction:
-            opcode = self.__memory.Read(self.PC+1)
-            instr = instr[int.from_bytes(opcode, 'big')]
+        opcode = self.__memory.Read(self.PC)[0]
+        instr = self.__base_opcodes[opcode]
+        if opcode == 0xCB:
+            opcode = self.__memory.Read(self.PC+1)[0]
+            instr = self.__cb_opcodes[opcode]
 
         self._curr_inst = instr
     #end
@@ -235,7 +236,7 @@ class CPU:
                 instr = self.__opcode_map[0xcb][opcode]
         elif type(opcode) is str:
             # This is pretty darn slow...
-            matching = [ x for x in known_instructions+cb_prefix if x._mnemonic == opcode ]
+            matching = [ x for x in base_instructions + cb_prefix if x._mnemonic == opcode ]
             if len(matching) < 1:
                 raise KeyError("Mnemonic not found!")
             instr = matching[0]

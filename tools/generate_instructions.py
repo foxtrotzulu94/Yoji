@@ -266,15 +266,20 @@ def create_header(file_handle):
 #end create_header
 
 def main():
-    out_filename = '../src/known_instructions.py'
-    if os.path.exists(out_filename):
-        os.remove(out_filename)
+    known_filenames = ['../src/known_instructions.py', '../src/base_instructions.py', '../src/cb_prefix_instructions.py']
+    for out_filename in known_filenames:
+        if os.path.exists(out_filename):
+            os.remove(out_filename)
 
-    with open('../src/known_instructions.py', 'w') as target_file:
-        create_header(target_file)
-        read_and_generate('./gb_base.json', 'known_instructions', target_file)
-        read_and_generate('./gb_cb_prefix.json', 'cb_prefix', target_file)
-    #close target_file
+    with open('../src/base_instructions.py', 'w') as base_file:
+        create_header(base_file)
+        read_and_generate('./gb_base.json', 'base_instructions', base_file)
+    #close file
+
+    with open('../src/cb_prefix_instructions.py', 'w') as cb_file:
+        create_header(cb_file)
+        read_and_generate('./gb_cb_prefix.json', 'cb_prefix', cb_file)
+    #close file
 #end
 
 if __name__ == "__main__":
