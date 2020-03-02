@@ -1,3 +1,4 @@
+from typing import *
 from enum import Enum, IntEnum
 
 class Flag(IntEnum):
@@ -32,7 +33,7 @@ class Registers(IntEnum):
     PC = -2
 #end
 
-_double_registers_name={
+_double_registers_name = {
     Registers.A: 'AF',
     Registers.BC: 'BC',
     Registers.B: 'BC',
@@ -44,7 +45,7 @@ _double_registers_name={
     Registers.PC: 'PC'
 }
 
-def GetRegisterName(reg, size):
+def GetRegisterName(reg : Registers, size: int) -> str:
     if size == 2:
         return _double_registers_name[reg]
 

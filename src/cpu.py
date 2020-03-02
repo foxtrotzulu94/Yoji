@@ -1,4 +1,6 @@
-from .cpu_types import *
+from typing import *
+from .cpu_types import Registers, Flag
+from .memory import Memory
 from .instructions import Instruction
 from .known_instructions import known_instructions, cb_prefix
 
@@ -7,7 +9,7 @@ class CPU:
     Emulates the Sharp LR35902 by instruction interpretation
     """
 
-    def __init__(self, memory):
+    def __init__(self, memory: Memory):
         self.__program_counter = 0
         self.__stack_ptr = 0
         self.__stack_size = 0
@@ -22,50 +24,53 @@ class CPU:
         self._cycles_left = -1
 
         # Technically, we can just use array indices to find it since known_instructions should be implemented as an ordered list
+        # TODO: Change to list for faster access through index offset
         self.__opcode_map = { x.Opcode: x for x in known_instructions }
         self.__opcode_map[0xCB] = { x.Opcode: x for x in cb_prefix }
     # end init
 
     ### Bit Flag methods ###
-    def get_flag(self, bit_offset):
+    def get_flag(self, bit_offset: int) -> bool:
         return (self.__registers[1] & (1 << bit_offset)) == (1 << bit_offset)
 
-    def set_flag(self, value, bit_offset):
+    def set_flag(self, value : bool, bit_offset: int):
         if value:
             self.__registers[1] = self.__registers[1] | 1 << bit_offset
         else:
             self.__registers[1] = (self.__registers[1] & ~(1 << bit_offset))
 
-    def _generate_get_flag(bit_offset):
-        def gen(self):
+    def _generate_get_flag(bit_offset: int) -> Callable[['CPU'], bool]:
+        def gen(self: 'CPU') -> bool:
             return self.get_flag(bit_offset)
         return gen
 
-    def _generate_set_flag(bit_offset):
-        def gen(self, value):
-            return self.set_flag(value, bit_offset)
+    def _generate_set_flag(bit_offset: int) -> Callable[['CPU', bool], None]:
+        def gen(self: 'CPU', value: bool):
+            self.set_flag(value, bit_offset)
         return gen
 
     ### Register Flag methods ###
     # NOTE they use big endian because the MSB should be stored in the first 8-bit register!
-    def get_register(self, offset, length):
+    def get_register(self, offset: int, length: int) -> int:
         """ Get method for regular registers """
         return int.from_bytes(self.__registers[offset : offset+length], 'big')
 
-    def set_register(self, value, offset, length):
+    def set_register(self, value : int, offset: int, length: int):
         """ Set method for regular registers """
+        data = bytes()
         if type(value) is int:
-            value = bytearray(value.to_bytes(length, 'big'))
-        self.__registers[offset : offset+length] = value
+            data = bytes([value]) if length == 1 else bytes([ (value&0xFF00) >> 8, value & 0xFF] )
+        for i in range(0, length):
+            self.__registers[offset + i] = data[i]
 
-    def _generate_get_register(offset, length = 1):
-        def gen(self):
+    def _generate_get_register(offset: int, length: int = 1) -> Callable[['CPU'], int]:
+        def gen(self: 'CPU') -> int:
             return self.get_register(offset, length)
         return gen
 
-    def _generate_set_register(offset, length = 1):
-        def gen(self, value):
-            return self.set_register(value, offset, length)
+    def _generate_set_register(offset: int, length: int = 1) -> Callable[['CPU', int], None]:
+        def gen(self: 'CPU', value: int):
+            self.set_register(value, offset, length)
         return gen
 
     ### Properties ###
@@ -87,6 +92,28 @@ class CPU:
     @SP.setter
     def SP(self, value):
         self.__stack_ptr = value
+
+    ## Registers ##
+    # 8-BIT WIDTH #
+    A = property(_generate_get_register(Registers.A), _generate_set_register(Registers.A), None, "The 8-bit Accumulator register")
+    F = property(_generate_get_register(Registers.F), _generate_set_register(Registers.F), None, "The Flag register")
+    B = property(_generate_get_register(Registers.B), _generate_set_register(Registers.B), None, "General purpose 8-bit register")
+    C = property(_generate_get_register(Registers.C), _generate_set_register(Registers.C), None, "General purpose 8-bit register")
+    D = property(_generate_get_register(Registers.D), _generate_set_register(Registers.D), None, "General purpose 8-bit register")
+    E = property(_generate_get_register(Registers.E), _generate_set_register(Registers.E), None, "General purpose 8-bit register")
+    H = property(_generate_get_register(Registers.H), _generate_set_register(Registers.H), None, "General purpose 8-bit register")
+    L = property(_generate_get_register(Registers.L), _generate_set_register(Registers.L), None, "General purpose 8-bit register")
+
+    # 16-BIT WIDTH #
+    BC = property(_generate_get_register(Registers.B,2), _generate_set_register(Registers.B,2), None, "General purpose 16-bit register")
+    DE = property(_generate_get_register(Registers.C,2), _generate_set_register(Registers.D,2), None, "General purpose 16-bit register")
+    HL = property(_generate_get_register(Registers.H,2), _generate_set_register(Registers.H,2), None, "General purpose 16-bit register")
+
+    ## Flags ##
+    z = property(_generate_get_flag(Flag.z), _generate_set_flag(Flag.z), None, "The Zero bit flag")
+    n = property(_generate_get_flag(Flag.n), _generate_set_flag(Flag.n), None, "The Subtract bit flag")
+    h = property(_generate_get_flag(Flag.h), _generate_set_flag(Flag.h), None, "The Half Carry bit flag")
+    c = property(_generate_get_flag(Flag.c), _generate_set_flag(Flag.c), None, "The Carry bit flag")
 
     def EnableInterrupts(self, is_enabled):
         self.__interrupts_enabled = is_enabled
@@ -115,33 +142,11 @@ class CPU:
         return int.from_bytes(top, 'little')
     #end
 
-    ## Registers ##
-    # 8-BIT WIDTH #
-    A = property(_generate_get_register(Registers.A), _generate_set_register(Registers.A), None, "The 8-bit Accumulator register")
-    F = property(_generate_get_register(Registers.F), _generate_set_register(Registers.F), None, "The Flag register")
-    B = property(_generate_get_register(Registers.B), _generate_set_register(Registers.B), None, "General purpose 8-bit register")
-    C = property(_generate_get_register(Registers.C), _generate_set_register(Registers.C), None, "General purpose 8-bit register")
-    D = property(_generate_get_register(Registers.D), _generate_set_register(Registers.D), None, "General purpose 8-bit register")
-    E = property(_generate_get_register(Registers.E), _generate_set_register(Registers.E), None, "General purpose 8-bit register")
-    H = property(_generate_get_register(Registers.H), _generate_set_register(Registers.H), None, "General purpose 8-bit register")
-    L = property(_generate_get_register(Registers.L), _generate_set_register(Registers.L), None, "General purpose 8-bit register")
-
-    # 16-BIT WIDTH #
-    BC = property(_generate_get_register(Registers.B,2), _generate_set_register(Registers.B,2), None, "General purpose 16-bit register")
-    DE = property(_generate_get_register(Registers.C,2), _generate_set_register(Registers.D,2), None, "General purpose 16-bit register")
-    HL = property(_generate_get_register(Registers.H,2), _generate_set_register(Registers.H,2), None, "General purpose 16-bit register")
-
-    ## Flags ##
-    z = property(_generate_get_flag(Flag.z), _generate_set_flag(Flag.z), None, "The Zero bit flag")
-    n = property(_generate_get_flag(Flag.n), _generate_set_flag(Flag.n), None, "The Subtract bit flag")
-    h = property(_generate_get_flag(Flag.h), _generate_set_flag(Flag.h), None, "The Half Carry bit flag")
-    c = property(_generate_get_flag(Flag.c), _generate_set_flag(Flag.c), None, "The Carry bit flag")
-
     def _get_next_instruction(self):
-        opcode = self.__memory.Read(self.PC, 1)
+        opcode = self.__memory.Read(self.PC)
         instr = self.__opcode_map[int.from_bytes(opcode, 'big')]
         if type(instr) is not Instruction:
-            opcode = self.__memory.Read(self.PC+1, 1)
+            opcode = self.__memory.Read(self.PC+1)
             instr = instr[int.from_bytes(opcode, 'big')]
 
         self._curr_inst = instr
@@ -245,4 +250,4 @@ class CPU:
         instr.writeback(self, self.__memory, location, result)
         self._check_interrupts()
     #end
-
+#end class
