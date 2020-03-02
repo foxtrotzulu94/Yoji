@@ -123,17 +123,17 @@ class CPU:
     # HACK: The stack operations need access to memory
     # Right now, the way this fits in the instruction machinery makes it complicated and wrong
     # but when executing instructions, we have a handle back to the CPU, so just use it here directly.
-    def PushStack(self, value):
+    def PushStack(self, value: int):
         converted = value.to_bytes(2, 'little')
         self.SP -= 2
         self.__memory.Write(self.SP, converted)
         self.__stack_size += 1
-    def PeekStack(self):
+    def PeekStack(self) -> bytearray:
         if self.__stack_size == 0:
-            return 0
+            return bytearray(1)
 
         return self.__memory.Read(self.SP, 2)
-    def PopStack(self):
+    def PopStack(self) -> int:
         assert(self.__stack_size > 0)
         top = self.PeekStack()
         self.SP += 2

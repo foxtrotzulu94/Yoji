@@ -1,3 +1,4 @@
+from typing import *
 from enum import Enum
 from .cpu_types import *
 
@@ -269,6 +270,9 @@ class Operand:
     #end
 #end operand
 
+Num = Optional[int]
+Arg1 = Union[int, bool, None]
+Action = Callable[['CPU', Arg1, Num], Num]
 class Instruction:
     """
     Internal representation of an LR35902 instruction.
@@ -276,7 +280,7 @@ class Instruction:
     all of the info needed to execute when combined with the current location, the CPU and the memory bus
     """
 
-    def __init__(self, opcode, shorthand, bus_width, byte_size, cycles, flags, operands, executor):
+    def __init__(self, opcode, shorthand, bus_width, byte_size, cycles, flags, operands, executor: Action):
         self._opcode = opcode
         self._mnemonic = shorthand
         self._result_size = bus_width
@@ -344,10 +348,6 @@ class Instruction:
 
     def execute(self, cpu, mem, location):
         """ Runs the instruction action on the known operands and returns the result """
-        # quick check
-        if self._action is None:
-            raise NotImplementedError("The instruction is not implemented yet!\n\t{}".format(self.ToString(mem, location-1)))
-            return None
 
         #Get the operands
         get_operands = lambda idx: self._get_operand(idx, cpu, mem, location)
@@ -355,8 +355,6 @@ class Instruction:
 
         # Do the thing and box the result!
         raw_result = self._action(cpu, dest, source)
-        if raw_result is None:
-            raw_result = 0
         result = (raw_result & 0xFF) if self._result_size == 1 else (raw_result & 0xFFFF)
 
         # Check the flag status
@@ -466,20 +464,20 @@ def NotImplementedYet(*unused):
 
 import operator
 
-def _from_operator(an_operator):
-    def func(cpu, destination, source):
+def _from_operator(an_operator) -> Action:
+    def func(cpu: 'CPU', destination: Arg1, source: Num) -> Num:
         return an_operator(destination, source)
     return func
 #end
 
 Add = _from_operator(operator.add)
-def AddWithCarry(cpu, destination, source):
+def AddWithCarry(cpu: 'CPU', destination: Arg1, source: Num) -> Num:
     return Add(cpu, destination, source) + CPU.c
 #end
 
 Subtract = _from_operator(operator.sub)
 Compare = Subtract
-def SubWithCarry(cpu, destination, source):
+def SubWithCarry(cpu: 'CPU', destination: Arg1, source: Num) -> Num:
     return Subtract(cpu, destination, source + CPU.c)
 #end
 
@@ -487,36 +485,36 @@ BinOr = _from_operator(operator.or_)
 BinXor = _from_operator(operator.xor)
 BinAnd = _from_operator(operator.and_)
 
-def Increment(cpu, unused, source):
+def Increment(cpu: 'CPU', destination: Arg1, source: Num) -> Num:
     return source + 1
-def Decrement(cpu, unused, source):
+def Decrement(cpu: 'CPU', destination: Arg1, source: Num) -> Num:
     return source - 1
 #end
 
-def ShiftLeft(_, unused, source):
+def ShiftLeft(_: 'CPU', __: Arg1, source: Num) -> Num:
     # Note: in our implementation Carry is set if the 9th bit (bit 8) is set
     return source << 1
-def RotateLeft(cpu, unused, source):
+def RotateLeft(cpu: 'CPU', _: Arg1, source: Num) -> Num:
     """ From z80 Heaven:
     9-bit rotation to the left, the register's bits are shifted left.
     The carry value is put into 0th bit of the register, and the leaving 7th bit is put into the carry.
     """
     return (source << 1) | cpu.C
-def RotateLeftWithCarry(cpu, unused, source):
+def RotateLeftWithCarry(cpu: 'CPU', _: Arg1, source: Num) -> Num:
     """ From z80 Heaven:
     8-bit rotation to the left. The bit leaving on the left is copied into the carry, and to bit 0.
     """
     return (source << 1) | (source >> 7)
 #end
 
-def ShiftRight(cpu, unused, source):
+def ShiftRight(cpu : 'CPU', _: Arg1, source: Num) -> Num:
     # Note: in our implementation Carry is set if the 9th bit is set.
     # We need to shift right, and place bit 0 in the carry
     return (source >> 1) | ((source & 1) << 8)
-def ShiftRightArithmetic(cpu, unused, source):
+def ShiftRightArithmetic(cpu: 'CPU', _: Arg1, source: Num) -> Num:
     # Do the above, but preserving bit 7
     return (source >> 1) | ((source & 1) << 8) | (source & 0x40)
-def RotateRight(cpu, unused, source):
+def RotateRight(cpu: 'CPU', _: Arg1, source: Num) -> Num:
     """ From z80 Heaven:
     9-bit rotation to the right.
     The carry is copied into bit 7, and the bit leaving on the right is copied into the carry.
@@ -527,7 +525,7 @@ def RotateRight(cpu, unused, source):
     # B: Move the least signifcant bit up to the bit 8. This will ensure to set/reset the carry bit later in Instructions._set_flags method
     # C: Put the carry bit in bit 7
     return (source >> 1) | ((source & 1) << 8) | (cpu.c << 7)
-def RotateRightWithCarry(cpu, unused, source):
+def RotateRightWithCarry(_: 'CPU', __: Arg1, source: Num) -> Num:
     """ From z80 Heaven:
     8-bit rotation to the right. the bit leaving on the right is copied into the carry, and into bit 7.
     """
@@ -535,83 +533,84 @@ def RotateRightWithCarry(cpu, unused, source):
     return (source >> 1) | ((source & 1) << 8) | ((source & 1) << 7)
 #end
 
-def Load(cpu, unused, source):
+def Load(_: 'CPU', __ : Arg1, source: Num) -> Num:
     # Just return the source, what matters for this one is the Write callback onto destination
     return source
-def Swap(_, __, source):
+def Swap(_: 'CPU', __ : Arg1, source: Num) -> Num:
     hi = source & 0xF0
     lo = source & 0xF
     result = (lo << 4) | (hi >> 4)
     return result
 #end
 
-def CheckBit(_, bit, source):
+def CheckBit(_: 'CPU', bit: Arg1, source: Num) -> Num:
     return (source & (1 << bit)) == 1 << bit
-def SetBit(_, source, bit):
+def SetBit(_ :'CPU', source: Arg1, bit: Num) -> Num:
     return source | (1 << bit)
-def SetCarry(cpu, *unused):
+def SetCarry(*_) -> Num:
     # Carry is set in bit 8
     return 1 << 8
-def InvertCarry(cpu,*unused):
+def InvertCarry(cpu :'CPU', _: Arg1, __ :Num) -> Num:
     return 0 if cpu.c else SetCarry(cpu)
 #end
 
-def Push(cpu, unused, val):
+def Push(cpu: 'CPU', _: Arg1, val: Num) -> Num:
     cpu.PushStack(val)
     return 0
-def Pop(cpu, *unused):
+def Pop(cpu: 'CPU', *_) -> Num:
     return cpu.PopStack()
-def Call(cpu, condition, location):
+def Call(cpu:'CPU', condition: Arg1, location: Num) -> Num:
     # Call into a routine.
     # Note that None is not False
-    if condition is False:
-        return
-
-    # The PC is always pointing at the next instruction now
-    Push(cpu, None, cpu.PC)
-    cpu.PC = location
-def Return(cpu, condition, unused):
-    if condition is False:
-        return
-
-    cpu.PC = Pop(cpu, None)
+    if not condition is False:
+        # The PC is always pointing at the next instruction now
+        Push(cpu, None, cpu.PC)
+        cpu.PC = location
+    return 0
+def Return(cpu: 'CPU', condition: Arg1, _: Num) -> Num:
+    if not condition is False:
+        cpu.PC = Pop(cpu, None)
+    return 0
 ReturnInterrupt = Return # For now...
-def Restart(cpu, unused, source):
+def Restart(cpu:'CPU', _: Arg1, source: Num) -> Num:
     # Calls into the GameBoy's Restart and Interrupt vector location
     Push(cpu, None, cpu.PC +3)
     cpu.PC = source & 0x00FF
-def Halt(cpu, *unused):
+    return 0
+def Halt(cpu:'CPU', *unused) -> Num:
     cpu.Halt()
+    return 0
 Stop = Halt # TODO? We might need to do blank the screen
 #end
 
-def Jump(cpu, condition, location):
-    if condition is False:
-        return
-    cpu.PC = location
-def NearJump(cpu, condition, signed_value):
-    if condition is False:
-        return
+def Jump(cpu:'CPU', condition: Arg1, location: Num) -> Num:
+    if not condition is False:
+        cpu.PC = location
+    return 0
+def NearJump(cpu:'CPU', condition: Arg1, signed_value: Num) -> Num:
+    if not condition is False:
+        value = signed_value
+        if CheckBit(None, 7, signed_value):
+            # Convert 2's complement back to integer and add a negative sign
+            value = - (((~value)+1)&0xFF)
 
-    value = signed_value
-    if CheckBit(None, 7, signed_value):
-        # Convert 2's complement back to integer and add a negative sign
-        value = - (((~value)+1)&0xFF)
-
-    cpu.PC = cpu.PC + value
+        cpu.PC = cpu.PC + value
+    return 0
 #end
 
-def EnableInterrupts(cpu, *unused):
+def EnableInterrupts(cpu:'CPU', *unused) -> Num:
     cpu.EnableInterrupts(True)
-def DisableInterrupts(cpu, *unused):
+    return 0
+def DisableInterrupts(cpu:'CPU', *unused) -> Num:
     cpu.EnableInterrupts(False)
+    return 0
 #end
 
-def ComplementA(cpu, *unused):
+def ComplementA(cpu:'CPU', *unused) -> Num:
     # Fairly specific
     cpu.A = (cpu.A ^ 0xFF) & 0xFF
     return cpu.A
-def DecimalAdjustAccumulator(cpu, *unused):
+def DecimalAdjustAccumulator(cpu:'CPU', *unused) -> Num:
     """ From z80 heaven:
     When this instruction is executed, the A register is BCD corrected using the contents of the flags.
     """
