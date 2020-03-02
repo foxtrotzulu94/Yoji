@@ -538,6 +538,11 @@ def RotateRightWithCarry(cpu, unused, source):
 def Load(cpu, unused, source):
     # Just return the source, what matters for this one is the Write callback onto destination
     return source
+def Swap(_, __, source):
+    hi = source & 0xF0
+    lo = source & 0xF
+    result = (lo << 4) | (hi >> 4)
+    return result
 #end
 
 def CheckBit(_, bit, source):
@@ -577,6 +582,7 @@ def Restart(cpu, unused, source):
     cpu.PC = source & 0x00FF
 def Halt(cpu, *unused):
     cpu.Halt()
+Stop = Halt # TODO? We might need to do blank the screen
 #end
 
 def Jump(cpu, condition, location):

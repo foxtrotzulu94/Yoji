@@ -6,6 +6,10 @@ def main():
     mem = Memory()
     cpu = CPU(mem)
 
+    cpu.H = 0xED
+    cpu.executeArbitraryInstruction("SWAP H")
+    assert(cpu.H == 0xDE)
+
     cpu.executeArbitraryInstruction("CCF")
     assert(cpu.c)
     cpu.executeArbitraryInstruction("CCF")

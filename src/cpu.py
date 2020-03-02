@@ -24,8 +24,6 @@ class CPU:
         self._curr_result = None
         self._cycles_left = -1
 
-        # Technically, we can just use array indices to find it since known_instructions should be implemented as an ordered list
-        # TODO: Change to list for faster access through index offset
         self.__base_opcodes = base_instructions
         self.__cb_opcodes = cb_prefix
     # end init

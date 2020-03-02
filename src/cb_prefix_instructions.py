@@ -348,56 +348,56 @@ cb_prefix = [
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.B, 1), Operand.reg(Registers.B, 1) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x31, "SWAP C", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.C, 1), Operand.reg(Registers.C, 1) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x32, "SWAP D", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.D, 1), Operand.reg(Registers.D, 1) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x33, "SWAP E", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.E, 1), Operand.reg(Registers.E, 1) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x34, "SWAP H", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.H, 1), Operand.reg(Registers.H, 1) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x35, "SWAP L", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.L, 1), Operand.reg(Registers.L, 1) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x36, "SWAP (HL)", bus_width=1,
         byte_size=2, cycles=16,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.regi(Registers.HL, 2), Operand.regi(Registers.HL, 2) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x37, "SWAP A", bus_width=1,
         byte_size=2, cycles=8,
         flags={ Flag.z:Bit.Calculate, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Reset },
         operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
-        executor = None),
+        executor = Swap),
         
     Instruction(
         0x38, "SRL B", bus_width=1,

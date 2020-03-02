@@ -124,7 +124,7 @@ base_instructions = [
         byte_size=1, cycles=4,
         flags=None,
         operands = None,
-        executor = None),
+        executor = Stop),
         
     Instruction(
         0x11, "LD DE,d16", bus_width=2,

@@ -44,9 +44,9 @@ mnemonic_map = {
     'SLA':'ShiftLeft',
     'SRA':'ShiftRightArithmetic',
     'SRL':'ShiftRight',
-    'STOP':None,
+    'STOP':'Stop',
     'SUB':'Subtract',
-    'SWAP':None,
+    'SWAP':'Swap',
     'XOR':'BinXor',
 }
 
