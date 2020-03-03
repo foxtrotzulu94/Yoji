@@ -26,6 +26,8 @@ class CPU:
 
         self.__base_opcodes = base_instructions
         self.__cb_opcodes = cb_prefix
+
+        self.__debug = False
     # end init
 
     ### Bit Flag methods ###
@@ -73,6 +75,15 @@ class CPU:
         return gen
 
     ### Properties ###
+
+    @property
+    def Debug(self):
+        """ Debug mode to print instructions on each tick """
+        return self.__debug
+
+    @Debug.setter
+    def Debug(self, value):
+        self.__debug = value
 
     @property
     def PC(self):
@@ -190,9 +201,16 @@ class CPU:
         if self.__suspended:
             return
 
-        self._get_next_instruction() # 1. Instruction Fetch, Decode
+        # 1. Instruction Fetch, Decode
+        self._get_next_instruction()
+        location = self.PC
         self.PC += self._curr_inst.Size
-        self._execute_instruction()  # 2. Execute & Writeback
+
+        # 2. Execute & Writeback
+        self._execute_instruction(location + 1)
+
+        if self.__debug:
+            print(self._curr_inst.ToString(self.__memory, location))
 
         self._cycles_left = self._curr_inst.Cycles - 1
     #end Tick

@@ -10,6 +10,10 @@ class Clock:
         self._should_run = True
     #end
 
+    def Tick(self):
+        # TODO: implement clock timers
+        pass
+
     def TickForever(self):
         """Ticks until an explicit stop is made"""
         while(self._should_run):
@@ -27,6 +31,7 @@ class Clock:
             # Can't get spec on audio, but it should be 4MHz
             #self._audio.Tick()
 
+            self.Tick()
             self._cpu.Tick()
             self._cycles += 1
         #end While
