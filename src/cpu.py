@@ -174,9 +174,6 @@ class CPU:
             location = self.PC + 1
             self.PC += self._curr_inst.Size
             self._execute_instruction(location)
-
-            # Writeback
-            self._curr_inst.writeback(self, self.__memory, location, self._curr_result)
         #end
 
         self._check_interrupts()
@@ -189,24 +186,13 @@ class CPU:
         if self._cycles_left > 0:
             return
 
+        self._check_interrupts()
         if self.__suspended:
-            self._check_interrupts()
             return
-
-        # 3. Writeback
-        if self._cycles_left == 0 and self._curr_inst is not None:
-            # If we have an instruction, do the writeback step in the last possible cycle
-            # this is to avoid any weird timing issues w.r.t the Memory bus
-            # TODO: refactor this so that the memory bus can also take into consideration the effects of cycle writeback
-            #       that way we can isolate writeback in the instruction machinery
-            self._curr_inst.writeback(self, self.__memory, self.PC + 1, self._curr_result)
-
-            self._check_interrupts()
-        # end if
 
         self._get_next_instruction() # 1. Instruction Fetch, Decode
         self.PC += self._curr_inst.Size
-        self._execute_instruction()  # 2. Execute
+        self._execute_instruction()  # 2. Execute & Writeback
 
         self._cycles_left = self._curr_inst.Cycles - 1
     #end Tick

@@ -344,11 +344,6 @@ class Instruction:
 
     def execute(self, cpu, mem, location):
         """ Runs the instruction action on the known operands and returns the result """
-        # quick check
-        if self._action is None:
-            raise NotImplementedError("The instruction is not implemented yet!\n\t{}".format(self.ToString(mem, location-1)))
-            return None
-
         #Get the operands
         get_operands = lambda idx: self._get_operand(idx, cpu, mem, location)
         dest, source = get_operands(0), get_operands(1)
@@ -361,6 +356,9 @@ class Instruction:
 
         # Check the flag status
         self._set_flags(cpu, raw_result, result, dest, source)
+
+        # Do writeback
+        self.writeback(cpu, mem, location, result)
 
         return result
     #end execute
