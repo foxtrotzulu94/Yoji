@@ -1,4 +1,5 @@
 from enum import Enum, IntEnum
+from .bus import Interrupt
 
 class Memory:
     # Great resource: http://gameboy.mongenel.com/dmg/asmmemmap.html
@@ -36,7 +37,7 @@ class Memory:
     def __init__(self, synchronized = False):
         # hard coding to the DMG for now
         self._boot_rom = bytearray()
-        self._mem_area = bytearray(0xFFFF) # Full 16-bit address space
+        self._mem_area = bytearray(0xFFFF + 1) # Full 16-bit address space
         self._len = len(self._mem_area)
         self._ram_write_queue = None
         self._vram_write_queue = None
@@ -113,8 +114,8 @@ class Memory:
         if type(offset) is bytearray:
             offset = int.from_bytes(offset, 'little')
         if type(data) is int:
-            # We don't allow longer memory!.
-            data = data.to_bytes(1, 'little')
+            # We don't allow int writes larger than a byte!
+            data = bytes([data])
 
         assert(type(data) is bytearray or type(data) is bytes)
         size = len(data)
@@ -133,6 +134,21 @@ class Memory:
         #end
     #end Write
 
+    def SetInterruptFlags(self, flags, set_bits):
+        curr_val = self.CheckInterruptFlags()
+        new_value = curr_val | flags if set_bits else curr_val & (~flags)
+        self.Write(0xFF0F, new_value)
+    def CheckInterruptFlags(self):
+        return self.Read(0xFF0F)[0]
+    #end
+
+    def SetInterruptEnable(self, flags, enable):
+        curr_val = self.CheckInterruptEnable()
+        new_value = curr_val | flags if enable else curr_val & (~flags)
+        self.Write(0xFFFF, new_value)
+    def CheckInterruptEnable(self):
+        return self.Read(0xFFFF)[0]
+    #end
 
     def LoadROM(self, data):
         """[Temporary]"""

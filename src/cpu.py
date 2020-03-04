@@ -1,5 +1,6 @@
 from typing import *
 from .cpu_types import Registers, Flag
+from .bus import Interrupt
 from .memory import Memory
 from .instructions import Instruction
 from .base_instructions import base_instructions
@@ -162,16 +163,37 @@ class CPU:
         self._curr_inst = instr
     #end
 
+    InterruptJumpTable = {
+        Interrupt.VBlank: 0x40,
+        Interrupt.LCD_STAT: 0x48,
+        Interrupt.Timer: 0x50,
+        Interrupt.Serial: 0x58,
+        Interrupt.Joypad: 0x60,
+    }
+
     def _execute_instruction(self, location):
         self._curr_result = self._curr_inst.execute(self, self.__memory, location)
     def _check_interrupts(self):
         if not self.__interrupts_enabled:
             return
 
-        # TODO: Check for pending interrupts to handle at mem 0xFF0F
+        enabled = self.__memory.CheckInterruptEnable()
+        raised = self.__memory.CheckInterruptFlags()
+        for bit in Interrupt:
+            if (enabled & bit) == bit and (raised & bit) == bit:
+                # If we were suspended, wake up!
+                self.__suspended = False
 
-        # TODO: When an interrupt is available, before dealing with it, set
-        self.__suspended = False
+                # Turn the bit off and Go handle the interrupt
+                self.__memory.SetInterruptFlags(bit, False)
+                self.__interrupts_enabled = False
+                self.PushStack(self.PC)
+                self.PC = CPU.InterruptJumpTable[bit]
+
+                # The interrupt routine will proceed to execute as normal
+                return
+            #end if
+        #end for
     #end
 
     def Step(self):

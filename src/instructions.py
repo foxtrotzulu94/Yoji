@@ -573,7 +573,9 @@ def Return(cpu, condition, unused):
         return
 
     cpu.PC = Pop(cpu, None)
-ReturnInterrupt = Return # For now...
+def ReturnInterrupt(cpu, *unused):
+    Return(cpu, None, None)
+    EnableInterrupts(cpu)
 def Restart(cpu, unused, source):
     # Calls into the GameBoy's Restart and Interrupt vector location
     Push(cpu, None, cpu.PC +3)

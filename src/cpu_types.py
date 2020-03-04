@@ -11,20 +11,20 @@ class Flag(IntEnum):
 
 class Registers(IntEnum):
     """Enum for refering to the CPU Registers"""
-    A = 0
-    F = 1
+    A  = 0
+    F  = 1
     AF = 0
 
-    B = 2
-    C = 3
+    B  = 2
+    C  = 3
     BC = 2
 
-    D = 4
-    E = 5
+    D  = 4
+    E  = 5
     DE = 4
 
-    H = 6
-    L = 7
+    H  = 6
+    L  = 7
     HL = 6
 
     # Special Registers
@@ -54,8 +54,8 @@ def GetRegisterName(reg : Registers, size: int) -> str:
 
 class Bit(Enum):
     """Enum for determining what to do when setting a bit flag"""
-    Set = 1
-    Reset = 0
+    Set       = 1
+    Reset     = 0
     Calculate = -1
-    Ignore = None
+    Ignore    = None
 #end bits
