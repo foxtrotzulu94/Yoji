@@ -1,6 +1,10 @@
 import time
 
 class Clock:
+    """
+    Emulates the System master clock by subdividing the machine cycle @ 4MHz
+    """
+
     def __init__(self, cpu, memory, video, audio):
         self._cpu = cpu
         self._memory = memory
@@ -19,7 +23,7 @@ class Clock:
     def TickForever(self):
         """Ticks until an explicit stop is made"""
         while(self._should_run):
-            start = time.monotonic_ns()
+            start = time.monotonic()
             # We divide out main loop among the components
             # Keep in mind the timings and the order
 
@@ -41,11 +45,12 @@ class Clock:
 
             self.Tick()
             self._cpu.Tick()
-            end = time.monotonic_ns()
+            end = time.monotonic()
             self._cycles += 1
             self._time += (end-start)
         #end While
 
         # if we exited the loop for any reason, prime it for the next run
         self._should_run = True
-    #end
+    #end Tick
+#end class

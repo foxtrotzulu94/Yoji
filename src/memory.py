@@ -1,5 +1,5 @@
 from enum import Enum, IntEnum
-from .bus import Interrupt
+from .bus import IO, InterruptBit
 
 class Memory:
     # Great resource: http://gameboy.mongenel.com/dmg/asmmemmap.html
@@ -105,10 +105,6 @@ class Memory:
             self._mem_area[offset + i] = data[i]
     #end
 
-    def _handle_interrupts(self):
-        # TODO;
-        pass
-
     def Write(self, offset, data):
         """ Read data to memory locations """
         if type(offset) is bytearray:
@@ -137,17 +133,17 @@ class Memory:
     def SetInterruptFlags(self, flags, set_bits):
         curr_val = self.CheckInterruptFlags()
         new_value = curr_val | flags if set_bits else curr_val & (~flags)
-        self.Write(0xFF0F, new_value)
+        self.Write(IO.INT.FLAG, new_value)
     def CheckInterruptFlags(self):
-        return self.Read(0xFF0F)[0]
+        return self.Read(IO.INT.FLAG)[0]
     #end
 
     def SetInterruptEnable(self, flags, enable):
         curr_val = self.CheckInterruptEnable()
         new_value = curr_val | flags if enable else curr_val & (~flags)
-        self.Write(0xFFFF, new_value)
+        self.Write(IO.INT.ENABLE, new_value)
     def CheckInterruptEnable(self):
-        return self.Read(0xFFFF)[0]
+        return self.Read(IO.INT.ENABLE)[0]
     #end
 
     def LoadROM(self, data):

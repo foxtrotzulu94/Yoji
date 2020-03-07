@@ -1,6 +1,6 @@
 from typing import *
 from .cpu_types import Registers, Flag
-from .bus import Interrupt
+from .bus import InterruptBit
 from .memory import Memory
 from .instructions import Instruction
 from .base_instructions import base_instructions
@@ -164,11 +164,11 @@ class CPU:
     #end
 
     InterruptJumpTable = {
-        Interrupt.VBlank: 0x40,
-        Interrupt.LCD_STAT: 0x48,
-        Interrupt.Timer: 0x50,
-        Interrupt.Serial: 0x58,
-        Interrupt.Joypad: 0x60,
+        InterruptBit.VBlank: 0x40,
+        InterruptBit.LCD_STAT: 0x48,
+        InterruptBit.Timer: 0x50,
+        InterruptBit.Serial: 0x58,
+        InterruptBit.Joypad: 0x60,
     }
 
     def _execute_instruction(self, location):
@@ -179,7 +179,7 @@ class CPU:
 
         enabled = self.__memory.CheckInterruptEnable()
         raised = self.__memory.CheckInterruptFlags()
-        for bit in Interrupt:
+        for bit in InterruptBit:
             if (enabled & bit) == bit and (raised & bit) == bit:
                 # If we were suspended, wake up!
                 self.__suspended = False
