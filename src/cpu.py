@@ -229,10 +229,9 @@ class CPU:
         self.PC += self._curr_inst.Size
 
         # 2. Execute & Writeback
-        self._execute_instruction(location + 1)
-
         if self.__debug:
             print(self._curr_inst.ToString(self.__memory, location))
+        self._execute_instruction(location + 1)
 
         self._cycles_left = self._curr_inst.Cycles - 1
     #end Tick
