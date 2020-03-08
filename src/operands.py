@@ -56,10 +56,16 @@ class BaseOperand:
     #end
 
     def _translate_address(self, address):
+        is_bytes = type(address) is not int
+
         if self.width == 1:
-            if type(address) is bytearray:
+            if is_bytes:
                 address = address[0]
-            address = address | 0xFF00
+            return address | 0xFF00
+
+        if is_bytes:
+            return address[1] << 8 | address[0]
+
         return address
 
     def can_set_value(self):
@@ -198,12 +204,6 @@ class RegisterOperand(BaseOperand):
         self._register = reg
     #end
 
-    def _to_bytes(self, value):
-        wb_v = value
-        if type(wb_v) is int:
-            num_bytes = 1 if self._register != Registers.SP else 2
-            wb_v = value.to_bytes(num_bytes, 'little')
-        return wb_v
     def _get_register(self, cpu):
         if self._register < 0:
             return cpu.SP if self._register == Registers.SP else cpu.PC

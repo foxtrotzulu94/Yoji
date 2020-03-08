@@ -118,8 +118,6 @@ class Memory:
 
     def Read(self, offset, length = 1):
         """ Read data from Memory """
-        if type(offset) is bytearray:
-            offset = int.from_bytes(offset, 'little')
         return self._read_internal(offset, length)
     def readVRAMBlock(self):
         """ solely for debugging purposes """
@@ -135,14 +133,12 @@ class Memory:
 
     def Write(self, offset, data):
         """ Read data to memory locations """
-        if type(offset) is bytearray:
-            offset = int.from_bytes(offset, 'little')
         if type(data) is int:
             # We don't allow int writes larger than a byte!
             data = bytes([data])
 
-        assert(type(data) is bytearray or type(data) is bytes)
-        assert(offset > Memory.Range.ROM_END)
+        #assert(type(data) is bytearray or type(data) is bytes)
+        #assert(offset > Memory.Range.ROM_END)
         size = len(data)
         if self.Synchronized:
             # queue it for a later write

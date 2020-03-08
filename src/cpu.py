@@ -59,9 +59,7 @@ class CPU:
 
     def set_register(self, value : int, offset: int, length: int):
         """ Set method for regular registers """
-        data = bytes()
-        if type(value) is int:
-            data = bytes([value]) if length == 1 else bytes([ (value&0xFF00) >> 8, value & 0xFF] )
+        data = bytes([value]) if length == 1 else bytes([ (value&0xFF00) >> 8, value & 0xFF] )
         for i in range(0, length):
             self.__registers[offset + i] = data[i]
 
@@ -218,7 +216,7 @@ class CPU:
     def Tick(self):
         "Executes instructions to the tick of a clock"
 
-        self._cycles_left = max(self._cycles_left - 1, 0)
+        self._cycles_left -= 1
         if self._cycles_left > 0:
             return
 

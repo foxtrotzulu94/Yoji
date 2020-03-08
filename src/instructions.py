@@ -20,16 +20,6 @@ class Instruction:
         self._operands = operands
     #end
 
-    def _get_operands(self, cpu, mem, location):
-        if self._operands is None:
-            return (None, None)
-
-        dest_op, src_op = self._operands
-        dest = None if dest_op is None else dest_op.get_value(cpu, mem, location)
-        src = None if src_op is None else src_op.get_value(cpu, mem, location)
-        return (dest, src)
-    #end
-
     def _get_operand(self, index, cpu, mem, location):
         if self._operands is None or self._operands[index] is None:
             return None
