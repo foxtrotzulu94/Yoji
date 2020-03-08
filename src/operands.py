@@ -35,6 +35,11 @@ class Addressing(Enum):
 #end bits
 
 class BaseOperand:
+    """
+    Internal representation of an instruction operand
+    This is used both for binding interface (get/set) and debugging purposes
+    """
+
     def __init__(self, width, addressing_mode):
         # Always used
         self._mode = addressing_mode
@@ -104,7 +109,7 @@ class BaseOperand:
             return "{:X}H".format(self._value) if self._value > 7 else str(self._value)
         elif self._mode == Addressing.Bit:
             name = self._bit.name.upper()
-            return name if self._bit_state == Bit.Set else "N"+name
+            return name if self._expected == Bit.Set else "N"+name
 
         return "Unsupported addressing mode operand"
     #end
@@ -145,7 +150,6 @@ class BitOperand(BaseOperand):
         return a_bit if self._expected == Bit.Set else (not a_bit)
     def set_value(self, cpu, mem, location, value):
         raise ValueError("A bit operand should not be written to directly!")
-    #end
 #end class
 
 class ImmediateOperand(BaseOperand):
@@ -170,11 +174,12 @@ class ImmediateOperand(BaseOperand):
 
 class DirectOperand(ImmediateOperand):
     def __init__(self, width):
-        super().__init__(width, Addressing.Direct)
+        BaseOperand.__init__(self, width, Addressing.Direct)
 
     def get_value(self, cpu, mem, location):
         "Gets the value of the operand"
-        return mem.Read(self._translate_address(super.get_value()), self.width)
+        imm = super().get_value(cpu, mem, location)
+        return self._to_num(mem.Read(self._translate_address(imm), self.width))
     def set_value(self, cpu, mem, location, value):
         address = mem.Read(location, self.width)
         mem.Write(self._translate_address(address), value)
@@ -274,37 +279,19 @@ class RegisterAndImmediateOperand(RegisterOperand):
     def get_value(self, cpu, mem, location):
         "Gets the value of the operand"
         # Reads 1 byte of data
-        return super.get_value(cpu, mem, location) + (mem.Read(location)[0])
+        return super().get_value(cpu, mem, location) + (mem.Read(location)[0])
     def set_value(self, cpu, mem, location, value):
         raise ValueError("An immediate mode operand cannot be written to!")
     #end
 #end class
 
-class Operand(BaseOperand):
+class Operand:
     """
-    Internal representation of an instruction operand
-    This is used both for binding (get/set) and debugging purposes
+    This is used for static methods mainly
     """
-
-    def __init__(self, reg, width, addressing_mode):
-        # Always used
-        self._mode = addressing_mode
-        self.width = width # 1 or 2 bytes
-
-        # used when operands constants, bits, register enums
-        self._register = reg
-        self._throwaway = False
-
-        # only used when bits are used to determine if we're checking set or reset bits
-        # which is why we provide a default value
-        self._bit_state = Bit.Ignore
-    #end
-
     @staticmethod
     def bit(offset, state):
-        op = BitOperand(offset, state)
-        op._bit_state = state
-        return op
+        return BitOperand(offset, state)
 
     @staticmethod
     def const(value):
@@ -312,8 +299,7 @@ class Operand(BaseOperand):
 
     @staticmethod
     def reg(reg, width=1, throwaway = False):
-        op = RegisterOperand(reg, width)
-        return op
+        return RegisterOperand(reg, width)
 
     @staticmethod
     def regi(reg, width=1):
@@ -337,138 +323,5 @@ class Operand(BaseOperand):
 
     @staticmethod
     def mem(width):
-        return Operand(None, width, Addressing.Direct)
-
-    def can_set_value(self):
-        """Checks if this operand can be used to set value"""
-        return self._mode != Addressing.Immediate and self._mode != Addressing.RegisterPlusImmediate \
-            and self._mode != Addressing.Bit and self._mode != Addressing.Constant
-
-    def _get_register(self, cpu):
-        if self._register < 0:
-            return cpu.SP if self._register == Registers.SP else cpu.PC
-        return cpu.get_register(self._register, self.width)
-
-    def _translate_address(self, address):
-        if self.width == 1:
-            if type(address) is bytearray:
-                address = address[0]
-            address = address | 0xFF00
-        return address
-
-    def _postop(self, cpu):
-        #Set the new value immediately
-        value = self._get_register(cpu)
-        new_value = value + 1 if self._mode == Addressing.RegisterIncrement else value - 1
-
-        if self._register < 0:
-            if self._register == Registers.SP:
-                cpu.SP = new_value
-            else:
-                cpu.PC = new_value
-        else:
-            cpu.set_register(new_value, self._register, self.width)
-        #end if-else
-    #end
-
-    def _previous_value(self, cpu):
-        # Get the previously used value
-        value = self._get_register(cpu)
-        return value - 1 if self._mode == Addressing.RegisterIncrement else value + 1
-
-    def get_value(self, cpu, mem, location):
-        "Gets the value of the operand"
-
-        # if we're retrieving a constant, just return immediately
-        if self._mode == Addressing.Constant:
-            return self._register
-
-        # Methods that will get the value
-        def bit():
-            a_bit = cpu.get_flag(self._register)
-            return a_bit if self._bit_state == Bit.Set else (not a_bit)
-        def immediate():
-            return mem.Read(location, self.width)
-        def register():
-            return self._get_register(cpu)
-        def register_post():
-            value = register()
-            self._postop(cpu)
-            return mem.Read(self._translate_address(value))
-        def register_w_immediate():
-            return register() + immediate()
-        def reg_indirect():
-            return mem.Read(self._translate_address(register()), self.width)
-        def direct():
-            return mem.Read(self._translate_address(immediate()), self.width)
-        def indirect():
-            return mem.Read(self._translate_address(direct()), self.width)
-
-        value_map = {
-            Addressing.Bit: bit,
-            Addressing.Immediate: immediate,
-            Addressing.Register: register,
-            Addressing.RegisterIncrement: register_post,
-            Addressing.RegisterDecrement: register_post,
-            Addressing.RegisterPlusImmediate: register_w_immediate,
-            Addressing.RegisterIndirect: reg_indirect,
-            Addressing.Direct: direct,
-            Addressing.Indirect: indirect
-        }
-
-        retVal = value_map[self._mode]()
-        if type(retVal) is bytearray:
-            retVal = int.from_bytes(retVal, 'little')
-        return retVal
-    #end get_value
-
-    def set_value(self, cpu, mem, location, value):
-        "Sets the value of the operand. Use for writeback step"
-
-        # Throw exception now so we know
-        if self._mode == Addressing.Immediate or self._mode == Addressing.RegisterPlusImmediate:
-            raise ValueError("An immediate mode operand cannot be written to!")
-        elif self._mode == Addressing.Constant:
-            raise ValueError("A constant-value operand cannot be written to!")
-        elif self._mode == Addressing.Bit:
-            raise ValueError("A bit operand should not be written to directly!")
-
-        def safe_val():
-            wb_v = value
-            if type(wb_v) is int:
-                num_bytes = 1 if self._register != Registers.SP else 2
-                wb_v = value.to_bytes(num_bytes, 'little')
-            return wb_v
-
-        # Methods that will get the value
-        def register():
-            if self._register < 0:
-                if self._register == Registers.SP:
-                    cpu.SP = value
-                else:
-                    cpu.PC = value
-            else:
-                cpu.set_register(value, self._register, self.width)
-        def reg_indirect():
-            mem.Write(self._translate_address(self._get_register(cpu)), safe_val())
-        def register_post():
-            mem.Write(self._translate_address(self._previous_value(cpu)), safe_val())
-        def direct():
-            address = mem.Read(location, self.width)
-            mem.Write(self._translate_address(address), value)
-        def indirect():
-            indirect_loc = mem.Read(location, self.width)
-            return mem.Read(self._translate_address(indirect_loc), self.width)
-
-        value_map = {
-            Addressing.Register: register,
-            Addressing.RegisterIncrement: register_post,
-            Addressing.RegisterDecrement: register_post,
-            Addressing.RegisterIndirect: reg_indirect,
-            Addressing.Direct: direct,
-            Addressing.Indirect: indirect
-        }
-
-        value_map[self._mode]()
-    #end set_value
+        return DirectOperand(width)
 #end operand
