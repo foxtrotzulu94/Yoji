@@ -126,6 +126,11 @@ class Operand:
         #end if-else
     #end
 
+    def _previous_value(self, cpu):
+        # Get the previously used value
+        value = self._get_register(cpu)
+        return value - 1 if self._mode == Addressing.RegisterIncrement else value + 1
+
     def get_value(self, cpu, mem, location):
         "Gets the value of the operand"
 
@@ -163,7 +168,8 @@ class Operand:
             Addressing.RegisterPlusImmediate: register_w_immediate,
             Addressing.RegisterIndirect: reg_indirect,
             Addressing.Direct: direct,
-            Addressing.Indirect: indirect}
+            Addressing.Indirect: indirect
+        }
 
         retVal = value_map[self._mode]()
         if type(retVal) is bytearray:
@@ -182,6 +188,13 @@ class Operand:
         elif self._mode == Addressing.Bit:
             raise ValueError("A bit operand should not be written to directly!")
 
+        def safe_val():
+            wb_v = value
+            if type(wb_v) is int:
+                num_bytes = 1 if self._register != Registers.SP else 2
+                wb_v = value.to_bytes(num_bytes, 'little')
+            return wb_v
+
         # Methods that will get the value
         def register():
             if self._register < 0:
@@ -192,14 +205,9 @@ class Operand:
             else:
                 cpu.set_register(value, self._register, self.width)
         def reg_indirect():
-            wb_v = value
-            if type(wb_v) is int:
-                num_bytes = 1 if self._register != Registers.SP else 2
-                wb_v = value.to_bytes(num_bytes, 'little')
-            mem.Write(self._translate_address(self._get_register(cpu)), wb_v)
+            mem.Write(self._translate_address(self._get_register(cpu)), safe_val())
         def register_post():
-            reg_indirect()
-            self._postop(cpu)
+            mem.Write(self._translate_address(self._previous_value(cpu)), safe_val())
         def direct():
             address = mem.Read(location, self.width)
             mem.Write(self._translate_address(address), value)
@@ -213,7 +221,8 @@ class Operand:
             Addressing.RegisterDecrement: register_post,
             Addressing.RegisterIndirect: reg_indirect,
             Addressing.Direct: direct,
-            Addressing.Indirect: indirect}
+            Addressing.Indirect: indirect
+        }
 
         value_map[self._mode]()
     #end set_value
