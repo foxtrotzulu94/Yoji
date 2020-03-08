@@ -77,8 +77,8 @@ class Instruction:
     def execute(self, cpu, mem, location):
         """ Runs the instruction action on the known operands and returns the result """
         #Get the operands
-        get_operands = lambda idx: self._get_operand(idx, cpu, mem, location)
-        dest, source = get_operands(0), get_operands(1)
+        dest = self._get_operand(0, cpu, mem, location)
+        source = self._get_operand(1, cpu, mem, location)
 
         # Do the thing and box the result!
         raw_result = self._action(cpu, dest, source)
@@ -96,7 +96,7 @@ class Instruction:
     #end execute
 
     def writeback(self, cpu, mem, location, result):
-        if self._operands is None or self._operands[0] is None or not self._operands[0].can_set_value():
+        if self._operands is None or self._operands[0] is None:
             # write back would be illegal
             return
 

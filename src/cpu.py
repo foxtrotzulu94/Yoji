@@ -177,8 +177,11 @@ class CPU:
         if not self.__interrupts_enabled:
             return
 
-        enabled = self.__memory.CheckInterruptEnable()
         raised = self.__memory.CheckInterruptFlags()
+        if raised == 0:
+            return
+
+        enabled = self.__memory.CheckInterruptEnable()
         for bit in InterruptBit:
             if (enabled & bit) == bit and (raised & bit) == bit:
                 # If we were suspended, wake up!

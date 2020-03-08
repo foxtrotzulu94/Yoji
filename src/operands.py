@@ -135,7 +135,9 @@ class ConstOperand(BaseOperand):
         "Gets the value of the operand"
         return self._value
     def set_value(self, cpu, mem, location, value):
-        raise ValueError("A constant-value operand cannot be written to!")
+        # No-op
+        #raise ValueError("A constant-value operand cannot be written to!")
+        pass
     #end
 #end class
 
@@ -149,7 +151,9 @@ class BitOperand(BaseOperand):
         a_bit = cpu.get_flag(self._bit)
         return a_bit if self._expected == Bit.Set else (not a_bit)
     def set_value(self, cpu, mem, location, value):
-        raise ValueError("A bit operand should not be written to directly!")
+        # No-op
+        #raise ValueError("A bit operand should not be written to directly!")
+        pass
 #end class
 
 class ImmediateOperand(BaseOperand):
@@ -168,7 +172,9 @@ class ImmediateOperand(BaseOperand):
         "Gets the value of the operand"
         return self._to_num(mem.Read(location, self.width))
     def set_value(self, cpu, mem, location, value):
-        raise ValueError("An immediate mode operand cannot be written to!")
+        # No-op
+        #raise ValueError("An immediate mode operand cannot be written to!")
+        pass
     #end
 #end class
 
@@ -281,7 +287,9 @@ class RegisterAndImmediateOperand(RegisterOperand):
         # Reads 1 byte of data
         return super().get_value(cpu, mem, location) + (mem.Read(location)[0])
     def set_value(self, cpu, mem, location, value):
-        raise ValueError("An immediate mode operand cannot be written to!")
+        # No-op
+        #raise ValueError("An immediate mode operand cannot be written to!")
+        pass
     #end
 #end class
 
