@@ -15,9 +15,9 @@ class Addressing(Enum):
     # Uses a CPU register as value
     Register = 'R'
 
-    # Uses value and does R+1
+    # Uses indirect value and does R+1
     RegisterIncrement = 'R+'
-    # Uses value and does R-1
+    # Uses indirect value and does R-1
     RegisterDecrement = 'R-'
 
     # Uses the Register + what is given by the operand
@@ -111,6 +111,21 @@ class Operand:
             address = address | 0xFF00
         return address
 
+    def _postop(self, cpu):
+        #Set the new value immediately
+        value = self._get_register(cpu)
+        new_value = value + 1 if self._mode == Addressing.RegisterIncrement else value - 1
+
+        if self._register < 0:
+            if self._register == Registers.SP:
+                cpu.SP = new_value
+            else:
+                cpu.PC = new_value
+        else:
+            cpu.set_register(new_value, self._register, self.width)
+        #end if-else
+    #end
+
     def get_value(self, cpu, mem, location):
         "Gets the value of the operand"
 
@@ -128,19 +143,8 @@ class Operand:
             return self._get_register(cpu)
         def register_post():
             value = register()
-
-            #Set the new value immediately
-            new_value = value + 1 if self._mode == Addressing.RegisterIncrement else value - 1
-            if self._register < 0:
-                if self._register == Registers.SP:
-                    cpu.SP = new_value
-                else:
-                    cpu.PC = new_value
-            else:
-                cpu.set_register(new_value, self._register, self.width)
-            #end if-else
-
-            return value
+            self._postop(cpu)
+            return mem.Read(self._translate_address(value))
         def register_w_immediate():
             return register() + immediate()
         def reg_indirect():
@@ -193,16 +197,20 @@ class Operand:
                 num_bytes = 1 if self._register != Registers.SP else 2
                 wb_v = value.to_bytes(num_bytes, 'little')
             mem.Write(self._translate_address(self._get_register(cpu)), wb_v)
+        def register_post():
+            reg_indirect()
+            self._postop(cpu)
         def direct():
-            mem.Write(self._translate_address(location), value)
+            address = mem.Read(location, self.width)
+            mem.Write(self._translate_address(address), value)
         def indirect():
             indirect_loc = mem.Read(location, self.width)
             return mem.Read(self._translate_address(indirect_loc), self.width)
 
         value_map = {
             Addressing.Register: register,
-            Addressing.RegisterIncrement: reg_indirect,
-            Addressing.RegisterDecrement: reg_indirect,
+            Addressing.RegisterIncrement: register_post,
+            Addressing.RegisterDecrement: register_post,
             Addressing.RegisterIndirect: reg_indirect,
             Addressing.Direct: direct,
             Addressing.Indirect: indirect}
