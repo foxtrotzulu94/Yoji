@@ -32,7 +32,7 @@ class Cartridge:
 
     # TODO: support more sizes
     _sizes = {
-        0x0: 32*1000 # 32KB, no ROM Bank
+        0x0: 32*1024 # 32KB, no ROM Bank
     }
 
     @staticmethod
