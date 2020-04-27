@@ -5,15 +5,17 @@ class Clock:
     Emulates the System master clock by subdividing the machine cycle @ 4MHz
     """
 
-    def __init__(self, cpu, memory, video, audio):
+    def __init__(self, cpu, ppu, memory, video_out, audio):
         self._cpu = cpu
+        self._ppu = ppu
         self._memory = memory
-        self._video = video
+        self._lcd = video_out
         self._audio = audio
 
         self._cycles = 0
         self._time = 0
         self._should_run = True
+        self._is_ticking = False
     #end
 
     def Tick(self):
@@ -22,6 +24,8 @@ class Clock:
 
     def TickForever(self):
         """Ticks until an explicit stop is made"""
+
+        self._is_ticking = True
         while(self._should_run):
             start = time.monotonic()
             # We divide out main loop among the components
@@ -36,19 +40,23 @@ class Clock:
                 self._memory.TickVRAM()
 
             if self._cycles % 67000 == 0:
-                # LCD refreshes at a rate of 59.7Hz
-                # self._video.Tick()
+                # LCD refreshes @ 59.7Hz
+                # self._lcd.Tick()
                 pass
 
             # Can't get spec on audio, but it should be 4MHz
             #self._audio.Tick()
 
+            # Clock, PPU and CPU tick @ 4MHz
             self.Tick()
+            #self._ppu.Tick()
             self._cpu.Tick()
+
             end = time.monotonic()
             self._cycles += 1
             self._time += (end-start)
         #end While
+        self._is_ticking = False
 
         # if we exited the loop for any reason, prime it for the next run
         self._should_run = True

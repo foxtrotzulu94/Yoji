@@ -1,4 +1,4 @@
-from enum import Enum, IntEnum
+from enum import IntEnum
 
 class IO:
     """ Input/Output register locations in memory """
@@ -59,7 +59,7 @@ class LCDCBit(IntEnum):
     Sprite_DisplayEnable      = 1 << 1
     Sprite_Size               = 1 << 2
     BG_Tile_Select            = 1 << 3
-    BG_Window_Data            = 1 << 4
+    BG_Window_Data_Select     = 1 << 4
     Window_Enable             = 1 << 5
     Window_Tile_Select        = 1 << 6
     LCD_Display_Enable        = 1 << 7
@@ -75,3 +75,8 @@ class StatusBit(IntEnum):
     M2_OAM_INT       = 1 << 5
     Y_Coincidence_INT= 1 << 6
 #end flags
+
+class Bus:
+    def __init__(self):
+        self._named_subscribers = {}
+    #end
