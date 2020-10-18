@@ -5,7 +5,8 @@ from .ppu import PPU
 from .memory import Memory
 from .clock import Clock
 from .catridge import Cartridge
-# from .video import
+
+from .sdl.video import Video
 
 class GameBoy:
     def __init__(self):
@@ -13,7 +14,7 @@ class GameBoy:
         self._cpu = CPU(self._memory)
         self._ppu = PPU(self._memory)
         self._audio = None
-        self._video = None
+        self._video = Video()
         self._cart = None
 
         self._clock = Clock(
@@ -47,9 +48,13 @@ class GameBoy:
         self._cart = Cartridge.from_file(file_path)
         self._memory.SetROM(self._cart)
         self.__log.info("Game ROM loaded: %s", file_path)
+
     def Run(self):
         """ Starts the GameBoy """
-        # TODO: initialize the SDL thread
         self.__log.info("Starting emulation loop run")
+        
+        # TODO: initialize the SDL thread
         self._clock.TickForever()
+        
+        self._video.Cleanup()
         self.__log.info("Shutting down")

@@ -16,7 +16,7 @@ class Memory:
         ROM_END = 0x7FFF
 
         # VRAM ranges
-        VRAM_BGN= 0x8000
+        VRAM_BGN       = 0x8000
         TILE_DATA      = 0x8000
         TILE_DATA_END  = 0x97FF
 
@@ -121,7 +121,7 @@ class Memory:
         return self._read_internal(offset, length)
     def readVRAMBlock(self):
         """ solely for debugging purposes """
-        VRAM_SIZE = Memory.Range.VRAM_END - Memory.Range.VRAM_BGN
+        VRAM_SIZE = Memory.Range.VRAM_END - Memory.Range.VRAM_BGN + 1
         return self.Read(Memory.Range.VRAM_BGN, VRAM_SIZE)
     #end
 

@@ -36,5 +36,13 @@
             "args": ["../roms/test_rom.gb", "--bios", "../roms/test_bios.bin", "--verbose" ],
             "console": "integratedTerminal"
         },
+        {
+            "name": "SDL Test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/sdl/sdl_test.py",
+            "args": ["../roms/test_rom.gb", "--bios", "../roms/test_bios.bin", "--verbose" ],
+            "console": "integratedTerminal"
+        }
     ]
 }
