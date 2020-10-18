@@ -1,7 +1,10 @@
+import logging
+
 from .cpu import CPU
 from .ppu import PPU
 from .memory import Memory
 from .clock import Clock
+from .catridge import Cartridge
 # from .video import
 
 class GameBoy:
@@ -11,6 +14,7 @@ class GameBoy:
         self._ppu = PPU(self._memory)
         self._audio = None
         self._video = None
+        self._cart = None
 
         self._clock = Clock(
             self._cpu,
@@ -20,6 +24,7 @@ class GameBoy:
             self._audio)
 
         self.__debug = False
+        self.__log = logging.getLogger(self.__class__.__name__)
     #end
 
     @property
@@ -32,7 +37,19 @@ class GameBoy:
         self._cpu.Debug = self.__debug = value
         # TODO: make a debug window
 
+    def ConfigureBIOS(self, bios_data):
+        if bios_data is None:
+            raise NotImplementedError()
+
+        self._memory.SetBootRom(bios_data)
+        self.__log.info("Successfully loaded BIOS")
+    def SetGameRomFromFile(self, file_path):
+        self._cart = Cartridge.from_file(file_path)
+        self._memory.SetROM(self._cart)
+        self.__log.info("Game ROM loaded: %s", file_path)
     def Run(self):
         """ Starts the GameBoy """
         # TODO: initialize the SDL thread
+        self.__log.info("Starting emulation loop run")
         self._clock.TickForever()
+        self.__log.info("Shutting down")
