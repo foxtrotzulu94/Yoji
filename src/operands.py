@@ -199,9 +199,10 @@ class DirectOperand(ImmediateOperand):
 #end class
 
 class RegisterOperand(BaseOperand):
-    def __init__(self, reg, width, mode = Addressing.Register):
+    def __init__(self, reg, width, mode = Addressing.Register, throwaway=False):
         super().__init__(width, mode)
         self._register = reg
+        self._throwaway=throwaway
     #end
 
     def _get_register(self, cpu):
@@ -223,6 +224,9 @@ class RegisterOperand(BaseOperand):
         return self._get_register(cpu)
     def set_value(self, cpu, mem, location, value):
         "Sets the value of the operand. Use for writeback step"
+        if self._throwaway:
+            return
+
         self._set_register(cpu, value)
     #end
 #end class
@@ -307,7 +311,7 @@ class Operand:
 
     @staticmethod
     def reg(reg, width=1, throwaway = False):
-        return RegisterOperand(reg, width)
+        return RegisterOperand(reg, width, throwaway=throwaway)
 
     @staticmethod
     def regi(reg, width=1):

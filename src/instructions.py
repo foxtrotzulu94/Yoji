@@ -59,7 +59,7 @@ class Instruction:
         for flag, status in self._flags_affected.items():
             if status is Bit.Calculate:
                 cpu.set_flag(results[flag](), flag)
-            elif status is not None:
+            elif status is not Bit.Ignore:
                 cpu.set_flag(status == Bit.Set, flag)
         #end for
     #end set_flags
@@ -221,7 +221,7 @@ def RotateLeft(cpu, unused, source):
     9-bit rotation to the left, the register's bits are shifted left.
     The carry value is put into 0th bit of the register, and the leaving 7th bit is put into the carry.
     """
-    return (source << 1) | cpu.C
+    return (source << 1) | cpu.c
 def RotateLeftWithCarry(cpu, unused, source):
     """ From z80 Heaven:
     8-bit rotation to the left. The bit leaving on the left is copied into the carry, and to bit 0.

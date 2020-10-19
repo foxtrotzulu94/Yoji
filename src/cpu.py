@@ -115,7 +115,7 @@ class CPU:
 
     # 16-BIT WIDTH #
     BC = property(_generate_get_register(Registers.B,2), _generate_set_register(Registers.B,2), None, "General purpose 16-bit register")
-    DE = property(_generate_get_register(Registers.C,2), _generate_set_register(Registers.D,2), None, "General purpose 16-bit register")
+    DE = property(_generate_get_register(Registers.D,2), _generate_set_register(Registers.D,2), None, "General purpose 16-bit register")
     HL = property(_generate_get_register(Registers.H,2), _generate_set_register(Registers.H,2), None, "General purpose 16-bit register")
 
     ## Flags ##
@@ -227,6 +227,11 @@ class CPU:
         # 1. Instruction Fetch, Decode
         self._get_next_instruction()
         location = self.PC
+
+        # 1.1 Check if we need to break
+        if self.PC == 0x0034:
+            print("BREAK")
+
         self.PC += self._curr_inst.Size
 
         # 2. Execute & Writeback

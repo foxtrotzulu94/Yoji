@@ -80,6 +80,8 @@ class Memory:
 
     def _is_vram_range(self, address):
         return address >= Memory.Range.VRAM_BGN and address <= Memory.Range.VRAM_END
+    def _is_tile_range(self, address):
+        return address >= Memory.Range.TILE_DATA and address <= Memory.Range.TILE_DATA_END
 
     def _is_io_range(self, address):
         return address >= Memory.Range.I_O_REGS and address <= Memory.Range.I_O_END
@@ -123,6 +125,10 @@ class Memory:
         """ solely for debugging purposes """
         VRAM_SIZE = Memory.Range.VRAM_END - Memory.Range.VRAM_BGN + 1
         return self.Read(Memory.Range.VRAM_BGN, VRAM_SIZE)
+    def readVRAMTiles(self):
+        """ solely for debugging purposes """
+        VRAM_SIZE = Memory.Range.TILE_DATA_END - Memory.Range.TILE_DATA + 1
+        return self.Read(Memory.Range.VRAM_BGN, VRAM_SIZE)
     #end
 
     def _write_internal(self, offset, data, length):
@@ -145,6 +151,11 @@ class Memory:
             write_tuple = (offset, data, size)
             if self._is_vram_range(offset):
                 assert(self._vram_write_queue is None)
+                if self._is_tile_range(offset):
+                    do_debug = False
+                    if do_debug:
+                        print("Writing to main memory")
+
                 self._vram_write_queue = write_tuple
             else:
                 assert(self._ram_write_queue is None)
