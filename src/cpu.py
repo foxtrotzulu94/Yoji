@@ -229,8 +229,8 @@ class CPU:
         location = self.PC
 
         # 1.1 Check if we need to break
-        if self.PC == 0x0034:
-            print("BREAK")
+        # if self.PC == 0x0034:
+        #     print("BREAK")
 
         self.PC += self._curr_inst.Size
 

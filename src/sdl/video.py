@@ -1,10 +1,19 @@
 from sdl2 import *
 
+# Where to place our default window
 START_X = SDL_WINDOWPOS_UNDEFINED
 START_Y = SDL_WINDOWPOS_UNDEFINED
+
+# GameBoy Viewport native Width and Height
 GB_NATIVE_WIDTH = 160
 GB_NATIVE_HEIGHT = 144
+
+# GameBoy default Tile Size is 8x8
+GB_TILE_PIXEL_SIZE = 8
+
+# Upscaling factor
 DEFAULT_SCALE = 4
+
 FLAGS = SDL_WINDOW_SHOWN
 
 class Video:
@@ -47,6 +56,7 @@ class Video:
         for i in range(0, len(gb_2bpp), 16):
             tiles.append(gb_2bpp[i:i+16])
 
+        # Step 1: determine the actual tiles
         rects = []
         for tile in tiles:
             blit_tile = []
@@ -72,7 +82,7 @@ class Video:
         self.being_updated = True
         temp_ren =self._renderer
         SDL_SetRenderTarget(temp_ren, self.__texture)
-        SDL_RenderClear(temp_ren)
+        #SDL_RenderClear(temp_ren)
         SDL_SetRenderDrawColor(temp_ren, 0, 0, 0, 0xFF)
 
         x_start,y_start = 0,0
@@ -89,11 +99,11 @@ class Video:
                 #end
                 y+= self._scale
             #end
-            x_start = (x_start + (8*self._scale) + 4)
+            x_start = (x_start + (GB_TILE_PIXEL_SIZE*self._scale) + self._scale)
 
-            # TODO: document. What did this do?
-            if (x_start + (8*self._scale)) > 4*GB_NATIVE_WIDTH:
-                y_start += (8*self._scale) + 4
+            # Go to next row by moving y_start
+            if (x_start + (GB_TILE_PIXEL_SIZE * self._scale)) > (self._scale * GB_NATIVE_WIDTH):
+                y_start += (GB_TILE_PIXEL_SIZE * self._scale) + self._scale
                 x_start = 0
         #end
 
