@@ -1,10 +1,11 @@
 import logging
+from sdl2 import *
 
 from .cpu import CPU
 from .ppu import PPU
 from .memory import Memory
 from .clock import Clock
-from .catridge import Cartridge
+from .cartridge import Cartridge
 
 from .sdl.video import Video
 
@@ -52,9 +53,21 @@ class GameBoy:
     def Run(self):
         """ Starts the GameBoy """
         self.__log.info("Starting emulation loop run")
-        
-        # TODO: initialize the SDL thread
-        self._clock.TickForever()
+
+        # TODO: Initialize systems
+
+        events = SDL_Event()
+        while True:
+            try:
+                # TODO: Abstract
+                SDL_PollEvent(events)
+                if events.type == SDL_QUIT:
+                    break
+
+                self._clock.Tick()
+            except KeyboardInterrupt:
+                break
+        # end while
         
         self._video.Cleanup()
         self.__log.info("Shutting down")

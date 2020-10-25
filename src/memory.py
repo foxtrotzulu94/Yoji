@@ -1,6 +1,6 @@
 from enum import Enum, IntEnum
 from .bus import IO, InterruptBit
-from .catridge import Cartridge
+from .cartridge import Cartridge
 
 class Memory:
     # Great resource: http://gameboy.mongenel.com/dmg/asmmemmap.html
