@@ -8,7 +8,7 @@ class Cartridge:
         ROM_ONLY = 0
         "Simplest cartridge available"
 
-        # TODO: supprot more types
+        # TODO: support more types
 
         @classmethod
         def is_supported(cls, value):
@@ -35,14 +35,16 @@ class Cartridge:
         0x0: 32*1024 # 32KB, no ROM Bank
     }
 
+    _bank_size = 16 * 1024
+
     @staticmethod
     def from_file(path):
         if not os.path.exists(path):
             return None
 
-        data = bytes()
+        data = bytearray()
         with open(path, 'rb') as cart:
-            data = bytes(cart.read())
+            data = bytearray(cart.read())
 
         return Cartridge(raw_data=data)
     #end from file
@@ -51,12 +53,32 @@ class Cartridge:
         self._data = raw_data
         self._rom_type = raw_data[Cartridge.Header.TYPE]
         self._rom_size = raw_data[Cartridge.Header.SIZE]
+
+        self._bank = 1
+
         assert(Cartridge.Type.is_supported(self._rom_type))
         assert(self._rom_size in Cartridge._sizes)
     #end
 
-    def GetBank(self, bk=0):
-        # TODO: keep?
-        length = Cartridge._sizes[self._rom_size]
-        return bytearray(self._data[0:length])
+    def ReadFixed(self, offset, length):
+        return self._data[ offset : offset+length]
+    def ReadMovable(self, offset, length):
+        start = (bank * _bank_size) + (offset - _bank_size)
+        end = start + length
+        return bytearray(self._data[ start : end ])
+
+    def ChangeBank(self, new_bank):
+        if self._rom_size == 0x0:
+            raise RuntimeError("32KB ROM requested a bank change")
+        self._bank = new_bank
+
+    def GetFixedBank(self):
+        return self.GetBank(0)
+
+    def GetCurrentBank(self):
+        return self.GetBank(self._bank)
+
+    def GetBank(self, bank):
+        offset = bank * _bank_size
+        return bytearray(self._data[offset: offset+_bank_size])
 #end

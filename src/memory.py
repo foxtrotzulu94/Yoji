@@ -41,8 +41,10 @@ class Memory:
         OAM_END  = 0xFE9F
         UNUSABLE = 0xFEFF # Unusable
 
-        I_O_REGS = 0xFF00
-        I_O_END  = 0xFF7F
+        I_O_REGS         = 0xFF00
+        # VRAM_BNK_SELECT  = 0xFF4F
+        BOOT_ROM_ENABLED = 0xFF50
+        I_O_END          = 0xFF7F
 
         HRAM_BGN = 0xFF80
         HRAM_END = 0xFFFE
@@ -78,6 +80,15 @@ class Memory:
             self.TickVRAM()
     #end
 
+    @property
+    def IsBootROMActive(self):
+        """ Checks that the boot ROM is enabled or not """
+        return int(self._mem_area[Memory.Range.BOOT_ROM_ENABLED] & 0xFF) != 0
+    
+    @IsBootROMActive.setter
+    def IsBootROMActive(self, value):
+        self._mem_area[Memory.Range.BOOT_ROM_ENABLED] = int(value)
+
     def _is_vram_range(self, address):
         return address >= Memory.Range.VRAM_BGN and address <= Memory.Range.VRAM_END
     def _is_tile_range(self, address):
@@ -85,9 +96,10 @@ class Memory:
 
     def _is_io_range(self, address):
         return address >= Memory.Range.I_O_REGS and address <= Memory.Range.I_O_END
-
-    def _get_range(self, address):
-        pass
+    def _is_unusable_region(self, address):
+        return address > Memory.Range.OAM_END and address <= Memory.Range.UNUSABLE
+    def _is_ROM_region(self, address):
+        return address >= Memory.Range.ROM_BGN and address <= Memory.Range.ROM_END
 
     def Tick(self):
         """ Should be called for writing/refreshing Work RAM """
@@ -109,10 +121,22 @@ class Memory:
 
     def _read_internal(self, offset, length):
         # Dispatches special memory segments
-        if self._is_boot_active and offset <= Memory.Range.BOOT_END:
+
+        if self.IsBootROMActive and offset <= Memory.Range.BOOT_END:
+            # Read straight from the boot ROM
             return self._boot_rom[offset: offset+length]
-        # if offset <= Memory.Range.ROM_END:
-        #     return self._rom._data[offset: offset+length]
+
+        elif self._is_ROM_region(offset):
+            # Read from the cartridge
+            read_func = Cartridge.ReadFixed
+            if offset > Memory.Range.ROM_0:
+                read_func = Cartridge.ReadMovable
+
+            return read_func(self._rom, offset, length)
+
+        elif self._is_unusable_region(offset):
+            # Throw an exception!
+            raise RuntimeError()
 
         # Fallback to Flat data
         return self._mem_area[offset: offset + length]
@@ -132,6 +156,11 @@ class Memory:
     #end
 
     def _write_internal(self, offset, data, length):
+        # Intercept Bank switches
+        if self._is_ROM_region(offset):
+            self._rom.ChangeBank(int(data[0]))
+            return
+
         # internal write method
         for i in range(0, length):
             self._mem_area[offset + i] = data[i]
@@ -143,19 +172,12 @@ class Memory:
             # We don't allow int writes larger than a byte!
             data = bytes([data])
 
-        #assert(type(data) is bytearray or type(data) is bytes)
-        #assert(offset > Memory.Range.ROM_END)
         size = len(data)
         if self.Synchronized:
             # queue it for a later write
             write_tuple = (offset, data, size)
             if self._is_vram_range(offset):
                 assert(self._vram_write_queue is None)
-                if self._is_tile_range(offset):
-                    do_debug = False
-                    if do_debug:
-                        print("Writing to main memory")
-
                 self._vram_write_queue = write_tuple
             else:
                 assert(self._ram_write_queue is None)
@@ -164,9 +186,6 @@ class Memory:
             # Write it directly
             self._write_internal(offset, data, size)
         #end
-
-        # Notify anyone over a bus
-        #TODO:
     #end Write
 
     def SetInterruptFlags(self, flags, set_bits):
@@ -186,14 +205,11 @@ class Memory:
     #end
 
     def SetBootRom(self, data):
-        """[Temporary]"""
-        self._is_boot_active = True
+        """Starts the Gameboy's Boot ROM"""
+        self.IsBootROMActive = True
         self._boot_rom = data
 
     def SetROM(self, rom):
-        """[Temporary]"""
+        """Sets the main Cartridge file"""
+        assert(type(rom) is Cartridge)
         self._rom = rom
-        size = len(self._mem_area)
-        self._mem_area = rom.GetBank() + self._mem_area[Memory.Range.VRAM_BGN:]
-        new_size = len(self._mem_area)
-        assert(size == new_size)
