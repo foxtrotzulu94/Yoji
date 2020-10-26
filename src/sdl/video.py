@@ -1,20 +1,6 @@
 from sdl2 import *
 
-# Where to place our default window
-START_X = SDL_WINDOWPOS_UNDEFINED
-START_Y = SDL_WINDOWPOS_UNDEFINED
-
-# GameBoy Viewport native Width and Height
-GB_NATIVE_WIDTH = 160
-GB_NATIVE_HEIGHT = 144
-
-# GameBoy default Tile Size is 8x8
-GB_TILE_PIXEL_SIZE = 8
-
-# Upscaling factor
-DEFAULT_SCALE = 4
-
-FLAGS = SDL_WINDOW_SHOWN
+from .constants import *
 
 class Video:
     def __init__(self, scale = None):
@@ -60,7 +46,7 @@ class Video:
         rects = []
         for tile in tiles:
             blit_tile = []
-            for xpos in range(0, 16, 2):
+            for xpos in range(0, 15, 2):
                 line = []
                 lsb,msb = tile[xpos], tile[xpos+1]
                 for bit in self.__bits:
@@ -85,7 +71,9 @@ class Video:
         #SDL_RenderClear(temp_ren)
         SDL_SetRenderDrawColor(temp_ren, 0, 0, 0, 0xFF)
 
+        # Step 2: actually transfer to the texture
         x_start,y_start = 0,0
+        x_count = 0
         for blit_tile in rects:
             y = y_start
             for horizontal in blit_tile:
@@ -99,19 +87,23 @@ class Video:
                 #end
                 y+= self._scale
             #end
-            x_start = (x_start + (GB_TILE_PIXEL_SIZE*self._scale) + self._scale)
+            next_x = (x_start + (GB_TILE_PIXEL_SIZE*self._scale) + self._scale)
+            x_count += 1
 
             # Go to next row by moving y_start
-            if (x_start + (GB_TILE_PIXEL_SIZE * self._scale)) > (self._scale * GB_NATIVE_WIDTH):
+            if x_count+1 > 16 or next_x >= (self._scale * GB_NATIVE_WIDTH):
                 y_start += (GB_TILE_PIXEL_SIZE * self._scale) + self._scale
                 x_start = 0
+                x_count = 0
+            else:
+                x_start = next_x
         #end
 
         SDL_SetRenderTarget(temp_ren, None)
         self.being_updated = False
 
     def Cleanup(self):
-        SDL_DestroyTexture(self.tex)
-        SDL_DestroyRenderer(self.ren)
-        SDL_DestroyWindow(self.win)
+        SDL_DestroyTexture(self.__texture)
+        SDL_DestroyRenderer(self._renderer)
+        SDL_DestroyWindow(self._window)
         SDL_Quit()

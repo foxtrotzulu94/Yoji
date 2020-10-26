@@ -1,5 +1,6 @@
 import logging
 from sdl2 import *
+from .sdl.window import VideoDebugWindow
 
 from .cpu import CPU
 from .ppu import PPU
@@ -52,9 +53,10 @@ class GameBoy:
 
     def Run(self):
         """ Starts the GameBoy """
-        self.__log.info("Starting emulation loop run")
+        self.__log.info("Starting emulation loop run")        
 
         # TODO: Initialize systems
+        tile_debug = VideoDebugWindow(self._memory.readVRAMTiles, 16, 384, b"Tile data")
 
         events = SDL_Event()
         while True:
@@ -63,11 +65,16 @@ class GameBoy:
                 SDL_PollEvent(events)
                 if events.type == SDL_QUIT:
                     break
+                elif events.type == SDL_WINDOWEVENT and events.window.event == SDL_WINDOWEVENT_CLOSE:
+                    break
 
                 self._clock.Tick()
+                tile_debug.Update()
+                tile_debug.Tick()
             except KeyboardInterrupt:
                 break
         # end while
         
         self._video.Cleanup()
+        tile_debug.Cleanup()
         self.__log.info("Shutting down")
