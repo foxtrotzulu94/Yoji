@@ -1,5 +1,53 @@
 from enum import IntEnum
 
+# Great resource: http://gameboy.mongenel.com/dmg/asmmemmap.html
+class Region(IntEnum):
+    """Enum for refering to the Memory Ranges"""
+    # ROM ranges
+    ROM_BGN = 0x0000
+    VECT    = 0x00FF
+    BOOT_END= 0x00FF
+    HEADER  = 0x014F
+    ROM_0   = 0x3FFF
+    ROM_XX  = 0x7FFF
+    ROM_END = 0x7FFF
+
+    # VRAM ranges
+    VRAM_BGN       = 0x8000
+    TILE_DATA      = 0x8000
+    TILE_DATA_END  = 0x97FF
+
+    BGMAP1      = 0x9800
+    BGMAP1_END  = 0x9BFF
+    BGMAP2      = 0x9C00
+    BGMAP2_END  = 0x9FFF
+    VRAM_END= 0x9FFF
+
+    # RAM ranges
+    RAM_BGN = 0xA000
+    ExtRAM  = 0xBFFF
+    IntRAM  = 0xCFFF
+    # GameBoy only range
+    RAM_END = 0xDFFF
+
+    # Reserved
+    ECHO_RAM_BGN = 0xE000
+    ECHO_RAM_END = 0xFDFF
+
+    OAM_BGN  = 0xFE00
+    OAM_END  = 0xFE9F
+    UNUSABLE = 0xFEFF # Unusable
+
+    I_O_REGS         = 0xFF00
+    # VRAM_BNK_SELECT  = 0xFF4F
+    I_O_END          = 0xFF7F
+
+    HRAM_BGN = 0xFF80
+    HRAM_END = 0xFFFE
+
+    INT_REG = 0xFFFF
+#end flags
+
 class IO:
     """ Input/Output register locations in memory """
 
@@ -75,8 +123,3 @@ class StatusBit(IntEnum):
     M2_OAM_INT       = 1 << 5
     Y_Coincidence_INT= 1 << 6
 #end flags
-
-class Bus:
-    def __init__(self):
-        self._named_subscribers = {}
-    #end

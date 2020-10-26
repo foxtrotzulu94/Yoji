@@ -51,12 +51,16 @@ class GameBoy:
         self._memory.SetROM(self._cart)
         self.__log.info("Game ROM loaded: %s", file_path)
 
+    def _handle_events(self):
+        pass
+
     def Run(self):
         """ Starts the GameBoy """
         self.__log.info("Starting emulation loop run")        
 
         # TODO: Initialize systems
-        tile_debug = VideoDebugWindow(self._memory.readVRAMTiles, 16, 384, b"Tile data")
+        tile_debug = VideoDebugWindow(self._ppu.DebugTileMapData, 16, 384, b"Tile data")
+        bg_debug = VideoDebugWindow(self._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data")
 
         events = SDL_Event()
         while True:
@@ -71,6 +75,9 @@ class GameBoy:
                 self._clock.Tick()
                 tile_debug.Update()
                 tile_debug.Tick()
+
+                bg_debug.Update()
+                bg_debug.Tick()
             except KeyboardInterrupt:
                 break
         # end while

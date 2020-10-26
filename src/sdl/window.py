@@ -100,15 +100,11 @@ class VideoDebugWindow(Window):
     #end
 
     def Update(self):
-        """TODO: OPTIMIZE"""
-
         if time.monotonic() < self.update_time:
             return
 
-        gb_2bpp = self.read_debug_data()
-
-        # Step 1: determine the actual tiles
-        tiles = self.ToTiles(gb_2bpp)
+        # Step 1: Get the debug data
+        tiles = self.read_debug_data()
 
         temp_ren =self.renderer
         SDL_SetRenderTarget(temp_ren, self.texture)

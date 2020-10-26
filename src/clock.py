@@ -36,9 +36,7 @@ class Clock:
 
         if self._cycles % 67000 == 0:
             # LCD refreshes @ 59.7Hz
-            # vram = self._memory.readVRAMTiles()
-            # self._lcd.Update(vram)
-            # self._should_run = self._lcd.Tick()
+            # self._lcd.Tick()
             pass
 
         # Can't get spec on audio, but it should be 4MHz
