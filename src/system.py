@@ -52,36 +52,46 @@ class GameBoy:
         self.__log.info("Game ROM loaded: %s", file_path)
 
     def _handle_events(self):
-        pass
+        # TODO: Abstract away into SDL
+        events = SDL_Event()
+        SDL_PollEvent(events)
+        if events.type == SDL_QUIT:
+            return False
+        elif events.type == SDL_WINDOWEVENT and events.window.event == SDL_WINDOWEVENT_CLOSE:
+            return False
+
+        # Everything handled successfully!
+        return True
+    #end
+
+    def _debug_tick(self, debug_objs):
+        for thing in debug_objs:
+            thing.Tick()
 
     def Run(self):
         """ Starts the GameBoy """
         self.__log.info("Starting emulation loop run")        
 
         # TODO: Initialize systems
+        # TODO: Abstract debugger?
         tile_debug = VideoDebugWindow(self._ppu.DebugTileMapData, 16, 384, b"Tile data")
-        bg_debug = VideoDebugWindow(self._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data")
+        bg_debug = VideoDebugWindow(self._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data", 2)
+        debug_objects = (tile_debug, bg_debug)
 
-        events = SDL_Event()
         while True:
             try:
-                # TODO: Abstract
-                SDL_PollEvent(events)
-                if events.type == SDL_QUIT:
-                    break
-                elif events.type == SDL_WINDOWEVENT and events.window.event == SDL_WINDOWEVENT_CLOSE:
+                keep_running = self._handle_events()
+                if not keep_running:
                     break
 
                 self._clock.Tick()
-                tile_debug.Update()
-                tile_debug.Tick()
-
-                bg_debug.Update()
-                bg_debug.Tick()
+                
+                self._debug_tick(debug_objects)
             except KeyboardInterrupt:
                 break
         # end while
         
         self._video.Cleanup()
         tile_debug.Cleanup()
+        bg_debug.Cleanup()
         self.__log.info("Shutting down")

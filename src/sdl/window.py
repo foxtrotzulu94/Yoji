@@ -56,18 +56,7 @@ class VideoDebugWindow(Window):
 
         super().__init__(name, width, height,  scale)
         self.read_debug_data = data_func
-        
-        self._hasUpdate = False
     #end
-
-    def Tick(self):
-        if not self._hasUpdate:
-            return
-
-        SDL_RenderClear(self.renderer)
-        SDL_RenderCopy(self.renderer, self.texture, None, None)
-        SDL_RenderPresent(self.renderer)
-        self._hasUpdate = False
 
     def ToTiles(self,gb_2bpp):
         # Read data 16 bytes at a time to create a tile
@@ -99,7 +88,7 @@ class VideoDebugWindow(Window):
         return (x, y)
     #end
 
-    def Update(self):
+    def Tick(self):
         if time.monotonic() < self.update_time:
             return
 
@@ -107,8 +96,8 @@ class VideoDebugWindow(Window):
         tiles = self.read_debug_data()
 
         temp_ren =self.renderer
-        SDL_SetRenderTarget(temp_ren, self.texture)
-        SDL_SetRenderDrawColor(temp_ren, 0, 0, 0, 0xFF)
+        SDL_SetRenderTarget(self.renderer, self.texture)
+        SDL_SetRenderDrawColor(self.renderer, 0, 0, 0, 0xFF)
 
         # Step 2: actually transfer to the texture
         x_start, y_start = 0,0
@@ -125,7 +114,11 @@ class VideoDebugWindow(Window):
                 tile_count = 0
         #end
 
-        SDL_SetRenderTarget(temp_ren, None)
+        SDL_SetRenderTarget(self.renderer, None)
+
+        # Step 3: draw the Update
+        SDL_RenderClear(self.renderer)
+        SDL_RenderCopy(self.renderer, self.texture, None, None)
+        SDL_RenderPresent(self.renderer)
 
         self.update_time = time.monotonic() + 1
-        self._hasUpdate = True
