@@ -25,7 +25,7 @@ class Debug:
         with open(filename, 'w') as dump_file:
             dump_file.write("; Decompilation of ")
             dump_file.write(self._memory.ROMName)
-            dump_file.write("\n")
+            dump_file.write("\nAddress   Opcode   Mnemonic\n")
 
             # Scan the whole thing, start at 0
             self._cpu.PC = 0x0

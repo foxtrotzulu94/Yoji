@@ -73,6 +73,8 @@ unary_instructions = {
     'RLC': 'RLC',
     'RLCA': 'A',
     'RR': 'RR',
+    'RRA': 'A',
+    'RRCA': 'A',
     'RRC': 'RRC',
     'RST': None,
     'SBC': 'SBC',
@@ -219,11 +221,21 @@ def translate_mnemonic(instr):
     return mnemonic_map[base]
 #end
 
+def unpack_cycles(cycle_text):
+    if type(cycle_text) is not str:
+        return cycle_text
+
+    parts = cycle_text.split('/')
+    if len(parts) == 1:
+        return cycle_text
+    
+    return "({},{})".format(*parts)
+
 def create_instruction(instr, file_handle):
     file_handle.write('    Instruction(\n')
     # TODO: parse bus_width from instruction source?
     file_handle.write('        0x{0:02X}, "{1}", bus_width={2},\n'.format(instr.opcode, instr.mnemonic, instr.width))
-    file_handle.write('        byte_size={}, cycles={},\n'.format(instr.bytes, instr.cycles))
+    file_handle.write('        byte_size={}, cycles={},\n'.format(instr.bytes, unpack_cycles(instr.cycles)))
     file_handle.write('        flags={},\n'.format(translate_flags(instr)))
     file_handle.write('        operands = {},\n'.format(translate_operands(instr)))
     file_handle.write('        executor = {}),\n'.format(translate_mnemonic(instr)))

@@ -116,7 +116,7 @@ base_instructions = [
         0x0F, "RRCA", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = None,
+        operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateRightWithCarry),
         
     Instruction(
@@ -228,12 +228,12 @@ base_instructions = [
         0x1F, "RRA", bus_width=1,
         byte_size=1, cycles=4,
         flags={ Flag.z:Bit.Reset, Flag.n:Bit.Reset, Flag.h:Bit.Reset, Flag.c:Bit.Calculate },
-        operands = None,
+        operands = ( Operand.reg(Registers.A, 1), Operand.reg(Registers.A, 1) ),
         executor = RotateRight),
         
     Instruction(
         0x20, "JR NZ,r8", bus_width=1,
-        byte_size=2, cycles=12/8,
+        byte_size=2, cycles=(12,8),
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(1) ),
         executor = NearJump),
@@ -289,7 +289,7 @@ base_instructions = [
         
     Instruction(
         0x28, "JR Z,r8", bus_width=1,
-        byte_size=2, cycles=12/8,
+        byte_size=2, cycles=(12,8),
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(1) ),
         executor = NearJump),
@@ -345,7 +345,7 @@ base_instructions = [
         
     Instruction(
         0x30, "JR NC,r8", bus_width=1,
-        byte_size=2, cycles=12/8,
+        byte_size=2, cycles=(12,8),
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(1) ),
         executor = NearJump),
@@ -401,7 +401,7 @@ base_instructions = [
         
     Instruction(
         0x38, "JR C,r8", bus_width=1,
-        byte_size=2, cycles=12/8,
+        byte_size=2, cycles=(12,8),
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(1) ),
         executor = NearJump),
@@ -1353,7 +1353,7 @@ base_instructions = [
         
     Instruction(
         0xC0, "RET NZ", bus_width=1,
-        byte_size=1, cycles=20/8,
+        byte_size=1, cycles=(20,8),
         flags=None,
         operands = ( None, Operand.bit(Flag.z, Bit.Reset) ),
         executor = Return),
@@ -1367,7 +1367,7 @@ base_instructions = [
         
     Instruction(
         0xC2, "JP NZ,a16", bus_width=2,
-        byte_size=3, cycles=16/12,
+        byte_size=3, cycles=(16,12),
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(2) ),
         executor = Jump),
@@ -1381,7 +1381,7 @@ base_instructions = [
         
     Instruction(
         0xC4, "CALL NZ,a16", bus_width=2,
-        byte_size=3, cycles=24/12,
+        byte_size=3, cycles=(24,12),
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(2) ),
         executor = Call),
@@ -1409,7 +1409,7 @@ base_instructions = [
         
     Instruction(
         0xC8, "RET Z", bus_width=1,
-        byte_size=1, cycles=20/8,
+        byte_size=1, cycles=(20,8),
         flags=None,
         operands = ( None, Operand.bit(Flag.z, Bit.Set) ),
         executor = Return),
@@ -1423,7 +1423,7 @@ base_instructions = [
         
     Instruction(
         0xCA, "JP Z,a16", bus_width=2,
-        byte_size=3, cycles=16/12,
+        byte_size=3, cycles=(16,12),
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(2) ),
         executor = Jump),
@@ -1437,7 +1437,7 @@ base_instructions = [
         
     Instruction(
         0xCC, "CALL Z,a16", bus_width=2,
-        byte_size=3, cycles=24/12,
+        byte_size=3, cycles=(24,12),
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(2) ),
         executor = Call),
@@ -1465,7 +1465,7 @@ base_instructions = [
         
     Instruction(
         0xD0, "RET NC", bus_width=1,
-        byte_size=1, cycles=20/8,
+        byte_size=1, cycles=(20,8),
         flags=None,
         operands = ( None, Operand.bit(Flag.c, Bit.Reset) ),
         executor = Return),
@@ -1479,7 +1479,7 @@ base_instructions = [
         
     Instruction(
         0xD2, "JP NC,a16", bus_width=2,
-        byte_size=3, cycles=16/12,
+        byte_size=3, cycles=(16,12),
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(2) ),
         executor = Jump),
@@ -1493,7 +1493,7 @@ base_instructions = [
         
     Instruction(
         0xD4, "CALL NC,a16", bus_width=2,
-        byte_size=3, cycles=24/12,
+        byte_size=3, cycles=(24,12),
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(2) ),
         executor = Call),
@@ -1521,7 +1521,7 @@ base_instructions = [
         
     Instruction(
         0xD8, "RET C", bus_width=1,
-        byte_size=1, cycles=20/8,
+        byte_size=1, cycles=(20,8),
         flags=None,
         operands = ( None, Operand.reg(Registers.C, 1) ),
         executor = Return),
@@ -1535,7 +1535,7 @@ base_instructions = [
         
     Instruction(
         0xDA, "JP C,a16", bus_width=2,
-        byte_size=3, cycles=16/12,
+        byte_size=3, cycles=(16,12),
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(2) ),
         executor = Jump),
@@ -1549,7 +1549,7 @@ base_instructions = [
         
     Instruction(
         0xDC, "CALL C,a16", bus_width=2,
-        byte_size=3, cycles=24/12,
+        byte_size=3, cycles=(24,12),
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(2) ),
         executor = Call),

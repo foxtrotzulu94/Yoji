@@ -13,7 +13,13 @@ class Instruction:
         self._mnemonic = shorthand
         self._result_size = bus_width
         self._size = byte_size
+
         self._cycles = cycles
+        self._short_cycles = None
+        if type(cycles) is not int:
+            self._cycles = max(cycles)
+            self._short_cycles = min(cycles)
+        
         self._flags_affected = flags
 
         self._action = executor
@@ -111,6 +117,11 @@ class Instruction:
     def Cycles(self):
         """ Gets the cycle count for the instruction """
         return self._cycles
+
+    @property
+    def ShortCycles(self):
+        """ Gets the small cycle count for a RET/JMP/CALL when it's conditions fail """
+        return self._short_cycles
 
     def is_complete(self):
         return self._action is not None

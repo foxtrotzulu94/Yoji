@@ -236,13 +236,19 @@ class CPU:
         #     print("BREAK")
 
         self.PC += self._curr_inst.Size
+        nextPC = self.PC
 
         # 2. Execute & Writeback
         if self.__debug:
             print(self._curr_inst.ToString(self.__memory, location))
         self._execute_instruction(location + 1)
 
-        self._cycles_left = self._curr_inst.Cycles - 1
+        # 3. Check how many cycles we have left for the next instruction
+        if self._curr_inst.ShortCycles is not None and self.PC == nextPC:
+            # This means we didn't take the Jump, so there's no memory penalty to pay here
+            self._cycles_left = self._curr_inst.ShortCycles - 1
+        else:
+            self._cycles_left = self._curr_inst.Cycles - 1
     #end Tick
 
     def Dump(self, move_forward = True, output_handle = sys.stdout):

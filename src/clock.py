@@ -26,6 +26,17 @@ class Clock:
         # We divide out main loop among the components
         # Keep in mind the timings and the order
 
+        # TODO: Rather than subdiving, pass the machine cycles as an argument for synchronization
+        # This came after an assertion error in the Memory Write Queue. Presumably we flushed an earlier write
+        # but there were back to back write instructions
+        # Specifically from Blarg's CPU test
+        # Address   Opcode   Mnemonic
+        # 0x02DA    0xCD     CALL 0x02B7
+        # 0x02B7    0xF5     PUSH AF <-- A write occurs (Wait for 3 more cycles)
+        # 0x02B8    0xFE     CP A,0x0A
+        # 0x02BA    0xC4     CALL NZ,0x026A
+        # 0x026A    0xF5     PUSH AF <-- Another write occurs, but the previous one hasn't finished!
+
         if self._cycles % 4 == 0:
             # RAM is 1Mhz (every 4 cycles)
             self._memory.Tick()
