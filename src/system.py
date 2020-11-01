@@ -45,7 +45,7 @@ class GameBoy:
     def ConfigureBIOS(self, bios_data):
         if bios_data is None:
             self._initializeSystemNoBIOS()
-            self.__log.info("Successfully loaded BIOS")
+            self.__log.info("Successfully Bootstrapped DMG mode")
             return
 
         self._memory.SetBootRom(bios_data)
@@ -82,6 +82,7 @@ class GameBoy:
         self._cpu.DE = 0x00D8
         self._cpu.HL = 0x014D
         self._cpu.SP = 0xFFFE
+        self._cpu.PC = 0x100
 
         self._memory.Synchronized = False
         # Init Timers
