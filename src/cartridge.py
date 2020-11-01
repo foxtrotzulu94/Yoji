@@ -8,6 +8,9 @@ class Cartridge:
         ROM_ONLY = 0
         "Simplest cartridge available"
 
+        MBC1 = 1
+        "Type 1 Memory Bank Controller - Only partially supported"
+
         # TODO: support more types
 
         @classmethod
@@ -31,11 +34,12 @@ class Cartridge:
     #end
 
     # TODO: support more sizes
-    _sizes = {
-        0x0: 32*1024 # 32KB, no ROM Bank
+    _size_id_map = {
+        0x0: 32*1024, # 32KB, no switchable ROM Bank
+        0x1: 64*1024 # 64KB, 4 ROM Banks
     }
 
-    _bank_size = 16 * 1024
+    _bank_size = 16 * 1024 # 16KB
 
     @staticmethod
     def from_file(path):
@@ -46,29 +50,32 @@ class Cartridge:
         with open(path, 'rb') as cart:
             data = bytearray(cart.read())
 
-        return Cartridge(raw_data=data)
+        return Cartridge(path, data)
     #end from file
 
-    def __init__(self, raw_data):
+    def __init__(self, path, raw_data):
+        self.name = os.path.basename(path)
+        self._path = path
         self._data = raw_data
         self._rom_type = raw_data[Cartridge.Header.TYPE]
-        self._rom_size = raw_data[Cartridge.Header.SIZE]
+        self._rom_size_id = raw_data[Cartridge.Header.SIZE]
 
         self._bank = 1
 
         assert(Cartridge.Type.is_supported(self._rom_type))
-        assert(self._rom_size in Cartridge._sizes)
+        assert(self._rom_size_id in Cartridge._size_id_map)
+        self._rom_size = Cartridge._size_id_map[self._rom_size_id]
     #end
 
     def ReadFixed(self, offset, length):
         return self._data[ offset : offset+length]
     def ReadMovable(self, offset, length):
-        start = (bank * _bank_size) + (offset - _bank_size)
+        start = (self._bank * Cartridge._bank_size) + (offset - Cartridge._bank_size)
         end = start + length
         return bytearray(self._data[ start : end ])
 
     def ChangeBank(self, new_bank):
-        if self._rom_size == 0x0:
+        if self._rom_size_id == 0x0:
             raise RuntimeError("32KB ROM requested a bank change")
         self._bank = new_bank
 

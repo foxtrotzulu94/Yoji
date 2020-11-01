@@ -32,6 +32,14 @@ class Memory:
     #end
 
     @property
+    def ROMName(self):
+        return str(self._rom.name)
+
+    @property
+    def ROM(self):
+        return self._rom
+
+    @property
     def IsBootROMActive(self):
         """ Checks that the boot ROM is enabled or not """
         return int(self._mem_area[IO.Boot] & 0xFF) != 0

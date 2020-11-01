@@ -1,4 +1,6 @@
+import sys
 from typing import *
+
 from .cpu_types import Registers, Flag
 from .bus import InterruptBit
 from .memory import Memory
@@ -243,12 +245,13 @@ class CPU:
         self._cycles_left = self._curr_inst.Cycles - 1
     #end Tick
 
-    def Dump(self, move_forward = True):
+    def Dump(self, move_forward = True, output_handle = sys.stdout):
         "Dumps the current CPU instruction about to be executed"
 
         # Fetch, Decode and dump
         self._get_next_instruction()
-        print(self._curr_inst.ToString(self.__memory, self.PC))
+        output_handle.write(self._curr_inst.ToString(self.__memory, self.PC))
+        output_handle.write('\n')
 
         if move_forward:
             self.PC += max(self._curr_inst.Size, 1)

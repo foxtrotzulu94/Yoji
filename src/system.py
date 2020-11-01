@@ -9,6 +9,8 @@ from .clock import Clock
 from .cartridge import Cartridge
 from .bus import *
 
+from .debug import Debug
+
 from .sdl.video import Video
 
 class GameBoy:
@@ -29,6 +31,9 @@ class GameBoy:
 
         self._init_complete = False
         self.__debug = False
+        
+        self.__debug_inspector = Debug(self._cpu, self._memory)
+        
         self.__log = logging.getLogger(self.__class__.__name__)
     #end
 
@@ -54,6 +59,14 @@ class GameBoy:
         self._cart = Cartridge.from_file(file_path)
         self._memory.SetROM(self._cart)
         self.__log.info("Game ROM loaded: %s", file_path)
+
+    def Debug_DumpROM(self):
+        if self._cart is None:
+            raise RuntimeError("No ROM to DUMP")
+        
+        self.__debug_inspector.disassemble_rom()
+    #end
+
 
     def _handle_events(self):
         # TODO: Abstract away into SDL

@@ -18,6 +18,7 @@ def _create_arg_parser():
     parser.add_argument("rom_file", help="The ROM file to load and run")
     parser.add_argument("--bios-image", "--bios", required=False, help="A compatible GameBoy BIOS to boot the system")
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+    parser.add_argument("-d", "--disassemble", help="Dumps the entire ROM", action="store_true")
     parser.add_argument('--debug', nargs='?', type=str2bool, default=False, const=True, help="Enable full debugging capabilities")
     parser.add_argument('--debug-video', nargs='?', type=str2bool, default=False, const=True, help="Open window debugging")
     return parser
@@ -38,6 +39,7 @@ def main():
 
     # Create the system
     system = GameBoy()
+    system.Debug = True
     system.ConfigureBIOS(bios_data)
     system.SetGameRomFromFile(parsed_args.rom_file)
 
@@ -45,6 +47,10 @@ def main():
         logging.basicConfig(level=logging.DEBUG)
         system.Debug = True
     
+    if parsed_args.disassemble:
+        system.Debug_DumpROM()
+        return
+
     system.Run()
 #end
 
