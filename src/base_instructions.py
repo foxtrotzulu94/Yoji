@@ -1366,21 +1366,21 @@ base_instructions = [
         executor = Pop),
         
     Instruction(
-        0xC2, "JP NZ,a16", bus_width=1,
+        0xC2, "JP NZ,a16", bus_width=2,
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(2) ),
         executor = Jump),
         
     Instruction(
-        0xC3, "JP a16", bus_width=1,
+        0xC3, "JP a16", bus_width=2,
         byte_size=3, cycles=16,
         flags=None,
         operands = ( None, Operand.imm(2) ),
         executor = Jump),
         
     Instruction(
-        0xC4, "CALL NZ,a16", bus_width=1,
+        0xC4, "CALL NZ,a16", bus_width=2,
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(2) ),
@@ -1422,7 +1422,7 @@ base_instructions = [
         executor = Return),
         
     Instruction(
-        0xCA, "JP Z,a16", bus_width=1,
+        0xCA, "JP Z,a16", bus_width=2,
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(2) ),
@@ -1436,14 +1436,14 @@ base_instructions = [
         executor = InvalidInstruction),
         
     Instruction(
-        0xCC, "CALL Z,a16", bus_width=1,
+        0xCC, "CALL Z,a16", bus_width=2,
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Set), Operand.imm(2) ),
         executor = Call),
         
     Instruction(
-        0xCD, "CALL a16", bus_width=1,
+        0xCD, "CALL a16", bus_width=2,
         byte_size=3, cycles=24,
         flags=None,
         operands = ( None, Operand.imm(2) ),
@@ -1478,7 +1478,7 @@ base_instructions = [
         executor = Pop),
         
     Instruction(
-        0xD2, "JP NC,a16", bus_width=1,
+        0xD2, "JP NC,a16", bus_width=2,
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(2) ),
@@ -1492,7 +1492,7 @@ base_instructions = [
         executor = InvalidInstruction),
         
     Instruction(
-        0xD4, "CALL NC,a16", bus_width=1,
+        0xD4, "CALL NC,a16", bus_width=2,
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.bit(Flag.c, Bit.Reset), Operand.imm(2) ),
@@ -1534,7 +1534,7 @@ base_instructions = [
         executor = ReturnInterrupt),
         
     Instruction(
-        0xDA, "JP C,a16", bus_width=1,
+        0xDA, "JP C,a16", bus_width=2,
         byte_size=3, cycles=16/12,
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(2) ),
@@ -1548,7 +1548,7 @@ base_instructions = [
         executor = InvalidInstruction),
         
     Instruction(
-        0xDC, "CALL C,a16", bus_width=1,
+        0xDC, "CALL C,a16", bus_width=2,
         byte_size=3, cycles=24/12,
         flags=None,
         operands = ( Operand.reg(Registers.C, 1), Operand.imm(2) ),

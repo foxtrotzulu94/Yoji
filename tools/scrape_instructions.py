@@ -30,6 +30,12 @@ class HTMLOpcodesInstructions(HTMLParser):
         if self.parsing_td:
             if self.step == 0:
                 self.curr_inst.mnemonic = data
+                
+                # Special Case: Jumps and calls with width 2
+                # We can easily detect them by looking at the address (16-bit)
+                if data.endswith('a16'):
+                    self.curr_inst.width = 2
+
             elif self.step == 1:
                 self.curr_inst.bytes, self.curr_inst.cycles = data.split()
             elif self.step == 2:
