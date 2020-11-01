@@ -43,7 +43,6 @@ class Instruction:
         def zero():
             return result == 0
         def negative():
-            # TODO: check if correct
             return result < 0
         def half_carry():
             # Really good explanation behind the Half-Carry flag

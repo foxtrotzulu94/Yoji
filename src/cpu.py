@@ -114,6 +114,7 @@ class CPU:
     L = property(_generate_get_register(Registers.L), _generate_set_register(Registers.L), None, "General purpose 8-bit register")
 
     # 16-BIT WIDTH #
+    AF = property(_generate_get_register(Registers.A,2), _generate_set_register(Registers.A,2), None, "General purpose 16-bit register")
     BC = property(_generate_get_register(Registers.B,2), _generate_set_register(Registers.B,2), None, "General purpose 16-bit register")
     DE = property(_generate_get_register(Registers.D,2), _generate_set_register(Registers.D,2), None, "General purpose 16-bit register")
     HL = property(_generate_get_register(Registers.H,2), _generate_set_register(Registers.H,2), None, "General purpose 16-bit register")

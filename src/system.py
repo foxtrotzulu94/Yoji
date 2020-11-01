@@ -7,6 +7,7 @@ from .ppu import PPU
 from .memory import Memory
 from .clock import Clock
 from .cartridge import Cartridge
+from .bus import *
 
 from .sdl.video import Video
 
@@ -26,6 +27,7 @@ class GameBoy:
             self._video,
             self._audio)
 
+        self._init_complete = False
         self.__debug = False
         self.__log = logging.getLogger(self.__class__.__name__)
     #end
@@ -42,7 +44,9 @@ class GameBoy:
 
     def ConfigureBIOS(self, bios_data):
         if bios_data is None:
-            raise NotImplementedError()
+            self._initializeSystemNoBIOS()
+            self.__log.info("Successfully loaded BIOS")
+            return
 
         self._memory.SetBootRom(bios_data)
         self.__log.info("Successfully loaded BIOS")
@@ -68,9 +72,47 @@ class GameBoy:
         for thing in debug_objs:
             thing.Tick()
 
+    def _initializeSystemNoBIOS(self):
+        """ Sets the system to the initial state of a DMG (Original GameBoy) """
+        if self._init_complete:
+            return
+        
+        self._cpu.AF = 0x01B0
+        self._cpu.BC = 0x0013
+        self._cpu.DE = 0x00D8
+        self._cpu.HL = 0x014D
+        self._cpu.SP = 0xFFFE
+
+        self._memory.Synchronized = False
+        # Init Timers
+        self._memory.Write(IO.Timer.TIMA, 00)
+        self._memory.Write(IO.Timer.TMA, 00)
+        self._memory.Write(IO.Timer.TAC, 00)
+        # Init Sound (Noise Registers)
+        # TODO: IO.Sound.NR*
+        # Init LCD
+        self._memory.Write(IO.LCD.LCDC, 0x91)
+        self._memory.Write(IO.LCD.SCX, 00)
+        self._memory.Write(IO.LCD.SCY, 00)
+        self._memory.Write(IO.LCD.LYC, 00)
+        self._memory.Write(IO.LCD.BGP, 0xFC)
+        self._memory.Write(IO.LCD.OBP0, 0xFF)
+        self._memory.Write(IO.LCD.OBP1, 0xFF)
+        self._memory.Write(IO.LCD.WX, 00)
+        self._memory.Write(IO.LCD.WY, 00)
+        self._memory.Synchronized = True
+        
+        # Don't re-run
+        self._init_complete = True
+        
+
     def Run(self):
         """ Starts the GameBoy """
-        self.__log.info("Starting emulation loop run")        
+        self.__log.info("Starting emulation loop run")
+
+        # If a boot ROM wasn't set, auto initialize
+        if not self._memory.IsBootROMActive and not self._init_complete:
+            self._initializeSystemNoBIOS()
 
         # TODO: Initialize systems
         # TODO: Abstract debugger?

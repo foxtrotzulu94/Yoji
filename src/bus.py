@@ -1,4 +1,4 @@
-from enum import IntEnum
+from enum import IntEnum, auto
 
 # Great resource: http://gameboy.mongenel.com/dmg/asmmemmap.html
 class Region(IntEnum):
@@ -54,6 +54,16 @@ class IO:
     Joypad = 0xFF00
     """ Address for Input register """
 
+    class Timer(IntEnum):
+        "Addresses for Timers"
+        DIV  = 0xFF04
+        TIMA = 0xFF05
+        TMA  = 0xFF06
+        TAC  = 0xFF07 
+
+    class Sound(IntEnum):
+        pass
+
     class INT(IntEnum):
         "Addresses for Interrupt Registers"
         FLAG = 0xFF0F
@@ -62,21 +72,21 @@ class IO:
     class LCD(IntEnum):
         "Addresses for LCD Registers"
         # General
-        Ctrl = 0xFF40
-        Stat = 0xFF41
+        LCDC = Control = 0xFF40
+        STAT = Status  = 0xFF41
 
         # Positioning/Scrolling
-        ScrollY  = 0xFF42
-        ScrollX  = 0xFF43
-        LineY    = 0xFF44
-        LineYCmp = 0xFF45
-        WindowY  = 0xFF4A
-        WindowX  = 0xFF4B
+        SCY = ScrollY  = 0xFF42
+        SCX = ScrollX  = 0xFF43
+        LY  = LineY    = 0xFF44
+        LYC = LineYCmp = 0xFF45
+        WY  = WindowY  = 0xFF4A
+        WX  = WindowX  = 0xFF4B
 
         # Palettes
-        BG_data      = 0xFF47
-        Sprite1_data = 0xFF48
-        Sprite2_data = 0xFF49
+        BGP  = BG_data      = 0xFF47
+        OBP0 = Sprite1_data = 0xFF48
+        OBP1 = Sprite2_data = 0xFF49
         #TODO: CGB Palette registers
 
         # DMA
