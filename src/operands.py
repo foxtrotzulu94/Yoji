@@ -117,6 +117,8 @@ class BaseOperand:
             name = self._bit.name.upper()
             return name if self._expected == Bit.Set else "N"+name
 
+        # TODO: SP+r8
+
         return "Unsupported addressing mode operand"
     #end
 

@@ -55,7 +55,7 @@ class Instruction:
             # https://robdor.com/2016/08/10/gameboy-emulator-half-carry-flag/
             return (((destination & 0xF) + (source & 0xF)) & 0x10) == 0x10
         def carry():
-            return raw_result > result
+            return (raw_result > result) or (raw_result < 0 and result > 0)
 
         # We use a dictionary in case we have instructions where directly executing the above methods would be an exception
         # For example, in the INC instruction, running half_carry would throw unsupported operand exception if source is None
@@ -204,7 +204,7 @@ def _from_operator(an_operator):
 
 Add = _from_operator(operator.add)
 def AddWithCarry(cpu, destination, source):
-    return Add(cpu, destination, source) + CPU.c
+    return Add(cpu, destination, source) + cpu.c
 #end
 
 Subtract = _from_operator(operator.sub)
