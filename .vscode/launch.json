@@ -36,7 +36,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
-            "args": ["../roms/test_rom.gb", "--bios", "../roms/test_bios.bin", "--verbose" ],
+            "args": ["../roms/test_rom.gb", "--bios", "../roms/test_bios.bin" ],
             "console": "integratedTerminal"
         },
         {
@@ -53,6 +53,14 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "args": ["../roms/cpu_instrs/cpu_instrs.gb", "--verbose" ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Blarg-01",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "args": ["../roms/cpu_instrs/individual/01-special.gb", "--verbose" ],
             "console": "integratedTerminal"
         },
         {

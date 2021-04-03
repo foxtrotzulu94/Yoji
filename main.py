@@ -39,13 +39,13 @@ def main():
 
     # Create the system
     system = GameBoy()
-    system.Debug = True
+    system.Debug.Active = True
     system.ConfigureBIOS(bios_data)
     system.SetGameRomFromFile(parsed_args.rom_file)
 
     if parsed_args.debug:
         logging.basicConfig(level=logging.DEBUG)
-        system.Debug = True
+        system.Debug.Active = True
     
     if parsed_args.disassemble:
         system.Debug_DumpROM()

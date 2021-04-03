@@ -25,12 +25,14 @@ class CPU:
 
         self._curr_inst = None
         self._curr_result = None
-        self._cycles_left = -1
+        self._next_instr_cycle = 0
 
         self.__base_opcodes = base_instructions
         self.__cb_opcodes = cb_prefix
 
         self.__debug = False
+
+        self.__break_queue = [(lambda x: x.PC == 0x0213 and x.A < 5)]
     # end init
 
     ### Bit Flag methods ###
@@ -216,11 +218,10 @@ class CPU:
         self._check_interrupts()
     #end Step
 
-    def Tick(self):
+    def Tick(self, cycle_num):
         "Executes instructions to the tick of a clock"
 
-        self._cycles_left -= 1
-        if self._cycles_left > 0:
+        if cycle_num < self._next_instr_cycle:
             return
 
         self._check_interrupts()
@@ -232,8 +233,8 @@ class CPU:
         location = self.PC
 
         # 1.1 Check if we need to break
-        # if self.PC == 0x0066:
-        #     print("BREAK")
+        if any([ x(self) for x in self.__break_queue]):
+            print("BREAK")
 
         self.PC += self._curr_inst.Size
         nextPC = self.PC
@@ -246,9 +247,9 @@ class CPU:
         # 3. Check how many cycles we have left for the next instruction
         if self._curr_inst.ShortCycles is not None and self.PC == nextPC:
             # This means we didn't take the Jump, so there's no memory penalty to pay here
-            self._cycles_left = self._curr_inst.ShortCycles - 1
+            self._next_instr_cycle = cycle_num + self._curr_inst.ShortCycles# - 1
         else:
-            self._cycles_left = self._curr_inst.Cycles - 1
+            self._next_instr_cycle = cycle_num + self._curr_inst.Cycles# - 1
     #end Tick
 
     def Dump(self, move_forward = True, output_handle = sys.stdout):

@@ -1,5 +1,5 @@
 from enum import Enum, IntEnum
-from .bus import IO, Region, InterruptBit
+from .bus import IO, Region, InterruptBit, MEMORY_RAM_CYCLES, MEMORY_VRAM_CYCLES
 from .cartridge import Cartridge
 
 class Memory:
@@ -9,10 +9,10 @@ class Memory:
         self._rom = None
         self._mem_area = bytearray(0xFFFF + 1) # Full 16-bit address space
         self._len = len(self._mem_area)
-        self._ram_write_queue = None
-        self._vram_write_queue = None
+        self._ram_write_queue = []
 
         self._synchronized = synchronized
+        self._cycle_count = 0
         self._is_boot_active = False
     # end
 
@@ -25,10 +25,13 @@ class Memory:
     def Synchronized(self, value):
         self._synchronized = value
         if not value:
-            # purge current write queue by
-            # ticking RAM and VRAM one last time
-            self.Tick()
-            self.TickVRAM()
+            # purge current write queue
+            while any(self._ram_write_queue):
+                write_args = self._ram_write_queue[0][1:]
+                self._write_internal(*write_args)
+
+                del self._ram_write_queue[0]
+        # end while
     #end
 
     @property
@@ -60,22 +63,24 @@ class Memory:
     def _is_ROM_region(self, address):
         return address >= Region.ROM_BGN and address <= Region.ROM_END
 
-    def Tick(self):
+    def Tick(self, cycle_num):
         """ Should be called for writing/refreshing Work RAM """
-        if self._ram_write_queue is None:
-            return
+        self._cycle_count = cycle_num
 
-        write_args = self._ram_write_queue
-        self._write_internal(*write_args)
-        self._ram_write_queue = None
-    def TickVRAM(self):
-        """ Should be called for writing/refreshing VRAM """
-        if self._vram_write_queue is None:
-            return
-
-        write_args = self._vram_write_queue
-        self._write_internal(*write_args)
-        self._vram_write_queue = None
+        # Check if there's anything to write
+        while any(self._ram_write_queue):
+            # While there's something in a queue, pop it and do it
+            next_element = self._ram_write_queue[0]
+            when_cycle = next_element[0]
+            if cycle_num == when_cycle:
+                write_args = next_element[1:]
+                self._write_internal(*write_args)
+                del self._ram_write_queue[0]
+            else:
+                # we assume the queue is ordered, 
+                # so we return here immediately
+                return
+        # end while
     #end
 
     def _read_internal(self, offset, length):
@@ -135,12 +140,14 @@ class Memory:
         if self.Synchronized:
             # queue it for a later write
             write_tuple = (offset, data, size)
+            next_cycles = self._cycle_count + MEMORY_RAM_CYCLES - 1
             if self._is_vram_range(offset):
-                assert(self._vram_write_queue is None)
-                self._vram_write_queue = write_tuple
-            else:
-                assert(self._ram_write_queue is None)
-                self._ram_write_queue = write_tuple
+                next_cycles = self._cycle_count + MEMORY_VRAM_CYCLES - 1
+
+            assert(not any(self._ram_write_queue)) # or self._ram_write_queue[0][0] - next_cycles < 2)
+
+            self._ram_write_queue.append( (next_cycles, ) + write_tuple )
+
         else:
             # Write it directly
             self._write_internal(offset, data, size)

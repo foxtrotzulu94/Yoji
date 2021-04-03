@@ -9,6 +9,16 @@ class Debug:
     def __init__(self, cpu : CPU, mem: Memory):
         self._cpu = cpu
         self._memory = mem
+        self._active = False
+
+    @property
+    def Active(self):
+        """ Debug mode to print instructions on each tick """
+        return self._active
+
+    @Active.setter
+    def Active(self, value):
+        self._active = value
     
     def disassemble_rom(self, filename = None):
         # get some basic info about the ROM

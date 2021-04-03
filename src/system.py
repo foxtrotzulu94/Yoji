@@ -30,22 +30,16 @@ class GameBoy:
             self._audio)
 
         self._init_complete = False
-        self.__debug = False
-        
-        self.__debug_inspector = Debug(self._cpu, self._memory)
+
+        self.__debug = Debug(self._cpu, self._memory)
         
         self.__log = logging.getLogger(self.__class__.__name__)
     #end
 
     @property
     def Debug(self):
-        """ Debug mode to print instructions on each tick """
+        """ Property to access the Debug window """
         return self.__debug
-
-    @Debug.setter
-    def Debug(self, value):
-        self._cpu.Debug = self.__debug = value
-        # TODO: make a debug window
 
     def ConfigureBIOS(self, bios_data):
         if bios_data is None:
@@ -131,7 +125,7 @@ class GameBoy:
         # TODO: Initialize systems
         # TODO: Abstract debugger?
         tile_debug = VideoDebugWindow(self._ppu.DebugTileMapData, 16, 384, b"Tile data")
-        bg_debug = VideoDebugWindow(self._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data", 2)
+        bg_debug = VideoDebugWindow(self._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data")
         debug_objects = (tile_debug, bg_debug)
 
         while True:

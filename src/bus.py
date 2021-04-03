@@ -1,5 +1,9 @@
 from enum import IntEnum, auto
 
+MEMORY_RAM_CYCLES = 4
+
+MEMORY_VRAM_CYCLES = 2
+
 # Great resource: http://gameboy.mongenel.com/dmg/asmmemmap.html
 class Region(IntEnum):
     """Enum for refering to the Memory Ranges"""
