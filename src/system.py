@@ -1,4 +1,6 @@
 import logging
+import sys
+
 from sdl2 import *
 from .sdl.window import VideoDebugWindow
 
@@ -8,8 +10,6 @@ from .memory import Memory
 from .clock import Clock
 from .cartridge import Cartridge
 from .bus import *
-
-from .debug import Debug
 
 from .sdl.video import Video
 
@@ -28,7 +28,7 @@ class GameBoy:
             self._audio)
 
         # TODO: Merge logging and debugging
-        self.__debug = Debug(self._cpu, self._memory)
+        self.__debug = Debug(self)
         self.__log = logging.getLogger(self.__class__.__name__)
 
         self._screen = Video(self)
@@ -124,3 +124,127 @@ class GameBoy:
         self._screen.Cleanup()
         self.__debug.Cleanup()
         self.__log.info("Shutting down")
+    #end run
+#end GameBoy
+
+class Debug:
+    def __init__(self, gameboy: GameBoy):
+        self._gb = gameboy
+        self._active = False
+        
+        self._tile_inspect_window = None
+        self._bgmap_inspect_window = None
+
+        self._breakpoints = []
+        self._inspect_windows = []
+
+    @property
+    def Active(self):
+        return self._active
+
+    @Active.setter
+    def Active(self, value):
+        self._active = value
+
+    @property
+    def InspectTiles(self):
+        return self._tile_inspect_window != None
+    @InspectTiles.setter
+    def InspectTiles(self, value):
+        if value:
+            self._tile_inspect_window = VideoDebugWindow(self._gb._ppu.DebugTileMapData, 16, 384, b"Tile data")
+            self._inspect_windows.append(self._tile_inspect_window)
+        else:
+            self._inspect_windows.remove(self._tile_inspect_window)
+            self._tile_inspect_window.Cleanup()
+            self._tile_inspect_window = None
+    #end
+
+    def ToggleInspectTiles(self):
+        self.InspectTiles = not self.InspectTiles
+
+    def Update(self):
+        for window in self._inspect_windows:
+            window.Update()
+    #end
+
+    def Cleanup(self):
+        for window in self._inspect_windows:
+            window.Cleanup()
+
+    def CreateWindowCommand(self, data_func, x_tiles, num_tiles, name, scale = None):
+        def WindowCommand():
+            self._inspect_windows.append(VideoDebugWindow(data_func, x_tiles, num_tiles, name, scale))
+        return WindowCommand
+
+    def execute_cpu_instruction(self, opcode):
+        """ Runs an arbitrary instruction once """
+        
+        cpu = self._gb._cpu
+        instr = None
+        # Instruction decode
+        if type(opcode) is int:
+            instr = cpu.__base_opcodes[opcode]
+            if (opcode & 0xFF00) == 0xCB00:
+                opcode = (opcode >> 8)
+                instr = self.__cb_opcodes[opcode]
+        elif type(opcode) is str:
+            # This is pretty darn slow...
+            matching = [ x for x in __base_opcodes + __cb_opcodes if x._mnemonic == opcode ]
+            if len(matching) < 1:
+                raise KeyError("Mnemonic not found!")
+            instr = matching[0]
+        #end
+
+        # Instruction Execute
+        location = cpu.PC + 1
+        print(instr.ToString(self.__memory, self.PC))
+        result = instr.execute(self, self.__memory, location)
+
+        # Writeback
+        instr.writeback(self, self.__memory, location, result)
+        self._check_interrupts()
+    #end
+
+    def print_cpu_instruction(self, output_handle = sys.stdout):
+        # Fetch, Decode and dump
+        cpu = self._gb._cpu
+        cpu._get_next_instruction()
+        output_handle.write(cpu._curr_inst.ToString(self._gb._memory, cpu.PC))
+        output_handle.write('\n')
+    
+    def dump_rom(self, filename = None):
+        # get some basic info about the ROM
+        mem_bus = self._gb._memory
+        rom_type = mem_bus._rom._rom_type
+        rom_size = mem_bus._rom._rom_size
+        bank_size = Cartridge._bank_size
+        banks = rom_size // bank_size
+
+        mem_bus.IsBootROMActive = False
+
+        if filename is None:
+            filename = mem_bus.ROMName + ".dump"
+
+        with open(filename, 'w') as dump_file:
+            dump_file.write("; Decompilation of ")
+            dump_file.write(mem_bus.ROMName)
+            dump_file.write("\nAddress   Opcode   Mnemonic\n")
+
+            # Scan the whole thing, start at 0
+            cpu = self._gb._cpu
+            cpu.PC = 0x0
+            while cpu.PC <= Region.ROM_0:
+                self.print_cpu_instruction(dump_file)
+                cpu.PC += max(cpu._curr_inst.Size, 1)
+
+            # switch and scan all the banks successively
+            for i in range(1, banks):
+                mem_bus.ROM.ChangeBank(i)
+                cpu.PC = Region.ROM_0+1    
+                
+                while cpu.PC <= Region.ROM_XX:
+                    self.print_cpu_instruction(dump_file)
+                    cpu.PC += max(cpu._curr_inst.Size, 1)
+    #end dump
+#end debugger

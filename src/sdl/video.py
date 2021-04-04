@@ -36,6 +36,7 @@ class Video:
 
         self._tk_root = tk.Tk()
         self._tk_root.title(b"Yoji")
+        self._tk_root.resizable(False, False)
 
         menubar = Menu(self._tk_root)
         filemenu = Menu(menubar, tearoff=0)
@@ -45,7 +46,7 @@ class Video:
         menubar.add_cascade(label="File", menu=filemenu)
 
         debug_menu = Menu(menubar, tearoff=0)
-        debug_menu.add_command(label="Tiles", command = self._gb.Debug.CreateWindowCommand(self._gb._ppu.DebugTileMapData, 16, 384, b"Tile data"))
+        debug_menu.add_checkbutton(label="Tiles", variable = self._gb.Debug.InspectTiles, command = self._gb.Debug.ToggleInspectTiles)
         debug_menu.add_checkbutton(label="BG Map", command = self._gb.Debug.CreateWindowCommand(self._gb._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data"))
         menubar.add_cascade(label="Debug", menu = debug_menu)
 
@@ -55,9 +56,8 @@ class Video:
 
         self._tk_embed = tk.Frame(self._tk_root, width = self._width, height = self._height)
         self._tk_embed.pack(side = BOTTOM)
-        def exit():
-            self._gb.ExitRun()
-        self._tk_root.protocol("WM_DELETE_WINDOW", exit)
+
+        self._tk_root.protocol("WM_DELETE_WINDOW", self._gb.ExitRun)
         self._tk_root.config(menu=menubar)
         self._tk_root.update()
 
@@ -80,7 +80,7 @@ class Video:
             return True
         except KeyboardInterrupt:
             return False
-            
+
     def Cleanup(self):
         SDL_DestroyTexture(self.__texture)
         SDL_DestroyRenderer(self._renderer)
