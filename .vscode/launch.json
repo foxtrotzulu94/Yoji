@@ -21,7 +21,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/tools/generate_instructions.py",
             "cwd": "${workspaceFolder}/tools",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         },
         {
             "name": "Instruction Scraper",
@@ -29,7 +30,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/tools/scrape_instructions.py",
             "cwd": "${workspaceFolder}/tools",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         },
         {
             "name": "Main",
@@ -37,7 +39,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "args": ["../roms/test_rom.gb", "--bios", "../roms/test_bios.bin" ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         },
         {
             "name": "SDL Test",
@@ -45,7 +48,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/src/sdl/sdl_test.py",
             "args": ["../roms/test_rom.gb", "--bios", "../roms/test_bios.bin", "--verbose" ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         },
         {
             "name": "Blarg",
@@ -53,7 +57,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "args": ["../roms/cpu_instrs/cpu_instrs.gb", "--verbose" ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         },
         {
             "name": "Blarg-01",
@@ -61,7 +66,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "args": ["../roms/cpu_instrs/individual/01-special.gb", "--verbose" ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         },
         {
             "name": "DUMP",
@@ -69,7 +75,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "args": ["../roms/cpu_instrs/cpu_instrs.gb", "-d" ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }

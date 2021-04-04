@@ -19,20 +19,21 @@ class GameBoy:
         self._cpu = CPU(self._memory)
         self._ppu = PPU(self._memory)
         self._audio = None
-        self._video = Video()
+        self._screen = Video(self)
         self._cart = None
 
         self._clock = Clock(
             self._cpu,
             self._ppu,
             self._memory,
-            self._video,
+            self._screen,
             self._audio)
 
         self._init_complete = False
+        self._ticking = False
 
+        # TODO: Merge logging and debugging
         self.__debug = Debug(self._cpu, self._memory)
-        
         self.__log = logging.getLogger(self.__class__.__name__)
     #end
 
@@ -40,6 +41,10 @@ class GameBoy:
     def Debug(self):
         """ Property to access the Debug window """
         return self.__debug
+
+    def ExitRun(self):
+        """ Indicates that ticking should stop, halting any existing runs """
+        self._ticking = False        
 
     def ConfigureBIOS(self, bios_data):
         if bios_data is None:
@@ -49,6 +54,7 @@ class GameBoy:
 
         self._memory.SetBootRom(bios_data)
         self.__log.info("Successfully loaded BIOS")
+
     def SetGameRomFromFile(self, file_path):
         self._cart = Cartridge.from_file(file_path)
         self._memory.SetROM(self._cart)
@@ -59,20 +65,6 @@ class GameBoy:
             raise RuntimeError("No ROM to DUMP")
         
         self.__debug_inspector.disassemble_rom()
-    #end
-
-
-    def _handle_events(self):
-        # TODO: Abstract away into SDL
-        events = SDL_Event()
-        SDL_PollEvent(events)
-        if events.type == SDL_QUIT:
-            return False
-        elif events.type == SDL_WINDOWEVENT and events.window.event == SDL_WINDOWEVENT_CLOSE:
-            return False
-
-        # Everything handled successfully!
-        return True
     #end
 
     def _debug_tick(self, debug_objs):
@@ -128,9 +120,10 @@ class GameBoy:
         bg_debug = VideoDebugWindow(self._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data")
         debug_objects = (tile_debug, bg_debug)
 
-        while True:
+        self._ticking = True
+        while self._ticking:
             try:
-                keep_running = self._handle_events()
+                keep_running = self._screen.Tick()
                 if not keep_running:
                     break
 
@@ -140,8 +133,9 @@ class GameBoy:
             except KeyboardInterrupt:
                 break
         # end while
+        self._ticking = False
         
-        self._video.Cleanup()
+        self._screen.Cleanup()
         tile_debug.Cleanup()
         bg_debug.Cleanup()
         self.__log.info("Shutting down")

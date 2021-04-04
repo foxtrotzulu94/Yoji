@@ -109,14 +109,6 @@ class Memory:
     def Read(self, offset, length = 1):
         """ Read data from Memory """
         return self._read_internal(offset, length)
-    def readVRAMBlock(self):
-        """ solely for debugging purposes """
-        VRAM_SIZE = Region.VRAM_END - Region.VRAM_BGN + 1
-        return self.Read(Region.VRAM_BGN, VRAM_SIZE)
-    def readVRAMTiles(self):
-        """ solely for debugging purposes """
-        VRAM_SIZE = Region.TILE_DATA_END - Region.TILE_DATA + 1
-        return self.Read(Region.VRAM_BGN, VRAM_SIZE)
     #end
 
     def _write_internal(self, offset, data, length):
