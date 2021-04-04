@@ -22,7 +22,7 @@ class Clock:
         # TODO: tick any hardware timers
         pass
 
-    def Tick(self):
+    def Update(self):
         # We divide out main loop among the components
         # Keep in mind the timings and the order
         # TODO: Pass in the current amount of cycles, makes it easier for debugging

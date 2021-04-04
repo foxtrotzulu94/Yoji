@@ -88,7 +88,7 @@ class VideoDebugWindow(Window):
         return (x, y)
     #end
 
-    def Tick(self):
+    def Update(self):
         if time.monotonic() < self.update_time:
             return
 

@@ -48,7 +48,7 @@ def main():
         system.Debug.Active = True
     
     if parsed_args.disassemble:
-        system.Debug_DumpROM()
+        system.Debug.dump_rom()
         return
 
     system.Run()

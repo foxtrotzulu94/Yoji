@@ -39,15 +39,17 @@ class Video:
 
         menubar = Menu(self._tk_root)
         filemenu = Menu(menubar, tearoff=0)
-        filemenu.add_command(label="New", command=donothing)
         filemenu.add_command(label="Open", command=donothing)
-        filemenu.add_command(label="Save", command=donothing)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=self.__exit_now)
         menubar.add_cascade(label="File", menu=filemenu)
 
+        debug_menu = Menu(menubar, tearoff=0)
+        debug_menu.add_command(label="Tiles", command = self._gb.Debug.CreateWindowCommand(self._gb._ppu.DebugTileMapData, 16, 384, b"Tile data"))
+        debug_menu.add_checkbutton(label="BG Map", command = self._gb.Debug.CreateWindowCommand(self._gb._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data"))
+        menubar.add_cascade(label="Debug", menu = debug_menu)
+
         helpmenu = Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Help Index", command=donothing)
         helpmenu.add_command(label="About...", command=donothing)
         menubar.add_cascade(label="Help", menu=helpmenu)
 
@@ -59,7 +61,7 @@ class Video:
         self._tk_root.config(menu=menubar)
         self._tk_root.update()
 
-    def Tick(self):
+    def Update(self):
         try:
             # Update Tk
             self._tk_root.update()
@@ -67,6 +69,7 @@ class Video:
             # Poll Events
             SDL_PollEvent(self.__events)
             if self.__events.type == SDL_QUIT or (self.__events.type == SDL_WINDOWEVENT and self.__events.window.event == SDL_WINDOWEVENT_CLOSE):
+                # TODO: Close only the window that was opened instead of all of them
                 self.__exit_now()
                 return False
 
@@ -77,74 +80,7 @@ class Video:
             return True
         except KeyboardInterrupt:
             return False
-
-    def Update(self, gb_2bpp):
-        """TODO: OPTIMIZE"""
-
-        tiles = []
-        for i in range(0, len(gb_2bpp), 16):
-            tiles.append(gb_2bpp[i:i+16])
-
-        # Step 1: determine the actual tiles
-        rects = []
-        for tile in tiles:
-            blit_tile = []
-            for xpos in range(0, 15, 2):
-                line = []
-                lsb,msb = tile[xpos], tile[xpos+1]
-                for bit in self.__bits:
-                    mask = 1 << bit
-                    hi_bit = (msb & mask) >> bit
-                    lo_bit = (lsb & mask) >> bit
-
-                    pixel = (hi_bit << 1) | lo_bit
-                    line.append( pixel )
-                blit_tile.append(line)
-
-            # tile is done
-            rects.append(blit_tile)
-        #end
-
-        # Render to texture
-        palette = self.__palette
-
-        self.being_updated = True
-        temp_ren =self._renderer
-        SDL_SetRenderTarget(temp_ren, self.__texture)
-        #SDL_RenderClear(temp_ren)
-        SDL_SetRenderDrawColor(temp_ren, 0, 0, 0, 0xFF)
-
-        # Step 2: actually transfer to the texture
-        x_start,y_start = 0,0
-        x_count = 0
-        for blit_tile in rects:
-            y = y_start
-            for horizontal in blit_tile:
-                x = x_start
-                for pixel in horizontal:
-                    color = self.__palette[pixel]
-                    SDL_SetRenderDrawColor(temp_ren, *color)
-                    pixel_rect = SDL_Rect(x, y, self._scale, self._scale)
-                    SDL_RenderFillRect(temp_ren, pixel_rect)
-                    x += self._scale
-                #end
-                y+= self._scale
-            #end
-            next_x = (x_start + (GB_TILE_PIXEL_SIZE*self._scale) + self._scale)
-            x_count += 1
-
-            # Go to next row by moving y_start
-            if x_count+1 > 16 or next_x >= (self._scale * GB_NATIVE_WIDTH):
-                y_start += (GB_TILE_PIXEL_SIZE * self._scale) + self._scale
-                x_start = 0
-                x_count = 0
-            else:
-                x_start = next_x
-        #end
-
-        SDL_SetRenderTarget(temp_ren, None)
-        self.being_updated = False
-
+            
     def Cleanup(self):
         SDL_DestroyTexture(self.__texture)
         SDL_DestroyRenderer(self._renderer)

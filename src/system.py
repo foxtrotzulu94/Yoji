@@ -19,22 +19,22 @@ class GameBoy:
         self._cpu = CPU(self._memory)
         self._ppu = PPU(self._memory)
         self._audio = None
-        self._screen = Video(self)
         self._cart = None
-
         self._clock = Clock(
             self._cpu,
             self._ppu,
             self._memory,
-            self._screen,
+            None, #self._screen,
             self._audio)
-
-        self._init_complete = False
-        self._ticking = False
 
         # TODO: Merge logging and debugging
         self.__debug = Debug(self._cpu, self._memory)
         self.__log = logging.getLogger(self.__class__.__name__)
+
+        self._screen = Video(self)
+
+        self._init_complete = False
+        self._ticking = False
     #end
 
     @property
@@ -59,13 +59,6 @@ class GameBoy:
         self._cart = Cartridge.from_file(file_path)
         self._memory.SetROM(self._cart)
         self.__log.info("Game ROM loaded: %s", file_path)
-
-    def Debug_DumpROM(self):
-        if self._cart is None:
-            raise RuntimeError("No ROM to DUMP")
-        
-        self.__debug_inspector.disassemble_rom()
-    #end
 
     def _debug_tick(self, debug_objs):
         for thing in debug_objs:
@@ -114,28 +107,20 @@ class GameBoy:
         if not self._memory.IsBootROMActive and not self._init_complete:
             self._initializeSystemNoBIOS()
 
-        # TODO: Initialize systems
-        # TODO: Abstract debugger?
-        tile_debug = VideoDebugWindow(self._ppu.DebugTileMapData, 16, 384, b"Tile data")
-        bg_debug = VideoDebugWindow(self._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data")
-        debug_objects = (tile_debug, bg_debug)
-
         self._ticking = True
         while self._ticking:
             try:
-                keep_running = self._screen.Tick()
+                keep_running = self._screen.Update()
                 if not keep_running:
                     break
 
-                self._clock.Tick()
-                
-                self._debug_tick(debug_objects)
+                self._clock.Update()
+                self.__debug.Update()
             except KeyboardInterrupt:
                 break
         # end while
         self._ticking = False
         
         self._screen.Cleanup()
-        tile_debug.Cleanup()
-        bg_debug.Cleanup()
+        self.__debug.Cleanup()
         self.__log.info("Shutting down")
