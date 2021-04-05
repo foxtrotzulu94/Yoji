@@ -1,3 +1,5 @@
+import time
+
 from sdl2 import *
 
 import tkinter as tk
@@ -26,6 +28,7 @@ class Video:
         self.__bits = [x for x in range(0,8)]
         self.__bits.reverse()
         self.__events = SDL_Event()
+        self.update_time = 0
 
     def __exit_now(self):
         self._gb.ExitRun()
@@ -59,9 +62,13 @@ class Video:
 
         self._tk_root.protocol("WM_DELETE_WINDOW", self._gb.ExitRun)
         self._tk_root.config(menu=menubar)
-        self._tk_root.update()
+        #self._tk_root.update()
 
     def Update(self):
+        if time.monotonic() < self.update_time:
+            return True
+
+        self.update_time = time.monotonic() + 0.3
         try:
             # Update Tk
             self._tk_root.update()

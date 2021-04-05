@@ -66,9 +66,9 @@ class Memory:
     def Tick(self, cycle_num):
         """ Should be called for writing/refreshing Work RAM """
         self._cycle_count = cycle_num
-
+        # assert(len(self._ram_write_queue) < 2)
         # Check if there's anything to write
-        while any(self._ram_write_queue):
+        if any(self._ram_write_queue):
             # While there's something in a queue, pop it and do it
             next_element = self._ram_write_queue[0]
             when_cycle = next_element[0]
@@ -80,13 +80,13 @@ class Memory:
                 # we assume the queue is ordered, 
                 # so we return here immediately
                 return
-        # end while
+        # end if
     #end
 
     def _read_internal(self, offset, length):
         # Dispatches special memory segments
 
-        if self.IsBootROMActive and offset <= Region.BOOT_END:
+        if offset <= Region.BOOT_END and self.IsBootROMActive:
             # Read straight from the boot ROM
             return self._boot_rom[offset: offset+length]
 
@@ -136,7 +136,7 @@ class Memory:
             if self._is_vram_range(offset):
                 next_cycles = self._cycle_count + MEMORY_VRAM_CYCLES - 1
 
-            assert(not any(self._ram_write_queue)) # or self._ram_write_queue[0][0] - next_cycles < 2)
+            # assert(not any(self._ram_write_queue)) # or self._ram_write_queue[0][0] - next_cycles < 2)
 
             self._ram_write_queue.append( (next_cycles, ) + write_tuple )
 

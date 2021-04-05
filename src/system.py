@@ -48,7 +48,7 @@ class GameBoy:
 
     def ConfigureBIOS(self, bios_data):
         if bios_data is None:
-            self._initializeSystemNoBIOS()
+            self._initialize_without_bios()
             self.__log.info("Successfully Bootstrapped DMG mode")
             return
 
@@ -56,7 +56,7 @@ class GameBoy:
         self.__log.info("Successfully loaded BIOS")
 
     def SetGameRomFromFile(self, file_path):
-        self._cart = Cartridge.from_file(file_path)
+        self._cart = Cartridge.FromFile(file_path)
         self._memory.SetROM(self._cart)
         self.__log.info("Game ROM loaded: %s", file_path)
 
@@ -64,7 +64,7 @@ class GameBoy:
         for thing in debug_objs:
             thing.Tick()
 
-    def _initializeSystemNoBIOS(self):
+    def _initialize_without_bios(self):
         """ Sets the system to the initial state of a DMG (Original GameBoy) """
         if self._init_complete:
             return
@@ -105,7 +105,7 @@ class GameBoy:
 
         # If a boot ROM wasn't set, auto initialize
         if not self._memory.IsBootROMActive and not self._init_complete:
-            self._initializeSystemNoBIOS()
+            self._initialize_without_bios()
 
         self._ticking = True
         while self._ticking:

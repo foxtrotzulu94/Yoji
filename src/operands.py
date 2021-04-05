@@ -47,10 +47,10 @@ class BaseOperand:
         self._throwaway = False
     #end
 
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         raise NotImplementedError()
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         "Sets the value of the operand. Use for writeback step"
         raise NotImplementedError()
     #end
@@ -69,7 +69,7 @@ class BaseOperand:
         return address
 
     def can_set_value(self):
-        """Checks if this operand can be used to set value"""
+        """UNUSED - Checks if this operand can be used to set value"""
         return self._mode != Addressing.Immediate and self._mode != Addressing.RegisterPlusImmediate \
             and self._mode != Addressing.Bit and self._mode != Addressing.Constant
     #end
@@ -139,10 +139,10 @@ class ConstOperand(BaseOperand):
     def __init__(self, value):
         super().__init__(1, Addressing.Constant)
         self._value = value
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         return self._value
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         # No-op
         #raise ValueError("A constant-value operand cannot be written to!")
         pass
@@ -154,11 +154,11 @@ class BitOperand(BaseOperand):
         super().__init__(1, Addressing.Bit)
         self._bit = offset
         self._expected = state
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         a_bit = cpu.get_flag(self._bit)
         return a_bit if self._expected == Bit.Set else (not a_bit)
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         # No-op
         #raise ValueError("A bit operand should not be written to directly!")
         pass
@@ -174,12 +174,13 @@ class ImmediateOperand(BaseOperand):
             return value[0]
 
         # TODO: Optimize based on this
-        assert(self.width == 2)
-        return int.from_bytes(value, 'little')
-    def get_value(self, cpu, mem, location):
+        #assert(self.width == 2)
+        #return int.from_bytes(value, 'little')
+        return (value[1] << 8) | value[0]
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         return self._to_num(mem.Read(location, self.width))
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         # No-op
         #raise ValueError("An immediate mode operand cannot be written to!")
         pass
@@ -190,11 +191,11 @@ class DirectOperand(ImmediateOperand):
     def __init__(self, width):
         BaseOperand.__init__(self, width, Addressing.Direct)
 
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
-        imm = super().get_value(cpu, mem, location)
+        imm = super().Get(cpu, mem, location)
         return self._to_num(mem.Read(self._translate_address(imm), self.width))
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         address = mem.Read(location, self.width)
         mem.Write(self._translate_address(address), value)
     #end
@@ -221,10 +222,10 @@ class RegisterOperand(BaseOperand):
             cpu.set_register(new_value, self._register, self.width)
     #end
 
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         return self._get_register(cpu)
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         "Sets the value of the operand. Use for writeback step"
         if self._throwaway:
             return
@@ -239,11 +240,11 @@ class RegisterIndirectOperand(RegisterOperand):
         self._register = reg
     #end
 
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         # Reads 1 byte of data
         return mem.Read(self._translate_address(self._get_register(cpu)), self.width)[0]
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         "Sets the value of the operand. Use for writeback step"
         # writes 1 byte of data
         mem.Write(self._translate_address(self._get_register(cpu)), bytes([value]))
@@ -269,12 +270,12 @@ class RegisterPostOperand(RegisterOperand):
         self._old_val = value
     #end
 
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         value = self._get_register(cpu)
         self._do_postop(cpu)
         return mem.Read(self._translate_address(value))[0]
-    def set_value(self, cpu, mem, location, value):
+    def Set(self, cpu, mem, location, value):
         "Sets the value of the operand. Use for writeback step"
         assert(self._old_val is not None)
         mem.Write(self._translate_address(self._old_val), bytes([value]))
@@ -288,11 +289,11 @@ class RegisterAndImmediateOperand(RegisterOperand):
         self._register = reg
     #end
 
-    def get_value(self, cpu, mem, location):
+    def Get(self, cpu, mem, location):
         "Gets the value of the operand"
         # Reads 1 byte of data
-        return super().get_value(cpu, mem, location) + (mem.Read(location)[0])
-    def set_value(self, cpu, mem, location, value):
+        return super().Get(cpu, mem, location) + (mem.Read(location)[0])
+    def Set(self, cpu, mem, location, value):
         # No-op
         #raise ValueError("An immediate mode operand cannot be written to!")
         pass

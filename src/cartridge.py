@@ -42,7 +42,7 @@ class Cartridge:
     _bank_size = 16 * 1024 # 16KB
 
     @staticmethod
-    def from_file(path):
+    def FromFile(path):
         if not os.path.exists(path):
             return None
 
@@ -75,7 +75,7 @@ class Cartridge:
         return bytearray(self._data[ start : end ])
 
     def ChangeBank(self, new_bank):
-        if self._rom_size_id == 0x0:
+        if self._rom_size_id == 0x0 and new_bank > 1:
             raise RuntimeError("32KB ROM requested a bank change")
         self._bank = new_bank
 

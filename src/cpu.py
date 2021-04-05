@@ -30,8 +30,6 @@ class CPU:
         self.__cb_opcodes = cb_prefix
 
         self.__debug = False
-
-        self.__break_queue = [(lambda x: x.PC == 0x0213 and x.A < 5)]
     # end init
 
     ### Bit Flag methods ###
@@ -204,17 +202,19 @@ class CPU:
     def Step(self):
         "Executes the next instruction immediately"
 
-        # Instruction Fetch, Decode is handled in Dump
-        self.Dump(False)
-
-        if not self.__suspended:
-            # execute
-            location = self.PC + 1
-            self.PC += self._curr_inst.Size
-            self._execute_instruction(location)
-        #end
-
         self._check_interrupts()
+        if self.__suspended:
+            return
+
+        # 1. Instruction Fetch, Decode
+        self._get_next_instruction()
+        location = self.PC
+
+        self.PC += self._curr_inst.Size
+        nextPC = self.PC
+
+        # 2. Execute & Writeback
+        self._execute_instruction(location + 1)
     #end Step
 
     def Tick(self, cycle_num):
@@ -231,51 +231,20 @@ class CPU:
         self._get_next_instruction()
         location = self.PC
 
-        # 1.1 Check if we need to break
-        if any([ x(self) for x in self.__break_queue]):
-            print("BREAK")
-
         self.PC += self._curr_inst.Size
         nextPC = self.PC
 
         # 2. Execute & Writeback
-        if self.__debug:
-            print(self._curr_inst.ToString(self.__memory, location))
+        # if self.__debug:
+        #     print(self._curr_inst.ToString(self.__memory, location))
+        # TODO: Verify this location + 1
         self._execute_instruction(location + 1)
 
-        # 3. Check how many cycles we have left for the next instruction
-        if self._curr_inst.ShortCycles is not None and self.PC == nextPC:
+        # Check how many cycles we have left for the next instruction
+        if self.PC == nextPC and self._curr_inst.ShortCycles is not None:
             # This means we didn't take the Jump, so there's no memory penalty to pay here
             self._next_instr_cycle = cycle_num + self._curr_inst.ShortCycles# - 1
         else:
             self._next_instr_cycle = cycle_num + self._curr_inst.Cycles# - 1
     #end Tick
-
-    def executeArbitraryInstruction(self, opcode):
-        """ solely for debugging purposes """
-        instr = None
-
-        # Instruction decode
-        if type(opcode) is int:
-            instr = self.__opcode_map[opcode]
-            if (opcode & 0xFF00) == 0xCB00:
-                opcode = (opcode >> 8)
-                instr = self.__opcode_map[0xcb][opcode]
-        elif type(opcode) is str:
-            # This is pretty darn slow...
-            matching = [ x for x in base_instructions + cb_prefix if x._mnemonic == opcode ]
-            if len(matching) < 1:
-                raise KeyError("Mnemonic not found!")
-            instr = matching[0]
-        #end
-
-        # Instruction Execute
-        location = self.PC + 1
-        print(instr.ToString(self.__memory, self.PC))
-        result = instr.execute(self, self.__memory, location)
-
-        # Writeback
-        instr.writeback(self, self.__memory, location, result)
-        self._check_interrupts()
-    #end
 #end class

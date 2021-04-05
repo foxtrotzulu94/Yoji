@@ -29,7 +29,7 @@ class Instruction:
     def _get_operand(self, index, cpu, mem, location):
         if self._operands is None or self._operands[index] is None:
             return None
-        val = self._operands[index].get_value(cpu, mem, location)
+        val = self._operands[index].Get(cpu, mem, location)
         if self._operands[index]._mode == Addressing.Bit:
             return val
 
@@ -95,7 +95,7 @@ class Instruction:
             # write back would be illegal
             return
 
-        self._operands[0].set_value(cpu, mem, location, result)
+        self._operands[0].Set(cpu, mem, location, result)
     #end writeback
 
     @property
@@ -122,9 +122,6 @@ class Instruction:
     def ShortCycles(self):
         """ Gets the small cycle count for a RET/JMP/CALL when it's conditions fail """
         return self._short_cycles
-
-    def is_complete(self):
-        return self._action is not None
 
     def _get_mnemonic(self, mem = None, addr = None):
         if self._operands is None:

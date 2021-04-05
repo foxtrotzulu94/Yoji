@@ -121,4 +121,4 @@ class VideoDebugWindow(Window):
         SDL_RenderCopy(self.renderer, self.texture, None, None)
         SDL_RenderPresent(self.renderer)
 
-        self.update_time = time.monotonic() + 1
+        self.update_time = time.monotonic() + 5
