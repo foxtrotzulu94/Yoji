@@ -172,9 +172,9 @@ class Debug:
         for window in self._inspect_windows:
             window.Cleanup()
 
-    def CreateWindowCommand(self, data_func, x_tiles, num_tiles, name, scale = None):
+    def CreateWindowCommand(self, data_func, x_tiles, num_tiles, name):
         def WindowCommand():
-            self._inspect_windows.append(VideoDebugWindow(data_func, x_tiles, num_tiles, name, scale))
+            self._inspect_windows.append(VideoDebugWindow(data_func, x_tiles, num_tiles, name))
         return WindowCommand
 
     def execute_cpu_instruction(self, opcode):

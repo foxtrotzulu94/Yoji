@@ -5,30 +5,27 @@ from sdl2 import *
 from .constants import *
 
 class Window:
-    def __init__(self, name, width, height, scale = None):
+    def __init__(self, name, width, height, scale = DEFAULT_SCALE):
         self.width = width
         self.height = height
-        self.scale = scale #1 pixel
+        self.scale = scale
+        self.palette = GB_GREY_PALETTE
 
         SDL_Init(SDL_INIT_VIDEO)
-
         self.window = SDL_CreateWindow(name, 
             START_X, 
             START_Y, 
-            self.width*2, 
-            self.height*2, 
+            # SDL will stretch the texture to the size of the window
+            self.width * self.scale, 
+            self.height * self.scale, 
             SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE)
 
         self.renderer = SDL_CreateRenderer(self.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
-
-        self.palette = [(0xE0, 0xDB, 0xCD, 0xFF), (0xA8, 0x9F, 0x94, 0xFF), (0x70, 0x6B, 0x66, 0xFF), (0x2B,0x2B,0x26, 0xFF)]
-
         self.texture = SDL_CreateTexture(self.renderer, 
             SDL_PIXELFORMAT_RGBA8888, 
             SDL_TEXTUREACCESS_TARGET, 
             self.width, 
             self.height)
-        print()
 
         self.update_time = time.monotonic() + 1
     #end
@@ -37,22 +34,20 @@ class Window:
         SDL_DestroyTexture(self.texture)
         SDL_DestroyRenderer(self.renderer)
         SDL_DestroyWindow(self.window)
-
 #end class
 
 class VideoDebugWindow(Window):
-    def __init__(self, data_func, x_tiles, num_tiles, name, scale = None):
-        scale = DEFAULT_SCALE if scale is None else scale
-        tile_size = GB_TILE_PIXEL_SIZE * scale
-        
+    def __init__(self, data_func, x_tiles, num_tiles, name, scale = DEFAULT_SCALE):        
         self.tiles_on_x = x_tiles
         self.tiles_on_y = num_tiles // self.tiles_on_x
+        self.tile_border = 1
 
-        width = tile_size * self.tiles_on_x + (scale * self.tiles_on_x - 1)
-        height = tile_size * self.tiles_on_y + (scale * self.tiles_on_y - 1)
+        # Size of the tile 8x8 and its border
+        width = (GB_TILE_PIXEL_SIZE * self.tiles_on_x) + (self.tile_border * self.tiles_on_x - 1)
+        height = (GB_TILE_PIXEL_SIZE * self.tiles_on_y) + (self.tile_border * self.tiles_on_y - 1)
 
         super().__init__(name, width, height,  scale)
-        self.read_debug_data = data_func
+        self.__read_debug_data = data_func
     #end
 
     def ToTiles(self,gb_2bpp):
@@ -71,50 +66,63 @@ class VideoDebugWindow(Window):
     #end
 
     def BlitTile(self, start_x, start_y, tile):
+        # Blit each pixel in native res, one at a time
+        # There are probably more efficient ways of doing this with SIMD and/or caching structures
+        # We do it naively here to be able to debug more easily.
+
         y = 0
         for line in tile:
             x = 0
             for pixel in line:
                 color = self.palette[pixel]
                 SDL_SetRenderDrawColor(self.renderer, *color)
-                pixel_rect = SDL_Rect(x + start_x, y + start_y, self.scale, self.scale)
+                pixel_rect = SDL_Rect(x + start_x, y + start_y, 1, 1)
                 SDL_RenderFillRect(self.renderer, pixel_rect)
-                x += self.scale
-            y += self.scale
+                x += 1
+            y += 1
         
         return (x, y)
     #end
 
-    def Update(self):
-        if time.monotonic() < self.update_time:
-            return
-
-        # Step 1: Get the debug data
-        tiles = self.read_debug_data()
-
+    def __draw_to_texture(self, tiles):
         SDL_SetRenderTarget(self.renderer, self.texture)
         SDL_SetRenderDrawColor(self.renderer, 0, 0, 0, 0xFF)
 
-        # Step 2: actually transfer to the texture
         x_start, y_start = 0,0
         tile_count = 0
         for sprite in tiles:
             last_x, last_y = self.BlitTile(x_start, y_start, sprite)
-            x_start += last_x + self.scale
+            x_start += last_x + self.tile_border
             tile_count += 1
 
             # Go to next row by moving y_start
             if tile_count + 1 > self.tiles_on_x:
-                y_start += last_y + self.scale
+                y_start += last_y + self.tile_border
                 x_start = 0
                 tile_count = 0
         #end
 
         SDL_SetRenderTarget(self.renderer, None)
+    #end draw
 
-        # Step 3: draw the Update
+    def __present_texture(self):
         SDL_RenderClear(self.renderer)
         SDL_RenderCopy(self.renderer, self.texture, None, None)
         SDL_RenderPresent(self.renderer)
+    # end present
+
+    def Update(self):
+        if time.monotonic() < self.update_time:
+            return
+
+        # Update has 3 steps:
+        # 1) Read the relevant data
+        # 2) Draw it to a texture
+        # 3) Present the texture by copying it to the screen
+        tiles = self.__read_debug_data()
+        self.__draw_to_texture(tiles)
+        self.__present_texture()
 
         self.update_time = time.monotonic() + 5
+    #end Update
+#end VideoDebugWindow

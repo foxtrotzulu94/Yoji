@@ -8,11 +8,9 @@ from tkinter import *
 from .constants import *
 
 class Video:
-    def __init__(self, gameboy, scale = None):
+    def __init__(self, gameboy, scale = DEFAULT_SCALE):
         self._gb = gameboy
-
-        # TODO: fix
-        self._scale = DEFAULT_SCALE if scale is None else scale
+        self._scale = scale
 
         SDL_Init(SDL_INIT_VIDEO)
         self._width = GB_NATIVE_WIDTH * self._scale
@@ -22,8 +20,8 @@ class Video:
         self._window = SDL_CreateWindowFrom(self._tk_embed.winfo_id())        
         self._renderer = SDL_CreateRenderer(self._window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 
-        self.__palette = [(0xE0, 0xDB, 0xCD, 0xFF), (0xA8, 0x9F, 0x94, 0xFF), (0x70, 0x6B, 0x66, 0xFF), (0x2B,0x2B,0x26, 0xFF)]
-        self.__texture = SDL_CreateTexture(self._renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, self._width, self._height)
+        self.__palette = GB_GREY_PALETTE
+        self.__texture = SDL_CreateTexture(self._renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, GB_NATIVE_WIDTH, GB_NATIVE_WIDTH)
 
         self.__bits = [x for x in range(0,8)]
         self.__bits.reverse()
