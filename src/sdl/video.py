@@ -62,7 +62,7 @@ class Video:
 
         self._tk_root.protocol("WM_DELETE_WINDOW", self._gb.ExitRun)
         self._tk_root.config(menu=menubar)
-        #self._tk_root.update()
+        self._tk_root.update()
 
     def Update(self):
         if time.monotonic() < self.update_time:

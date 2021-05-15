@@ -8,6 +8,7 @@ class Window:
     def __init__(self, name, width, height, scale = None):
         self.width = width
         self.height = height
+        self.scale = scale #1 pixel
 
         SDL_Init(SDL_INIT_VIDEO)
 
