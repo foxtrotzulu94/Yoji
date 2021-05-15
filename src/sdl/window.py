@@ -26,8 +26,8 @@ class Window:
         self.texture = SDL_CreateTexture(self.renderer, 
             SDL_PIXELFORMAT_RGBA8888, 
             SDL_TEXTUREACCESS_TARGET, 
-            GB_NATIVE_WIDTH, 
-            GB_NATIVE_HEIGHT)
+            self.width, 
+            self.height)
         print()
 
         self.update_time = time.monotonic() + 1
@@ -92,7 +92,6 @@ class VideoDebugWindow(Window):
         # Step 1: Get the debug data
         tiles = self.read_debug_data()
 
-        temp_ren =self.renderer
         SDL_SetRenderTarget(self.renderer, self.texture)
         SDL_SetRenderDrawColor(self.renderer, 0, 0, 0, 0xFF)
 
