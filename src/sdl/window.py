@@ -5,21 +5,17 @@ from sdl2 import *
 from .constants import *
 
 class Window:
-    def __init__(self, name, width, height, scale = None, use_scale_for_window_size = False):
-        self.scale = DEFAULT_SCALE if scale is None else scale
+    def __init__(self, name, width, height, scale = None):
         self.width = width
         self.height = height
-        if use_scale_for_window_size:
-            self.width *= self.scale
-            self.height *= self.scale
 
         SDL_Init(SDL_INIT_VIDEO)
 
         self.window = SDL_CreateWindow(name, 
             START_X, 
             START_Y, 
-            self.width, 
-            self.height, 
+            self.width*2, 
+            self.height*2, 
             SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE)
 
         self.renderer = SDL_CreateRenderer(self.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
@@ -29,8 +25,8 @@ class Window:
         self.texture = SDL_CreateTexture(self.renderer, 
             SDL_PIXELFORMAT_RGBA8888, 
             SDL_TEXTUREACCESS_TARGET, 
-            self.width, 
-            self.height)
+            GB_NATIVE_WIDTH, 
+            GB_NATIVE_HEIGHT)
         print()
 
         self.update_time = time.monotonic() + 1
