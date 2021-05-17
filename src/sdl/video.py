@@ -20,7 +20,7 @@ class Video:
         self._window = SDL_CreateWindowFrom(self._tk_embed.winfo_id())        
         self._renderer = SDL_CreateRenderer(self._window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 
-        self.__palette = GB_GREY_PALETTE
+        self.__palette = DEFAULT_PALETTE
         self.__texture = SDL_CreateTexture(self._renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, GB_NATIVE_WIDTH, GB_NATIVE_WIDTH)
 
         self.__bits = [x for x in range(0,8)]
@@ -61,6 +61,10 @@ class Video:
         self._tk_root.protocol("WM_DELETE_WINDOW", self._gb.ExitRun)
         self._tk_root.config(menu=menubar)
         self._tk_root.update()
+
+    @property
+    def Buffer(self):
+        return self.__texture
 
     def Update(self):
         if time.monotonic() < self.update_time:

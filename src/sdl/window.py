@@ -9,7 +9,7 @@ class Window:
         self.width = width
         self.height = height
         self.scale = scale
-        self.palette = GB_GREY_PALETTE
+        self.palette = DEFAULT_PALETTE
 
         SDL_Init(SDL_INIT_VIDEO)
         self.window = SDL_CreateWindow(name, 

@@ -115,6 +115,16 @@ class GameBoy:
                     break
 
                 self._clock.Update()
+                # TEST
+                SDL_RenderClear(self._screen._renderer)
+                SDL_SetRenderTarget(self._screen._renderer, self._screen.Buffer)
+                SDL_SetRenderDrawColor(self._screen._renderer, *(0xE0, 0xF8, 0xD0, 0xFF))
+                SDL_RenderFillRect(self._screen._renderer, None)
+                SDL_SetRenderTarget(self._screen._renderer, None)
+                SDL_RenderCopy(self._screen._renderer,  self._screen.Buffer, None, None)
+                SDL_RenderPresent(self._screen._renderer)
+                # END TEST
+
                 self.__debug.Update()
             except KeyboardInterrupt:
                 break
