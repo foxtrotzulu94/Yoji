@@ -1,6 +1,6 @@
 from .bus import IO, Region
 
-from .sdl.constants import PaletteLookupTable
+from .sdl.constants import *
 
 class PPU:
     # TODO: Caching, profiling, optimization!
@@ -9,6 +9,9 @@ class PPU:
     Everything here is still expressed in 2 Byte per-pixel data structures
     """
     def __init__(self, memory):
+        self._scroll_x = 0
+        self._scroll_y = 0
+
         self.__test_y = 0
         # self._background
         self._memory = memory
@@ -47,12 +50,12 @@ class PPU:
         major_idx = self.__test_y // 8
         minor_idx = self.__test_y % 8
 
-        relevant_tiles = background[(major_idx*20) : (major_idx*20) + 20]
+        relevant_tiles = background[(major_idx*32) : (major_idx*32) + 20]
         line = []
         for tile in relevant_tiles:
             line += tile[minor_idx]
 
-        self.__test_y = (self.__test_y + 1) % 144
+        self.__test_y = (self.__test_y + 1) % (GB_NATIVE_HEIGHT+1)
         return line
 
     def DebugTileMapData(self):

@@ -21,7 +21,16 @@ class Video:
         self._renderer = SDL_CreateRenderer(self._window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 
         self.__palette = DEFAULT_PALETTE
-        self._texture = SDL_CreateTexture(self._renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, GB_NATIVE_WIDTH, GB_NATIVE_WIDTH)
+        self._texture = SDL_CreateTexture(self._renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, GB_NATIVE_WIDTH, GB_NATIVE_HEIGHT)
+
+        # Clear the screen
+        SDL_RenderClear(self._renderer)
+        SDL_SetRenderTarget(self._renderer, self.Buffer)
+        SDL_SetRenderDrawColor(self._renderer, *(0x0, 0x0, 0x0, 0xFF))
+        SDL_RenderFillRect(self._renderer, None)
+        SDL_SetRenderTarget(self._renderer, None)
+        SDL_RenderCopy(self._renderer,  self.Buffer, None, None)
+        SDL_RenderPresent(self._renderer)
 
         self.__bits = [x for x in range(0,8)]
         self.__bits.reverse()
@@ -56,7 +65,7 @@ class Video:
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         self._tk_embed = tk.Frame(self._tk_root, width = self._width, height = self._height)
-        self._tk_embed.pack(side = BOTTOM)
+        self._tk_embed.pack(side = BOTTOM, fill = BOTH)
 
         self._tk_root.protocol("WM_DELETE_WINDOW", self._gb.ExitRun)
         self._tk_root.config(menu=menubar)

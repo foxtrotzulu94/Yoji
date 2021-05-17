@@ -44,6 +44,6 @@ class LCD:
         SDL_RenderCopy(self.renderer, self.texture, None, None)
         SDL_RenderPresent(self.renderer)
 
-        self._lcd_line = (self._lcd_line + 1) % GB_NATIVE_HEIGHT
+        self._lcd_line = (self._lcd_line + 1) % (GB_NATIVE_HEIGHT + 1)
         self.next_update = cycle_num + self.update_time
     #end Tick
