@@ -5,11 +5,11 @@ class Clock:
     Emulates the System master clock by subdividing the machine cycle @ 4MHz
     """
 
-    def __init__(self, cpu, ppu, memory, video_out, audio):
+    def __init__(self, cpu, ppu, memory, lcd, audio):
         self._cpu = cpu
         self._ppu = ppu
         self._memory = memory
-        self._lcd = video_out
+        self._lcd = lcd
         self._audio = audio
 
         self._cycles = 0
@@ -43,14 +43,14 @@ class Clock:
         self._memory.Tick(self._cycles)
 
         # LCD refreshes @ 59.7Hz
-        # self._lcd.Tick()
+        self._lcd.Tick(self._cycles)
 
         # Can't get spec on audio, but it should be 4MHz
         #self._audio.Tick()
 
         # Clock, PPU and CPU tick @ 4MHz
         self._tick_timers()
-        #self._ppu.Tick()
+        self._ppu.Tick()
         self._cpu.Tick(self._cycles)
         
         # Increase cycle count

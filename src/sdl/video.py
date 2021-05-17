@@ -21,7 +21,7 @@ class Video:
         self._renderer = SDL_CreateRenderer(self._window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 
         self.__palette = DEFAULT_PALETTE
-        self.__texture = SDL_CreateTexture(self._renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, GB_NATIVE_WIDTH, GB_NATIVE_WIDTH)
+        self._texture = SDL_CreateTexture(self._renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, GB_NATIVE_WIDTH, GB_NATIVE_WIDTH)
 
         self.__bits = [x for x in range(0,8)]
         self.__bits.reverse()
@@ -48,7 +48,7 @@ class Video:
 
         debug_menu = Menu(menubar, tearoff=0)
         debug_menu.add_checkbutton(label="Tiles", variable = self._gb.Debug.InspectTiles, command = self._gb.Debug.ToggleInspectTiles)
-        debug_menu.add_checkbutton(label="BG Map", command = self._gb.Debug.CreateWindowCommand(self._gb._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data"))
+        debug_menu.add_checkbutton(label="BG Map", variable = self._gb.Debug.InspectBackgroundMap, command = self._gb.Debug.ToggleInspectBackgroundMap)
         menubar.add_cascade(label="Debug", menu = debug_menu)
 
         helpmenu = Menu(menubar, tearoff=0)
@@ -64,13 +64,13 @@ class Video:
 
     @property
     def Buffer(self):
-        return self.__texture
+        return self._texture
 
     def Update(self):
         if time.monotonic() < self.update_time:
             return True
 
-        self.update_time = time.monotonic() + 0.3
+        self.update_time = time.monotonic() + 0.13
         try:
             # Update Tk
             self._tk_root.update()
@@ -83,15 +83,16 @@ class Video:
                 return False
 
             # Clear and present whatever's in the renderer
-            SDL_RenderClear(self._renderer)
-            SDL_RenderCopy(self._renderer, self.__texture, None, None)
-            SDL_RenderPresent(self._renderer)
+            # TODO: set dirty bit or something            
+            # SDL_RenderClear(self._renderer)
+            # SDL_RenderCopy(self._renderer, self._texture, None, None)
+            # SDL_RenderPresent(self._renderer)
             return True
         except KeyboardInterrupt:
             return False
 
     def Cleanup(self):
-        SDL_DestroyTexture(self.__texture)
+        SDL_DestroyTexture(self._texture)
         SDL_DestroyRenderer(self._renderer)
         SDL_DestroyWindow(self._window)
         SDL_Quit()

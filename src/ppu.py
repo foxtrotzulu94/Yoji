@@ -3,7 +3,13 @@ from .bus import IO, Region
 from .sdl.constants import PaletteLookupTable
 
 class PPU:
+    # TODO: Caching, profiling, optimization!
+    """
+    Emulates the GameBoy's Pixel Processing Unit.
+    Everything here is still expressed in 2 Byte per-pixel data structures
+    """
     def __init__(self, memory):
+        self.__test_y = 0
         # self._background
         self._memory = memory
     #end
@@ -31,6 +37,23 @@ class PPU:
 
         return tiles
     #end
+
+    def ReadNextLine(self):
+        # TODO: Actually make a nicer method and decide how this gets pushed to the LCD
+        # TODO: Check the math!!!! We are reading data, but it doesn't seem to be quite right
+        background = self.DebugBackgroundData()
+        
+        # 20 tiles make a line!
+        major_idx = self.__test_y // 8
+        minor_idx = self.__test_y % 8
+
+        relevant_tiles = background[(major_idx*20) : (major_idx*20) + 20]
+        line = []
+        for tile in relevant_tiles:
+            line += tile[minor_idx]
+
+        self.__test_y = (self.__test_y + 1) % 144
+        return line
 
     def DebugTileMapData(self):
         return self.ToTileLists(self.TileData)

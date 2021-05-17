@@ -12,26 +12,27 @@ from .cartridge import Cartridge
 from .bus import *
 
 from .sdl.video import Video
+from .sdl.lcd import LCD
 
 class GameBoy:
     def __init__(self):
+        # TODO: Merge logging and debugging
+        self.__debug = Debug(self)
+        self.__log = logging.getLogger(self.__class__.__name__)
+        self._screen = Video(self)
+
         self._memory = Memory(synchronized = True)
         self._cpu = CPU(self._memory)
         self._ppu = PPU(self._memory)
+        self._lcd = LCD(self._screen._window, self._ppu, self._screen)
         self._audio = None
         self._cart = None
         self._clock = Clock(
             self._cpu,
             self._ppu,
             self._memory,
-            None, #self._screen,
+            self._lcd,
             self._audio)
-
-        # TODO: Merge logging and debugging
-        self.__debug = Debug(self)
-        self.__log = logging.getLogger(self.__class__.__name__)
-
-        self._screen = Video(self)
 
         self._init_complete = False
         self._ticking = False
@@ -115,16 +116,6 @@ class GameBoy:
                     break
 
                 self._clock.Update()
-                # TEST
-                SDL_RenderClear(self._screen._renderer)
-                SDL_SetRenderTarget(self._screen._renderer, self._screen.Buffer)
-                SDL_SetRenderDrawColor(self._screen._renderer, *(0xE0, 0xF8, 0xD0, 0xFF))
-                SDL_RenderFillRect(self._screen._renderer, None)
-                SDL_SetRenderTarget(self._screen._renderer, None)
-                SDL_RenderCopy(self._screen._renderer,  self._screen.Buffer, None, None)
-                SDL_RenderPresent(self._screen._renderer)
-                # END TEST
-
                 self.__debug.Update()
             except KeyboardInterrupt:
                 break
@@ -138,20 +129,35 @@ class GameBoy:
 #end GameBoy
 
 class Debug:
+
     def __init__(self, gameboy: GameBoy):
+        from collections import OrderedDict
+
         self._gb = gameboy
         self._active = False
-        
-        self._tile_inspect_window = None
-        self._bgmap_inspect_window = None
 
         self._breakpoints = []
+        self._bgmap_inspect_window = None
+        self._tile_inspect_window = None
         self._inspect_windows = []
+
+    def __generate_inspect_window_property(key, documentation, data_func, x_tiles, num_tiles):
+        def get(self):
+            return self.has_key(key)
+        def set(self, value):
+            if value:
+                window = VideoDebugWindow(data_func, x_tiles, num_tiles, key)
+                self._inspect_windows[key] = window
+            else:
+                window = self._inspect_windows[key]
+                window.Cleanup()
+                del self._inspect_windows[key]
+        return property(get, set, None, documentation)
+    #end
 
     @property
     def Active(self):
         return self._active
-
     @Active.setter
     def Active(self, value):
         self._active = value
@@ -170,8 +176,24 @@ class Debug:
             self._tile_inspect_window = None
     #end
 
+    @property
+    def InspectBackgroundMap(self):
+        return self._bgmap_inspect_window != None
+    @InspectBackgroundMap.setter
+    def InspectBackgroundMap(self, value):
+        if value:
+            self._bgmap_inspect_window = VideoDebugWindow(self._gb._ppu.DebugBackgroundData, 32, 32 * 32, b"Background data")
+            self._inspect_windows.append(self._bgmap_inspect_window)
+        else:
+            self._inspect_windows.remove(self._bgmap_inspect_window)
+            self._bgmap_inspect_window.Cleanup()
+            self._bgmap_inspect_window = None
+    #end
+
     def ToggleInspectTiles(self):
         self.InspectTiles = not self.InspectTiles
+    def ToggleInspectBackgroundMap(self):
+        self.InspectBackgroundMap = not self.InspectBackgroundMap
 
     def Update(self):
         for window in self._inspect_windows:
@@ -181,11 +203,6 @@ class Debug:
     def Cleanup(self):
         for window in self._inspect_windows:
             window.Cleanup()
-
-    def CreateWindowCommand(self, data_func, x_tiles, num_tiles, name):
-        def WindowCommand():
-            self._inspect_windows.append(VideoDebugWindow(data_func, x_tiles, num_tiles, name))
-        return WindowCommand
 
     def execute_cpu_instruction(self, opcode):
         """ Runs an arbitrary instruction once """
