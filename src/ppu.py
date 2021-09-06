@@ -43,14 +43,24 @@ class PPU:
 
     def ReadNextLine(self):
         # TODO: Actually make a nicer method and decide how this gets pushed to the LCD
-        # TODO: Check the math!!!! We are reading data, but it doesn't seem to be quite right
         background = self.DebugBackgroundData()
-        
-        # 20 tiles make a line!
-        major_idx = self.__test_y // 8
+
+        # NOTE:
+        # 'background' is a flat list of tiles, which themselves are 8x8 entries of 1's and 0's
+        # (e.g. background[0] -> list[8][8]), this is the PPU internal representation that is easy to scale and transform
+        # The background map is made up of 32x32 tiles, hence each line has 32
+        # Given that, we need two indices: major_idx to select the tiles that will be rendered (this slice becomes relevant_tiles)
+        #                                  minor_idx to determine which pixels of said tiles need to be sent over
+        # This operation would be simpler if 'background' were a true 2D bitmap
+        # NOTE that one thing that is not handled is any x offset (as would be needed for true viewport functionality)
+        # NOTE we also do not handle writing any LCD status registers backs
+
+        # floor with int divide by 8, multiply by the amount to skip once we finish a line
+        major_idx = (self.__test_y // 8) * 32 # TODO: we'd add an x-offset somewhere in this line
         minor_idx = self.__test_y % 8
 
-        relevant_tiles = background[(major_idx*32) : (major_idx*32) + 20]
+        # 20 tiles make a display line!
+        relevant_tiles = background[major_idx : major_idx + 20]
         line = []
         for tile in relevant_tiles:
             line += tile[minor_idx]

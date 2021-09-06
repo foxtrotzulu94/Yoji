@@ -52,7 +52,7 @@ class Clock:
         self._tick_timers()
         self._ppu.Tick()
         self._cpu.Tick(self._cycles)
-        
+
         # Increase cycle count
         self._cycles += 1
         

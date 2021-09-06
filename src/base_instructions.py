@@ -1371,7 +1371,7 @@ base_instructions = [
         flags=None,
         operands = ( Operand.bit(Flag.z, Bit.Reset), Operand.imm(2) ),
         executor = Jump),
-        
+
     Instruction(
         0xC3, "JP a16", bus_width=2,
         byte_size=3, cycles=16,

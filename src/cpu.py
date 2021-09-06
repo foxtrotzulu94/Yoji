@@ -177,6 +177,8 @@ class CPU:
         if not self.__interrupts_enabled:
             return
 
+        # TODO: Optimize! Switch priority and have memory execute a callback to CPU
+        # or better yet, have it come in through the system and mark a dirty flag.
         raised = self.__memory.CheckInterruptFlags()
         if raised == 0:
             return
@@ -194,6 +196,7 @@ class CPU:
                 self.PC = CPU.InterruptJumpTable[bit]
 
                 # The interrupt routine will proceed to execute as normal
+                # TODO: verify. We haven't dealt with interrupts in a while and the code has changed everywhere else
                 return
             #end if
         #end for
@@ -240,6 +243,7 @@ class CPU:
         # TODO: Verify this location + 1
         self._execute_instruction(location + 1)
 
+        # TODO: FIX: have the instruction return how many cycles we need to wait
         # Check how many cycles we have left for the next instruction
         if self.PC == nextPC and self._curr_inst.ShortCycles is not None:
             # This means we didn't take the Jump, so there's no memory penalty to pay here

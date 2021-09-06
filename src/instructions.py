@@ -19,7 +19,7 @@ class Instruction:
         if type(cycles) is not int:
             self._cycles = max(cycles)
             self._short_cycles = min(cycles)
-        
+
         self._flags_affected = flags
 
         self._action = executor
@@ -182,6 +182,9 @@ class Instruction:
 def NoOp(*unused):
     return None
 def Reset(*unused):
+    # TODO: FIX - SHOULD RESET A BIT!
+    # NOTE: I just noticed this prevented us from running blargs test
+    #       not all of our CB prefix instructions were tested enough
     return 0
 #end
 
