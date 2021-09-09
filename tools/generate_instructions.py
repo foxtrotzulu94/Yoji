@@ -51,7 +51,7 @@ mnemonic_map = {
 }
 
 # Key is instructions, Value is writeback register
-# When none, Writeback scenario is not supported
+# When value is 'None', Writeback scenario is not supported
 # When key==value, writeback to location
 unary_instructions = {
     'ADC': 'A',
@@ -198,7 +198,7 @@ def translate_operands(instr):
             else:
                 dst = writeback_reg
                 src = op_tks
-        #end if-else
+    #end if-else on tokens
 
     # now translate the operands
     dst_text = translate_operand(dst)

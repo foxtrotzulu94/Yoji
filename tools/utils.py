@@ -13,6 +13,7 @@ class TextInstruction:
     def __init__(self, opcode):
         self.opcode = opcode
         self.mnemonic = "INVALID"
+        self.operands = None
         self.bytes = -1
         self.cycles = -1
         self.flags = None
@@ -23,3 +24,47 @@ class TextInstruction:
 
     def __repr__(self):
         return self.__str__()
+
+def tokenize_mnemonic(instr):
+    """
+    Returns a list of tokens
+    The first token is the operation and all subsequent tokens are operands
+    """
+
+    tokens = instr.mnemonic.split()
+    base = tokens[0]
+    dst = src = None
+    if len(tokens) < 2:
+        # Only single token (the operation)
+        return ( base ,)
+
+    else:
+        op_tks = tokens[1]
+        if ',' in op_tks:
+            dst, src = op_tks.split(',')
+            return (base, dst, src)
+        else:
+            return (base, op_tks)
+    #end if-else on tokens
+
+class RefinedInstruction:
+    from json import JSONEncoder
+    class Serializer(JSONEncoder):
+        def default(self, o):
+            return o.__dict__
+
+    def __init__(self, txt_instr, prefix = None):
+        # do a full copy
+        self.__dict__ = txt_instr.__dict__
+        self.prefix = prefix
+        # BUT override some values and compute others
+        self.operands = tokenize_mnemonic(txt_instr)[1:]
+        temp_flags = self.flags
+        if temp_flags is not None:
+            self.flags = None if all(x == '-' for x in temp_flags) else temp_flags
+        if self.flags is not None:
+            self.flags = dict(zip(['z', 'n', 'h', 'c'], self.flags))
+            
+        self.opcode_bin = bin(self.opcode)
+        self.opcode_hex = hex(self.opcode)
+
