@@ -1,3 +1,4 @@
+import time
 import logging
 import sys
 
@@ -23,8 +24,8 @@ class GameBoy:
 
         self._memory = Memory(synchronized = True)
         self._cpu = CPU(self._memory)
-        self._ppu = PPU(self._memory)
-        self._lcd = LCD(self._screen._window, self._ppu, self._screen)
+        self._lcd = LCD(self._screen)
+        self._ppu = PPU(self._memory, self._lcd)
         self._audio = None
         self._cart = None
         self._clock = Clock(
@@ -110,6 +111,7 @@ class GameBoy:
 
         self._ticking = True
         while self._ticking:
+            start = time.monotonic_ns()
             try:
                 keep_running = self._screen.Update()
                 if not keep_running:
@@ -119,6 +121,9 @@ class GameBoy:
                 self.__debug.Update()
             except KeyboardInterrupt:
                 break
+
+            duration = time.monotonic_ns()-start
+            #print(f"last loop time: {duration} ns")
         # end while
         self._ticking = False
         

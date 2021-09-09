@@ -68,7 +68,7 @@ class Memory:
         self._cycle_count = cycle_num
         # assert(len(self._ram_write_queue) < 2)
         # Check if there's anything to write
-        if any(self._ram_write_queue):
+        if len(self._ram_write_queue) > 0:
             # While there's something in a queue, pop it and do it
             next_element = self._ram_write_queue[0]
             when_cycle = next_element[0]
@@ -118,6 +118,9 @@ class Memory:
             return
 
         # internal write method
+        # TODO: Optimize!
+        # It'll be easier if certain sections (like the PPU or input) are able to
+        # intercept the call and handle their own memory rather than writing here
         for i in range(0, length):
             self._mem_area[offset + i] = data[i]
     #end

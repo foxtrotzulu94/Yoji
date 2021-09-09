@@ -79,7 +79,7 @@ class Video:
         if time.monotonic() < self.update_time:
             return True
 
-        self.update_time = time.monotonic() + 0.13
+        self.update_time = time.monotonic() + 0.33
         try:
             # Update Tk
             self._tk_root.update()

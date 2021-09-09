@@ -1,3 +1,6 @@
+from enum import IntEnum, auto
+import time
+
 from .bus import IO, Region
 
 from .sdl.constants import *
@@ -8,13 +11,25 @@ class PPU:
     Emulates the GameBoy's Pixel Processing Unit.
     Everything here is still expressed in 2 Byte per-pixel data structures
     """
-    def __init__(self, memory):
+    class State(IntEnum):
+        MODE_0 = 1
+        MODE_1 = 1
+        OAM_SEARCH = 5
+        H_BLANK = 3
+        V_BLANK = 4
+
+    def __init__(self, memory, lcd):
+        self._lcd = lcd
         self._scroll_x = 0
         self._scroll_y = 0
 
         self.__test_y = 0
         # self._background
         self._memory = memory
+        self._next_instr_cycle =0
+        self._state = PPU.State.MODE_0
+        self._cache_pixels = None
+        self.checkpoint = None
     #end
 
     @property
@@ -28,13 +43,15 @@ class PPU:
 
     def ToTileLists(self, gb_2bpp):
         # Read data 16 bytes at a time to create a tile
-        tile_line = []
-        for i in range(0, len(gb_2bpp), 16):
-            tile_line.append(gb_2bpp[i:i+16])
+        # tile_line = []
+        # for i in range(0, len(gb_2bpp), 16):
+        #     tile_line.append()
 
         # Transform each tile to pixel color
         tiles = []
-        for data in tile_line:
+        #for data in tile_line:
+        for i in range(0, len(gb_2bpp), 16):
+            data = gb_2bpp[i:i+16]
             pixels = [ PaletteLookupTable[data[idx+1]][data[idx]] for idx in range(0, 16, 2) ]
             tiles.append( pixels )
 
@@ -65,7 +82,7 @@ class PPU:
         for tile in relevant_tiles:
             line += tile[minor_idx]
 
-        self.__test_y = (self.__test_y + 1) % (GB_NATIVE_HEIGHT+1)
+        self.__test_y = (self.__test_y + 1) #% (GB_NATIVE_HEIGHT+1)
         return line
 
     def DebugTileMapData(self):
@@ -78,7 +95,41 @@ class PPU:
         raw_bg = [tiles[int(x)] for x in bg]
         return raw_bg
 
-    def Tick(self):
-        pass
+    def Tick(self, cycle_num):
+        if cycle_num < self._next_instr_cycle:
+            return
+
+        # what mode were we in?
+        proc_cycles = 0
+        if self._state == PPU.State.V_BLANK:
+            self.checkpoint = time.monotonic()
+            self._state = PPU.State.OAM_SEARCH
+        if self._state == PPU.State.OAM_SEARCH:
+            proc_cycles = 20
+            self._state = PPU.State.MODE_0
+            # TODO: set interrupts, do some partial processing
+
+        elif self._state == PPU.State.MODE_0:
+            self._lcd.PixelLineCallback(self.ReadNextLine())
+            proc_cycles = 43
+            self._state = PPU.State.H_BLANK
+
+        elif self._state == PPU.State.H_BLANK:
+            proc_cycles = 51
+            self._state = PPU.State.OAM_SEARCH
+            # TODO: set interrupts, do some partial processing
+
+        if self.__test_y == (GB_NATIVE_HEIGHT+1):
+            # v-blank time
+            # TODO: verify behaviour
+            self._state = PPU.State.V_BLANK
+            proc_cycles = (20+43+51) * 10
+            self.__test_y = 0
+            if self.checkpoint is not None:
+                duration = time.monotonic() - self.checkpoint
+                #print(f"Full screen render took {duration} seconds")
+                #print("complete")
+
+        self._next_instr_cycle = cycle_num+proc_cycles
 
 #end class

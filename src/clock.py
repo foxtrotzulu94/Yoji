@@ -14,6 +14,7 @@ class Clock:
 
         self._cycles = 0
         self._time = 0
+        self._streaming_average =0
         self._should_run = True
         self._is_ticking = False
     #end
@@ -23,6 +24,7 @@ class Clock:
         pass
 
     def Update(self):
+        start = time.monotonic_ns()
         # We divide out main loop among the components
         # Keep in mind the timings and the order
         # TODO: Pass in the current amount of cycles, makes it easier for debugging
@@ -42,19 +44,25 @@ class Clock:
         # VRAM is 2Mhz (every 2 cycles)
         self._memory.Tick(self._cycles)
 
-        # LCD refreshes @ 59.7Hz
-        self._lcd.Tick(self._cycles)
-
         # Can't get spec on audio, but it should be 4MHz
         #self._audio.Tick()
 
         # Clock, PPU and CPU tick @ 4MHz
         self._tick_timers()
-        self._ppu.Tick()
+        self._ppu.Tick(self._cycles)
         self._cpu.Tick(self._cycles)
 
+        # LCD refreshes @ 59.7Hz
+        self._lcd.Tick(self._cycles)
+
+        end = time.monotonic_ns()
         # Increase cycle count
         self._cycles += 1
+
+        duration = end-start
+        running_avg = (duration - self._streaming_average) / (self._cycles)
+        self._streaming_average = self._streaming_average + running_avg
+        print(f"last cycle time: {duration} ns")
         
 
     def TickForever(self):
@@ -65,7 +73,8 @@ class Clock:
             start = time.monotonic()
             self.Tick()
             end = time.monotonic()
-            self._time += (end-start)
+            duration = (end-start)
+            self._time += duration
         #end While
         self._is_ticking = False
 
