@@ -2,11 +2,12 @@
     {
         "opcode": 0,
         "mnemonic": "NOP",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "NOP",
         "operands": [],
         "opcode_bin": "0b0",
         "opcode_hex": "0x0"
@@ -14,11 +15,12 @@
     {
         "opcode": 1,
         "mnemonic": "LD BC,d16",
-        "bytes": "3",
-        "cycles": "12",
+        "bytes": 3,
+        "cycles": 12,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "BC",
             "d16"
@@ -29,11 +31,12 @@
     {
         "opcode": 2,
         "mnemonic": "LD (BC),A",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(BC)",
             "A"
@@ -44,11 +47,12 @@
     {
         "opcode": 3,
         "mnemonic": "INC BC",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "BC"
         ],
@@ -58,8 +62,8 @@
     {
         "opcode": 4,
         "mnemonic": "INC B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -68,6 +72,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "B"
         ],
@@ -77,8 +82,8 @@
     {
         "opcode": 5,
         "mnemonic": "DEC B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -87,6 +92,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "B"
         ],
@@ -96,11 +102,12 @@
     {
         "opcode": 6,
         "mnemonic": "LD B,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "d8"
@@ -111,8 +118,8 @@
     {
         "opcode": 7,
         "mnemonic": "RLCA",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "0",
             "n": "0",
@@ -121,6 +128,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "RLCA",
         "operands": [],
         "opcode_bin": "0b111",
         "opcode_hex": "0x7"
@@ -128,11 +136,12 @@
     {
         "opcode": 8,
         "mnemonic": "LD (a16),SP",
-        "bytes": "3",
-        "cycles": "20",
+        "bytes": 3,
+        "cycles": 20,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(a16)",
             "SP"
@@ -143,8 +152,8 @@
     {
         "opcode": 9,
         "mnemonic": "ADD HL,BC",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "-",
             "n": "0",
@@ -153,6 +162,7 @@
         },
         "width": 2,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "HL",
             "BC"
@@ -163,11 +173,12 @@
     {
         "opcode": 10,
         "mnemonic": "LD A,(BC)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "(BC)"
@@ -178,11 +189,12 @@
     {
         "opcode": 11,
         "mnemonic": "DEC BC",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "BC"
         ],
@@ -192,8 +204,8 @@
     {
         "opcode": 12,
         "mnemonic": "INC C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -202,6 +214,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "C"
         ],
@@ -211,8 +224,8 @@
     {
         "opcode": 13,
         "mnemonic": "DEC C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -221,6 +234,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "C"
         ],
@@ -230,11 +244,12 @@
     {
         "opcode": 14,
         "mnemonic": "LD C,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "d8"
@@ -245,8 +260,8 @@
     {
         "opcode": 15,
         "mnemonic": "RRCA",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "0",
             "n": "0",
@@ -255,6 +270,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "RRCA",
         "operands": [],
         "opcode_bin": "0b1111",
         "opcode_hex": "0xf"
@@ -262,11 +278,12 @@
     {
         "opcode": 16,
         "mnemonic": "STOP",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "STOP",
         "operands": [],
         "opcode_bin": "0b10000",
         "opcode_hex": "0x10"
@@ -274,11 +291,12 @@
     {
         "opcode": 17,
         "mnemonic": "LD DE,d16",
-        "bytes": "3",
-        "cycles": "12",
+        "bytes": 3,
+        "cycles": 12,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "DE",
             "d16"
@@ -289,11 +307,12 @@
     {
         "opcode": 18,
         "mnemonic": "LD (DE),A",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(DE)",
             "A"
@@ -304,11 +323,12 @@
     {
         "opcode": 19,
         "mnemonic": "INC DE",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "DE"
         ],
@@ -318,8 +338,8 @@
     {
         "opcode": 20,
         "mnemonic": "INC D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -328,6 +348,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "D"
         ],
@@ -337,8 +358,8 @@
     {
         "opcode": 21,
         "mnemonic": "DEC D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -347,6 +368,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "D"
         ],
@@ -356,11 +378,12 @@
     {
         "opcode": 22,
         "mnemonic": "LD D,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "d8"
@@ -371,8 +394,8 @@
     {
         "opcode": 23,
         "mnemonic": "RLA",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "0",
             "n": "0",
@@ -381,6 +404,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "RLA",
         "operands": [],
         "opcode_bin": "0b10111",
         "opcode_hex": "0x17"
@@ -388,11 +412,12 @@
     {
         "opcode": 24,
         "mnemonic": "JR r8",
-        "bytes": "2",
-        "cycles": "12",
+        "bytes": 2,
+        "cycles": 12,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "JR",
         "operands": [
             "r8"
         ],
@@ -402,8 +427,8 @@
     {
         "opcode": 25,
         "mnemonic": "ADD HL,DE",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "-",
             "n": "0",
@@ -412,6 +437,7 @@
         },
         "width": 2,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "HL",
             "DE"
@@ -422,11 +448,12 @@
     {
         "opcode": 26,
         "mnemonic": "LD A,(DE)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "(DE)"
@@ -437,11 +464,12 @@
     {
         "opcode": 27,
         "mnemonic": "DEC DE",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "DE"
         ],
@@ -451,8 +479,8 @@
     {
         "opcode": 28,
         "mnemonic": "INC E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -461,6 +489,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "E"
         ],
@@ -470,8 +499,8 @@
     {
         "opcode": 29,
         "mnemonic": "DEC E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -480,6 +509,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "E"
         ],
@@ -489,11 +519,12 @@
     {
         "opcode": 30,
         "mnemonic": "LD E,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "d8"
@@ -504,8 +535,8 @@
     {
         "opcode": 31,
         "mnemonic": "RRA",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "0",
             "n": "0",
@@ -514,6 +545,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "RRA",
         "operands": [],
         "opcode_bin": "0b11111",
         "opcode_hex": "0x1f"
@@ -521,11 +553,15 @@
     {
         "opcode": 32,
         "mnemonic": "JR NZ,r8",
-        "bytes": "2",
-        "cycles": "12/8",
+        "bytes": 2,
+        "cycles": [
+            12,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "JR",
         "operands": [
             "NZ",
             "r8"
@@ -536,11 +572,12 @@
     {
         "opcode": 33,
         "mnemonic": "LD HL,d16",
-        "bytes": "3",
-        "cycles": "12",
+        "bytes": 3,
+        "cycles": 12,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "HL",
             "d16"
@@ -551,11 +588,12 @@
     {
         "opcode": 34,
         "mnemonic": "LD (HL+),A",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL+)",
             "A"
@@ -566,11 +604,12 @@
     {
         "opcode": 35,
         "mnemonic": "INC HL",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "HL"
         ],
@@ -580,8 +619,8 @@
     {
         "opcode": 36,
         "mnemonic": "INC H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -590,6 +629,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "H"
         ],
@@ -599,8 +639,8 @@
     {
         "opcode": 37,
         "mnemonic": "DEC H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -609,6 +649,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "H"
         ],
@@ -618,11 +659,12 @@
     {
         "opcode": 38,
         "mnemonic": "LD H,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "d8"
@@ -633,8 +675,8 @@
     {
         "opcode": 39,
         "mnemonic": "DAA",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "-",
@@ -643,6 +685,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DAA",
         "operands": [],
         "opcode_bin": "0b100111",
         "opcode_hex": "0x27"
@@ -650,11 +693,15 @@
     {
         "opcode": 40,
         "mnemonic": "JR Z,r8",
-        "bytes": "2",
-        "cycles": "12/8",
+        "bytes": 2,
+        "cycles": [
+            12,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "JR",
         "operands": [
             "Z",
             "r8"
@@ -665,8 +712,8 @@
     {
         "opcode": 41,
         "mnemonic": "ADD HL,HL",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "-",
             "n": "0",
@@ -675,6 +722,7 @@
         },
         "width": 2,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "HL",
             "HL"
@@ -685,11 +733,12 @@
     {
         "opcode": 42,
         "mnemonic": "LD A,(HL+)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "(HL+)"
@@ -700,11 +749,12 @@
     {
         "opcode": 43,
         "mnemonic": "DEC HL",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "HL"
         ],
@@ -714,8 +764,8 @@
     {
         "opcode": 44,
         "mnemonic": "INC L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -724,6 +774,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "L"
         ],
@@ -733,8 +784,8 @@
     {
         "opcode": 45,
         "mnemonic": "DEC L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -743,6 +794,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "L"
         ],
@@ -752,11 +804,12 @@
     {
         "opcode": 46,
         "mnemonic": "LD L,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "d8"
@@ -767,8 +820,8 @@
     {
         "opcode": 47,
         "mnemonic": "CPL",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "-",
             "n": "1",
@@ -777,6 +830,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CPL",
         "operands": [],
         "opcode_bin": "0b101111",
         "opcode_hex": "0x2f"
@@ -784,11 +838,15 @@
     {
         "opcode": 48,
         "mnemonic": "JR NC,r8",
-        "bytes": "2",
-        "cycles": "12/8",
+        "bytes": 2,
+        "cycles": [
+            12,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "JR",
         "operands": [
             "NC",
             "r8"
@@ -799,11 +857,12 @@
     {
         "opcode": 49,
         "mnemonic": "LD SP,d16",
-        "bytes": "3",
-        "cycles": "12",
+        "bytes": 3,
+        "cycles": 12,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "SP",
             "d16"
@@ -814,11 +873,12 @@
     {
         "opcode": 50,
         "mnemonic": "LD (HL-),A",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL-)",
             "A"
@@ -829,11 +889,12 @@
     {
         "opcode": 51,
         "mnemonic": "INC SP",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "SP"
         ],
@@ -843,8 +904,8 @@
     {
         "opcode": 52,
         "mnemonic": "INC (HL)",
-        "bytes": "1",
-        "cycles": "12",
+        "bytes": 1,
+        "cycles": 12,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -853,6 +914,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "(HL)"
         ],
@@ -862,8 +924,8 @@
     {
         "opcode": 53,
         "mnemonic": "DEC (HL)",
-        "bytes": "1",
-        "cycles": "12",
+        "bytes": 1,
+        "cycles": 12,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -872,6 +934,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "(HL)"
         ],
@@ -881,11 +944,12 @@
     {
         "opcode": 54,
         "mnemonic": "LD (HL),d8",
-        "bytes": "2",
-        "cycles": "12",
+        "bytes": 2,
+        "cycles": 12,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "d8"
@@ -896,8 +960,8 @@
     {
         "opcode": 55,
         "mnemonic": "SCF",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "-",
             "n": "0",
@@ -906,6 +970,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SCF",
         "operands": [],
         "opcode_bin": "0b110111",
         "opcode_hex": "0x37"
@@ -913,11 +978,15 @@
     {
         "opcode": 56,
         "mnemonic": "JR C,r8",
-        "bytes": "2",
-        "cycles": "12/8",
+        "bytes": 2,
+        "cycles": [
+            12,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "JR",
         "operands": [
             "C",
             "r8"
@@ -928,8 +997,8 @@
     {
         "opcode": 57,
         "mnemonic": "ADD HL,SP",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "-",
             "n": "0",
@@ -938,6 +1007,7 @@
         },
         "width": 2,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "HL",
             "SP"
@@ -948,11 +1018,12 @@
     {
         "opcode": 58,
         "mnemonic": "LD A,(HL-)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "(HL-)"
@@ -963,11 +1034,12 @@
     {
         "opcode": 59,
         "mnemonic": "DEC SP",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "SP"
         ],
@@ -977,8 +1049,8 @@
     {
         "opcode": 60,
         "mnemonic": "INC A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -987,6 +1059,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "INC",
         "operands": [
             "A"
         ],
@@ -996,8 +1069,8 @@
     {
         "opcode": 61,
         "mnemonic": "DEC A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -1006,6 +1079,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "DEC",
         "operands": [
             "A"
         ],
@@ -1015,11 +1089,12 @@
     {
         "opcode": 62,
         "mnemonic": "LD A,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "d8"
@@ -1030,8 +1105,8 @@
     {
         "opcode": 63,
         "mnemonic": "CCF",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "-",
             "n": "0",
@@ -1040,6 +1115,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CCF",
         "operands": [],
         "opcode_bin": "0b111111",
         "opcode_hex": "0x3f"
@@ -1047,11 +1123,12 @@
     {
         "opcode": 64,
         "mnemonic": "LD B,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "B"
@@ -1062,11 +1139,12 @@
     {
         "opcode": 65,
         "mnemonic": "LD B,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "C"
@@ -1077,11 +1155,12 @@
     {
         "opcode": 66,
         "mnemonic": "LD B,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "D"
@@ -1092,11 +1171,12 @@
     {
         "opcode": 67,
         "mnemonic": "LD B,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "E"
@@ -1107,11 +1187,12 @@
     {
         "opcode": 68,
         "mnemonic": "LD B,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "H"
@@ -1122,11 +1203,12 @@
     {
         "opcode": 69,
         "mnemonic": "LD B,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "L"
@@ -1137,11 +1219,12 @@
     {
         "opcode": 70,
         "mnemonic": "LD B,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "(HL)"
@@ -1152,11 +1235,12 @@
     {
         "opcode": 71,
         "mnemonic": "LD B,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "B",
             "A"
@@ -1167,11 +1251,12 @@
     {
         "opcode": 72,
         "mnemonic": "LD C,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "B"
@@ -1182,11 +1267,12 @@
     {
         "opcode": 73,
         "mnemonic": "LD C,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "C"
@@ -1197,11 +1283,12 @@
     {
         "opcode": 74,
         "mnemonic": "LD C,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "D"
@@ -1212,11 +1299,12 @@
     {
         "opcode": 75,
         "mnemonic": "LD C,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "E"
@@ -1227,11 +1315,12 @@
     {
         "opcode": 76,
         "mnemonic": "LD C,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "H"
@@ -1242,11 +1331,12 @@
     {
         "opcode": 77,
         "mnemonic": "LD C,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "L"
@@ -1257,11 +1347,12 @@
     {
         "opcode": 78,
         "mnemonic": "LD C,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "(HL)"
@@ -1272,11 +1363,12 @@
     {
         "opcode": 79,
         "mnemonic": "LD C,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "C",
             "A"
@@ -1287,11 +1379,12 @@
     {
         "opcode": 80,
         "mnemonic": "LD D,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "B"
@@ -1302,11 +1395,12 @@
     {
         "opcode": 81,
         "mnemonic": "LD D,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "C"
@@ -1317,11 +1411,12 @@
     {
         "opcode": 82,
         "mnemonic": "LD D,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "D"
@@ -1332,11 +1427,12 @@
     {
         "opcode": 83,
         "mnemonic": "LD D,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "E"
@@ -1347,11 +1443,12 @@
     {
         "opcode": 84,
         "mnemonic": "LD D,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "H"
@@ -1362,11 +1459,12 @@
     {
         "opcode": 85,
         "mnemonic": "LD D,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "L"
@@ -1377,11 +1475,12 @@
     {
         "opcode": 86,
         "mnemonic": "LD D,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "(HL)"
@@ -1392,11 +1491,12 @@
     {
         "opcode": 87,
         "mnemonic": "LD D,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "D",
             "A"
@@ -1407,11 +1507,12 @@
     {
         "opcode": 88,
         "mnemonic": "LD E,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "B"
@@ -1422,11 +1523,12 @@
     {
         "opcode": 89,
         "mnemonic": "LD E,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "C"
@@ -1437,11 +1539,12 @@
     {
         "opcode": 90,
         "mnemonic": "LD E,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "D"
@@ -1452,11 +1555,12 @@
     {
         "opcode": 91,
         "mnemonic": "LD E,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "E"
@@ -1467,11 +1571,12 @@
     {
         "opcode": 92,
         "mnemonic": "LD E,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "H"
@@ -1482,11 +1587,12 @@
     {
         "opcode": 93,
         "mnemonic": "LD E,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "L"
@@ -1497,11 +1603,12 @@
     {
         "opcode": 94,
         "mnemonic": "LD E,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "(HL)"
@@ -1512,11 +1619,12 @@
     {
         "opcode": 95,
         "mnemonic": "LD E,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "E",
             "A"
@@ -1527,11 +1635,12 @@
     {
         "opcode": 96,
         "mnemonic": "LD H,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "B"
@@ -1542,11 +1651,12 @@
     {
         "opcode": 97,
         "mnemonic": "LD H,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "C"
@@ -1557,11 +1667,12 @@
     {
         "opcode": 98,
         "mnemonic": "LD H,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "D"
@@ -1572,11 +1683,12 @@
     {
         "opcode": 99,
         "mnemonic": "LD H,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "E"
@@ -1587,11 +1699,12 @@
     {
         "opcode": 100,
         "mnemonic": "LD H,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "H"
@@ -1602,11 +1715,12 @@
     {
         "opcode": 101,
         "mnemonic": "LD H,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "L"
@@ -1617,11 +1731,12 @@
     {
         "opcode": 102,
         "mnemonic": "LD H,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "(HL)"
@@ -1632,11 +1747,12 @@
     {
         "opcode": 103,
         "mnemonic": "LD H,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "H",
             "A"
@@ -1647,11 +1763,12 @@
     {
         "opcode": 104,
         "mnemonic": "LD L,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "B"
@@ -1662,11 +1779,12 @@
     {
         "opcode": 105,
         "mnemonic": "LD L,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "C"
@@ -1677,11 +1795,12 @@
     {
         "opcode": 106,
         "mnemonic": "LD L,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "D"
@@ -1692,11 +1811,12 @@
     {
         "opcode": 107,
         "mnemonic": "LD L,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "E"
@@ -1707,11 +1827,12 @@
     {
         "opcode": 108,
         "mnemonic": "LD L,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "H"
@@ -1722,11 +1843,12 @@
     {
         "opcode": 109,
         "mnemonic": "LD L,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "L"
@@ -1737,11 +1859,12 @@
     {
         "opcode": 110,
         "mnemonic": "LD L,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "(HL)"
@@ -1752,11 +1875,12 @@
     {
         "opcode": 111,
         "mnemonic": "LD L,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "L",
             "A"
@@ -1767,11 +1891,12 @@
     {
         "opcode": 112,
         "mnemonic": "LD (HL),B",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "B"
@@ -1782,11 +1907,12 @@
     {
         "opcode": 113,
         "mnemonic": "LD (HL),C",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "C"
@@ -1797,11 +1923,12 @@
     {
         "opcode": 114,
         "mnemonic": "LD (HL),D",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "D"
@@ -1812,11 +1939,12 @@
     {
         "opcode": 115,
         "mnemonic": "LD (HL),E",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "E"
@@ -1827,11 +1955,12 @@
     {
         "opcode": 116,
         "mnemonic": "LD (HL),H",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "H"
@@ -1842,11 +1971,12 @@
     {
         "opcode": 117,
         "mnemonic": "LD (HL),L",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "L"
@@ -1857,11 +1987,12 @@
     {
         "opcode": 118,
         "mnemonic": "HALT",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "HALT",
         "operands": [],
         "opcode_bin": "0b1110110",
         "opcode_hex": "0x76"
@@ -1869,11 +2000,12 @@
     {
         "opcode": 119,
         "mnemonic": "LD (HL),A",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(HL)",
             "A"
@@ -1884,11 +2016,12 @@
     {
         "opcode": 120,
         "mnemonic": "LD A,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "B"
@@ -1899,11 +2032,12 @@
     {
         "opcode": 121,
         "mnemonic": "LD A,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "C"
@@ -1914,11 +2048,12 @@
     {
         "opcode": 122,
         "mnemonic": "LD A,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "D"
@@ -1929,11 +2064,12 @@
     {
         "opcode": 123,
         "mnemonic": "LD A,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "E"
@@ -1944,11 +2080,12 @@
     {
         "opcode": 124,
         "mnemonic": "LD A,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "H"
@@ -1959,11 +2096,12 @@
     {
         "opcode": 125,
         "mnemonic": "LD A,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "L"
@@ -1974,11 +2112,12 @@
     {
         "opcode": 126,
         "mnemonic": "LD A,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "(HL)"
@@ -1989,11 +2128,12 @@
     {
         "opcode": 127,
         "mnemonic": "LD A,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "A"
@@ -2004,8 +2144,8 @@
     {
         "opcode": 128,
         "mnemonic": "ADD A,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2014,6 +2154,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "B"
@@ -2024,8 +2165,8 @@
     {
         "opcode": 129,
         "mnemonic": "ADD A,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2034,6 +2175,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "C"
@@ -2044,8 +2186,8 @@
     {
         "opcode": 130,
         "mnemonic": "ADD A,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2054,6 +2196,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "D"
@@ -2064,8 +2207,8 @@
     {
         "opcode": 131,
         "mnemonic": "ADD A,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2074,6 +2217,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "E"
@@ -2084,8 +2228,8 @@
     {
         "opcode": 132,
         "mnemonic": "ADD A,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2094,6 +2238,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "H"
@@ -2104,8 +2249,8 @@
     {
         "opcode": 133,
         "mnemonic": "ADD A,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2114,6 +2259,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "L"
@@ -2124,8 +2270,8 @@
     {
         "opcode": 134,
         "mnemonic": "ADD A,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2134,6 +2280,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "(HL)"
@@ -2144,8 +2291,8 @@
     {
         "opcode": 135,
         "mnemonic": "ADD A,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2154,6 +2301,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "A"
@@ -2164,8 +2312,8 @@
     {
         "opcode": 136,
         "mnemonic": "ADC A,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2174,6 +2322,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "B"
@@ -2184,8 +2333,8 @@
     {
         "opcode": 137,
         "mnemonic": "ADC A,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2194,6 +2343,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "C"
@@ -2204,8 +2354,8 @@
     {
         "opcode": 138,
         "mnemonic": "ADC A,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2214,6 +2364,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "D"
@@ -2224,8 +2375,8 @@
     {
         "opcode": 139,
         "mnemonic": "ADC A,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2234,6 +2385,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "E"
@@ -2244,8 +2396,8 @@
     {
         "opcode": 140,
         "mnemonic": "ADC A,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2254,6 +2406,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "H"
@@ -2264,8 +2417,8 @@
     {
         "opcode": 141,
         "mnemonic": "ADC A,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2274,6 +2427,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "L"
@@ -2284,8 +2438,8 @@
     {
         "opcode": 142,
         "mnemonic": "ADC A,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2294,6 +2448,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "(HL)"
@@ -2304,8 +2459,8 @@
     {
         "opcode": 143,
         "mnemonic": "ADC A,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2314,6 +2469,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "A"
@@ -2324,8 +2480,8 @@
     {
         "opcode": 144,
         "mnemonic": "SUB B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2334,6 +2490,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "B"
         ],
@@ -2343,8 +2500,8 @@
     {
         "opcode": 145,
         "mnemonic": "SUB C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2353,6 +2510,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "C"
         ],
@@ -2362,8 +2520,8 @@
     {
         "opcode": 146,
         "mnemonic": "SUB D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2372,6 +2530,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "D"
         ],
@@ -2381,8 +2540,8 @@
     {
         "opcode": 147,
         "mnemonic": "SUB E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2391,6 +2550,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "E"
         ],
@@ -2400,8 +2560,8 @@
     {
         "opcode": 148,
         "mnemonic": "SUB H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2410,6 +2570,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "H"
         ],
@@ -2419,8 +2580,8 @@
     {
         "opcode": 149,
         "mnemonic": "SUB L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2429,6 +2590,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "L"
         ],
@@ -2438,8 +2600,8 @@
     {
         "opcode": 150,
         "mnemonic": "SUB (HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2448,6 +2610,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "(HL)"
         ],
@@ -2457,8 +2620,8 @@
     {
         "opcode": 151,
         "mnemonic": "SUB A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2467,6 +2630,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "A"
         ],
@@ -2476,8 +2640,8 @@
     {
         "opcode": 152,
         "mnemonic": "SBC A,B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2486,6 +2650,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "B"
@@ -2496,8 +2661,8 @@
     {
         "opcode": 153,
         "mnemonic": "SBC A,C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2506,6 +2671,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "C"
@@ -2516,8 +2682,8 @@
     {
         "opcode": 154,
         "mnemonic": "SBC A,D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2526,6 +2692,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "D"
@@ -2536,8 +2703,8 @@
     {
         "opcode": 155,
         "mnemonic": "SBC A,E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2546,6 +2713,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "E"
@@ -2556,8 +2724,8 @@
     {
         "opcode": 156,
         "mnemonic": "SBC A,H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2566,6 +2734,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "H"
@@ -2576,8 +2745,8 @@
     {
         "opcode": 157,
         "mnemonic": "SBC A,L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2586,6 +2755,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "L"
@@ -2596,8 +2766,8 @@
     {
         "opcode": 158,
         "mnemonic": "SBC A,(HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2606,6 +2776,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "(HL)"
@@ -2616,8 +2787,8 @@
     {
         "opcode": 159,
         "mnemonic": "SBC A,A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -2626,6 +2797,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "A"
@@ -2636,8 +2808,8 @@
     {
         "opcode": 160,
         "mnemonic": "AND B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2646,6 +2818,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "B"
         ],
@@ -2655,8 +2828,8 @@
     {
         "opcode": 161,
         "mnemonic": "AND C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2665,6 +2838,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "C"
         ],
@@ -2674,8 +2848,8 @@
     {
         "opcode": 162,
         "mnemonic": "AND D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2684,6 +2858,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "D"
         ],
@@ -2693,8 +2868,8 @@
     {
         "opcode": 163,
         "mnemonic": "AND E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2703,6 +2878,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "E"
         ],
@@ -2712,8 +2888,8 @@
     {
         "opcode": 164,
         "mnemonic": "AND H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2722,6 +2898,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "H"
         ],
@@ -2731,8 +2908,8 @@
     {
         "opcode": 165,
         "mnemonic": "AND L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2741,6 +2918,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "L"
         ],
@@ -2750,8 +2928,8 @@
     {
         "opcode": 166,
         "mnemonic": "AND (HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2760,6 +2938,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "(HL)"
         ],
@@ -2769,8 +2948,8 @@
     {
         "opcode": 167,
         "mnemonic": "AND A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2779,6 +2958,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "A"
         ],
@@ -2788,8 +2968,8 @@
     {
         "opcode": 168,
         "mnemonic": "XOR B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2798,6 +2978,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "B"
         ],
@@ -2807,8 +2988,8 @@
     {
         "opcode": 169,
         "mnemonic": "XOR C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2817,6 +2998,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "C"
         ],
@@ -2826,8 +3008,8 @@
     {
         "opcode": 170,
         "mnemonic": "XOR D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2836,6 +3018,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "D"
         ],
@@ -2845,8 +3028,8 @@
     {
         "opcode": 171,
         "mnemonic": "XOR E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2855,6 +3038,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "E"
         ],
@@ -2864,8 +3048,8 @@
     {
         "opcode": 172,
         "mnemonic": "XOR H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2874,6 +3058,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "H"
         ],
@@ -2883,8 +3068,8 @@
     {
         "opcode": 173,
         "mnemonic": "XOR L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2893,6 +3078,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "L"
         ],
@@ -2902,8 +3088,8 @@
     {
         "opcode": 174,
         "mnemonic": "XOR (HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2912,6 +3098,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "(HL)"
         ],
@@ -2921,8 +3108,8 @@
     {
         "opcode": 175,
         "mnemonic": "XOR A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2931,6 +3118,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "A"
         ],
@@ -2940,8 +3128,8 @@
     {
         "opcode": 176,
         "mnemonic": "OR B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2950,6 +3138,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "B"
         ],
@@ -2959,8 +3148,8 @@
     {
         "opcode": 177,
         "mnemonic": "OR C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2969,6 +3158,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "C"
         ],
@@ -2978,8 +3168,8 @@
     {
         "opcode": 178,
         "mnemonic": "OR D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -2988,6 +3178,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "D"
         ],
@@ -2997,8 +3188,8 @@
     {
         "opcode": 179,
         "mnemonic": "OR E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3007,6 +3198,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "E"
         ],
@@ -3016,8 +3208,8 @@
     {
         "opcode": 180,
         "mnemonic": "OR H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3026,6 +3218,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "H"
         ],
@@ -3035,8 +3228,8 @@
     {
         "opcode": 181,
         "mnemonic": "OR L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3045,6 +3238,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "L"
         ],
@@ -3054,8 +3248,8 @@
     {
         "opcode": 182,
         "mnemonic": "OR (HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3064,6 +3258,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "(HL)"
         ],
@@ -3073,8 +3268,8 @@
     {
         "opcode": 183,
         "mnemonic": "OR A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3083,6 +3278,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "A"
         ],
@@ -3092,8 +3288,8 @@
     {
         "opcode": 184,
         "mnemonic": "CP B",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3102,6 +3298,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "B"
         ],
@@ -3111,8 +3308,8 @@
     {
         "opcode": 185,
         "mnemonic": "CP C",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3121,6 +3318,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "C"
         ],
@@ -3130,8 +3328,8 @@
     {
         "opcode": 186,
         "mnemonic": "CP D",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3140,6 +3338,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "D"
         ],
@@ -3149,8 +3348,8 @@
     {
         "opcode": 187,
         "mnemonic": "CP E",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3159,6 +3358,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "E"
         ],
@@ -3168,8 +3368,8 @@
     {
         "opcode": 188,
         "mnemonic": "CP H",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3178,6 +3378,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "H"
         ],
@@ -3187,8 +3388,8 @@
     {
         "opcode": 189,
         "mnemonic": "CP L",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3197,6 +3398,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "L"
         ],
@@ -3206,8 +3408,8 @@
     {
         "opcode": 190,
         "mnemonic": "CP (HL)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3216,6 +3418,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "(HL)"
         ],
@@ -3225,8 +3428,8 @@
     {
         "opcode": 191,
         "mnemonic": "CP A",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3235,6 +3438,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "A"
         ],
@@ -3244,11 +3448,15 @@
     {
         "opcode": 192,
         "mnemonic": "RET NZ",
-        "bytes": "1",
-        "cycles": "20/8",
+        "bytes": 1,
+        "cycles": [
+            20,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RET",
         "operands": [
             "NZ"
         ],
@@ -3258,11 +3466,12 @@
     {
         "opcode": 193,
         "mnemonic": "POP BC",
-        "bytes": "1",
-        "cycles": "12",
+        "bytes": 1,
+        "cycles": 12,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "POP",
         "operands": [
             "BC"
         ],
@@ -3272,11 +3481,15 @@
     {
         "opcode": 194,
         "mnemonic": "JP NZ,a16",
-        "bytes": "3",
-        "cycles": "16/12",
+        "bytes": 3,
+        "cycles": [
+            16,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "JP",
         "operands": [
             "NZ",
             "a16"
@@ -3287,11 +3500,12 @@
     {
         "opcode": 195,
         "mnemonic": "JP a16",
-        "bytes": "3",
-        "cycles": "16",
+        "bytes": 3,
+        "cycles": 16,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "JP",
         "operands": [
             "a16"
         ],
@@ -3301,11 +3515,15 @@
     {
         "opcode": 196,
         "mnemonic": "CALL NZ,a16",
-        "bytes": "3",
-        "cycles": "24/12",
+        "bytes": 3,
+        "cycles": [
+            24,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "CALL",
         "operands": [
             "NZ",
             "a16"
@@ -3316,11 +3534,12 @@
     {
         "opcode": 197,
         "mnemonic": "PUSH BC",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "PUSH",
         "operands": [
             "BC"
         ],
@@ -3330,8 +3549,8 @@
     {
         "opcode": 198,
         "mnemonic": "ADD A,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3340,6 +3559,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "A",
             "d8"
@@ -3350,11 +3570,12 @@
     {
         "opcode": 199,
         "mnemonic": "RST 00H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "00H"
         ],
@@ -3364,11 +3585,15 @@
     {
         "opcode": 200,
         "mnemonic": "RET Z",
-        "bytes": "1",
-        "cycles": "20/8",
+        "bytes": 1,
+        "cycles": [
+            20,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RET",
         "operands": [
             "Z"
         ],
@@ -3378,11 +3603,12 @@
     {
         "opcode": 201,
         "mnemonic": "RET",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RET",
         "operands": [],
         "opcode_bin": "0b11001001",
         "opcode_hex": "0xc9"
@@ -3390,11 +3616,15 @@
     {
         "opcode": 202,
         "mnemonic": "JP Z,a16",
-        "bytes": "3",
-        "cycles": "16/12",
+        "bytes": 3,
+        "cycles": [
+            16,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "JP",
         "operands": [
             "Z",
             "a16"
@@ -3405,11 +3635,12 @@
     {
         "opcode": 203,
         "mnemonic": "PREFIX CB",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "PREFIX",
         "operands": [
             "CB"
         ],
@@ -3419,11 +3650,15 @@
     {
         "opcode": 204,
         "mnemonic": "CALL Z,a16",
-        "bytes": "3",
-        "cycles": "24/12",
+        "bytes": 3,
+        "cycles": [
+            24,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "CALL",
         "operands": [
             "Z",
             "a16"
@@ -3434,11 +3669,12 @@
     {
         "opcode": 205,
         "mnemonic": "CALL a16",
-        "bytes": "3",
-        "cycles": "24",
+        "bytes": 3,
+        "cycles": 24,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "CALL",
         "operands": [
             "a16"
         ],
@@ -3448,8 +3684,8 @@
     {
         "opcode": 206,
         "mnemonic": "ADC A,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3458,6 +3694,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "ADC",
         "operands": [
             "A",
             "d8"
@@ -3468,11 +3705,12 @@
     {
         "opcode": 207,
         "mnemonic": "RST 08H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "08H"
         ],
@@ -3482,11 +3720,15 @@
     {
         "opcode": 208,
         "mnemonic": "RET NC",
-        "bytes": "1",
-        "cycles": "20/8",
+        "bytes": 1,
+        "cycles": [
+            20,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RET",
         "operands": [
             "NC"
         ],
@@ -3496,11 +3738,12 @@
     {
         "opcode": 209,
         "mnemonic": "POP DE",
-        "bytes": "1",
-        "cycles": "12",
+        "bytes": 1,
+        "cycles": 12,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "POP",
         "operands": [
             "DE"
         ],
@@ -3510,11 +3753,15 @@
     {
         "opcode": 210,
         "mnemonic": "JP NC,a16",
-        "bytes": "3",
-        "cycles": "16/12",
+        "bytes": 3,
+        "cycles": [
+            16,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "JP",
         "operands": [
             "NC",
             "a16"
@@ -3530,6 +3777,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11010011",
         "opcode_hex": "0xd3"
@@ -3537,11 +3785,15 @@
     {
         "opcode": 212,
         "mnemonic": "CALL NC,a16",
-        "bytes": "3",
-        "cycles": "24/12",
+        "bytes": 3,
+        "cycles": [
+            24,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "CALL",
         "operands": [
             "NC",
             "a16"
@@ -3552,11 +3804,12 @@
     {
         "opcode": 213,
         "mnemonic": "PUSH DE",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "PUSH",
         "operands": [
             "DE"
         ],
@@ -3566,8 +3819,8 @@
     {
         "opcode": 214,
         "mnemonic": "SUB d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3576,6 +3829,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SUB",
         "operands": [
             "d8"
         ],
@@ -3585,11 +3839,12 @@
     {
         "opcode": 215,
         "mnemonic": "RST 10H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "10H"
         ],
@@ -3599,11 +3854,15 @@
     {
         "opcode": 216,
         "mnemonic": "RET C",
-        "bytes": "1",
-        "cycles": "20/8",
+        "bytes": 1,
+        "cycles": [
+            20,
+            8
+        ],
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RET",
         "operands": [
             "C"
         ],
@@ -3613,11 +3872,12 @@
     {
         "opcode": 217,
         "mnemonic": "RETI",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RETI",
         "operands": [],
         "opcode_bin": "0b11011001",
         "opcode_hex": "0xd9"
@@ -3625,11 +3885,15 @@
     {
         "opcode": 218,
         "mnemonic": "JP C,a16",
-        "bytes": "3",
-        "cycles": "16/12",
+        "bytes": 3,
+        "cycles": [
+            16,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "JP",
         "operands": [
             "C",
             "a16"
@@ -3645,6 +3909,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11011011",
         "opcode_hex": "0xdb"
@@ -3652,11 +3917,15 @@
     {
         "opcode": 220,
         "mnemonic": "CALL C,a16",
-        "bytes": "3",
-        "cycles": "24/12",
+        "bytes": 3,
+        "cycles": [
+            24,
+            12
+        ],
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "CALL",
         "operands": [
             "C",
             "a16"
@@ -3672,6 +3941,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11011101",
         "opcode_hex": "0xdd"
@@ -3679,8 +3949,8 @@
     {
         "opcode": 222,
         "mnemonic": "SBC A,d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -3689,6 +3959,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "SBC",
         "operands": [
             "A",
             "d8"
@@ -3699,11 +3970,12 @@
     {
         "opcode": 223,
         "mnemonic": "RST 18H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "18H"
         ],
@@ -3713,11 +3985,12 @@
     {
         "opcode": 224,
         "mnemonic": "LDH (a8),A",
-        "bytes": "2",
-        "cycles": "12",
+        "bytes": 2,
+        "cycles": 12,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LDH",
         "operands": [
             "(a8)",
             "A"
@@ -3728,11 +4001,12 @@
     {
         "opcode": 225,
         "mnemonic": "POP HL",
-        "bytes": "1",
-        "cycles": "12",
+        "bytes": 1,
+        "cycles": 12,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "POP",
         "operands": [
             "HL"
         ],
@@ -3742,11 +4016,12 @@
     {
         "opcode": 226,
         "mnemonic": "LD (C),A",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(C)",
             "A"
@@ -3762,6 +4037,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11100011",
         "opcode_hex": "0xe3"
@@ -3774,6 +4050,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11100100",
         "opcode_hex": "0xe4"
@@ -3781,11 +4058,12 @@
     {
         "opcode": 229,
         "mnemonic": "PUSH HL",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "PUSH",
         "operands": [
             "HL"
         ],
@@ -3795,8 +4073,8 @@
     {
         "opcode": 230,
         "mnemonic": "AND d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3805,6 +4083,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "AND",
         "operands": [
             "d8"
         ],
@@ -3814,11 +4093,12 @@
     {
         "opcode": 231,
         "mnemonic": "RST 20H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "20H"
         ],
@@ -3828,8 +4108,8 @@
     {
         "opcode": 232,
         "mnemonic": "ADD SP,r8",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "0",
             "n": "0",
@@ -3838,6 +4118,7 @@
         },
         "width": 2,
         "prefix": null,
+        "operation": "ADD",
         "operands": [
             "SP",
             "r8"
@@ -3848,11 +4129,12 @@
     {
         "opcode": 233,
         "mnemonic": "JP (HL)",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "JP",
         "operands": [
             "(HL)"
         ],
@@ -3862,11 +4144,12 @@
     {
         "opcode": 234,
         "mnemonic": "LD (a16),A",
-        "bytes": "3",
-        "cycles": "16",
+        "bytes": 3,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "(a16)",
             "A"
@@ -3882,6 +4165,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11101011",
         "opcode_hex": "0xeb"
@@ -3894,6 +4178,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11101100",
         "opcode_hex": "0xec"
@@ -3906,6 +4191,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11101101",
         "opcode_hex": "0xed"
@@ -3913,8 +4199,8 @@
     {
         "opcode": 238,
         "mnemonic": "XOR d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -3923,6 +4209,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "XOR",
         "operands": [
             "d8"
         ],
@@ -3932,11 +4219,12 @@
     {
         "opcode": 239,
         "mnemonic": "RST 28H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "28H"
         ],
@@ -3946,11 +4234,12 @@
     {
         "opcode": 240,
         "mnemonic": "LDH A,(a8)",
-        "bytes": "2",
-        "cycles": "12",
+        "bytes": 2,
+        "cycles": 12,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LDH",
         "operands": [
             "A",
             "(a8)"
@@ -3961,8 +4250,8 @@
     {
         "opcode": 241,
         "mnemonic": "POP AF",
-        "bytes": "1",
-        "cycles": "12",
+        "bytes": 1,
+        "cycles": 12,
         "flags": {
             "z": "Z",
             "n": "N",
@@ -3971,6 +4260,7 @@
         },
         "width": 2,
         "prefix": null,
+        "operation": "POP",
         "operands": [
             "AF"
         ],
@@ -3980,11 +4270,12 @@
     {
         "opcode": 242,
         "mnemonic": "LD A,(C)",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "(C)"
@@ -3995,11 +4286,12 @@
     {
         "opcode": 243,
         "mnemonic": "DI",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "DI",
         "operands": [],
         "opcode_bin": "0b11110011",
         "opcode_hex": "0xf3"
@@ -4012,6 +4304,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11110100",
         "opcode_hex": "0xf4"
@@ -4019,11 +4312,12 @@
     {
         "opcode": 245,
         "mnemonic": "PUSH AF",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "PUSH",
         "operands": [
             "AF"
         ],
@@ -4033,8 +4327,8 @@
     {
         "opcode": 246,
         "mnemonic": "OR d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4043,6 +4337,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "OR",
         "operands": [
             "d8"
         ],
@@ -4052,11 +4347,12 @@
     {
         "opcode": 247,
         "mnemonic": "RST 30H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "30H"
         ],
@@ -4066,8 +4362,8 @@
     {
         "opcode": 248,
         "mnemonic": "LD HL,SP+r8",
-        "bytes": "2",
-        "cycles": "12",
+        "bytes": 2,
+        "cycles": 12,
         "flags": {
             "z": "0",
             "n": "0",
@@ -4076,6 +4372,7 @@
         },
         "width": 2,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "HL",
             "SP+r8"
@@ -4086,11 +4383,12 @@
     {
         "opcode": 249,
         "mnemonic": "LD SP,HL",
-        "bytes": "1",
-        "cycles": "8",
+        "bytes": 1,
+        "cycles": 8,
         "flags": null,
         "width": 2,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "SP",
             "HL"
@@ -4101,11 +4399,12 @@
     {
         "opcode": 250,
         "mnemonic": "LD A,(a16)",
-        "bytes": "3",
-        "cycles": "16",
+        "bytes": 3,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "LD",
         "operands": [
             "A",
             "(a16)"
@@ -4116,11 +4415,12 @@
     {
         "opcode": 251,
         "mnemonic": "EI",
-        "bytes": "1",
-        "cycles": "4",
+        "bytes": 1,
+        "cycles": 4,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "EI",
         "operands": [],
         "opcode_bin": "0b11111011",
         "opcode_hex": "0xfb"
@@ -4133,6 +4433,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11111100",
         "opcode_hex": "0xfc"
@@ -4145,6 +4446,7 @@
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "INVALID",
         "operands": [],
         "opcode_bin": "0b11111101",
         "opcode_hex": "0xfd"
@@ -4152,8 +4454,8 @@
     {
         "opcode": 254,
         "mnemonic": "CP d8",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "1",
@@ -4162,6 +4464,7 @@
         },
         "width": 1,
         "prefix": null,
+        "operation": "CP",
         "operands": [
             "d8"
         ],
@@ -4171,11 +4474,12 @@
     {
         "opcode": 255,
         "mnemonic": "RST 38H",
-        "bytes": "1",
-        "cycles": "16",
+        "bytes": 1,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": null,
+        "operation": "RST",
         "operands": [
             "38H"
         ],
@@ -4185,8 +4489,8 @@
     {
         "opcode": 0,
         "mnemonic": "RLC B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4195,6 +4499,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "B"
         ],
@@ -4204,8 +4509,8 @@
     {
         "opcode": 1,
         "mnemonic": "RLC C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4214,6 +4519,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "C"
         ],
@@ -4223,8 +4529,8 @@
     {
         "opcode": 2,
         "mnemonic": "RLC D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4233,6 +4539,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "D"
         ],
@@ -4242,8 +4549,8 @@
     {
         "opcode": 3,
         "mnemonic": "RLC E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4252,6 +4559,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "E"
         ],
@@ -4261,8 +4569,8 @@
     {
         "opcode": 4,
         "mnemonic": "RLC H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4271,6 +4579,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "H"
         ],
@@ -4280,8 +4589,8 @@
     {
         "opcode": 5,
         "mnemonic": "RLC L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4290,6 +4599,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "L"
         ],
@@ -4299,8 +4609,8 @@
     {
         "opcode": 6,
         "mnemonic": "RLC (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4309,6 +4619,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "(HL)"
         ],
@@ -4318,8 +4629,8 @@
     {
         "opcode": 7,
         "mnemonic": "RLC A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4328,6 +4639,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RLC",
         "operands": [
             "A"
         ],
@@ -4337,8 +4649,8 @@
     {
         "opcode": 8,
         "mnemonic": "RRC B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4347,6 +4659,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "B"
         ],
@@ -4356,8 +4669,8 @@
     {
         "opcode": 9,
         "mnemonic": "RRC C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4366,6 +4679,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "C"
         ],
@@ -4375,8 +4689,8 @@
     {
         "opcode": 10,
         "mnemonic": "RRC D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4385,6 +4699,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "D"
         ],
@@ -4394,8 +4709,8 @@
     {
         "opcode": 11,
         "mnemonic": "RRC E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4404,6 +4719,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "E"
         ],
@@ -4413,8 +4729,8 @@
     {
         "opcode": 12,
         "mnemonic": "RRC H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4423,6 +4739,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "H"
         ],
@@ -4432,8 +4749,8 @@
     {
         "opcode": 13,
         "mnemonic": "RRC L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4442,6 +4759,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "L"
         ],
@@ -4451,8 +4769,8 @@
     {
         "opcode": 14,
         "mnemonic": "RRC (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4461,6 +4779,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "(HL)"
         ],
@@ -4470,8 +4789,8 @@
     {
         "opcode": 15,
         "mnemonic": "RRC A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4480,6 +4799,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RRC",
         "operands": [
             "A"
         ],
@@ -4489,8 +4809,8 @@
     {
         "opcode": 16,
         "mnemonic": "RL B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4499,6 +4819,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "B"
         ],
@@ -4508,8 +4829,8 @@
     {
         "opcode": 17,
         "mnemonic": "RL C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4518,6 +4839,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "C"
         ],
@@ -4527,8 +4849,8 @@
     {
         "opcode": 18,
         "mnemonic": "RL D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4537,6 +4859,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "D"
         ],
@@ -4546,8 +4869,8 @@
     {
         "opcode": 19,
         "mnemonic": "RL E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4556,6 +4879,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "E"
         ],
@@ -4565,8 +4889,8 @@
     {
         "opcode": 20,
         "mnemonic": "RL H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4575,6 +4899,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "H"
         ],
@@ -4584,8 +4909,8 @@
     {
         "opcode": 21,
         "mnemonic": "RL L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4594,6 +4919,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "L"
         ],
@@ -4603,8 +4929,8 @@
     {
         "opcode": 22,
         "mnemonic": "RL (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4613,6 +4939,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "(HL)"
         ],
@@ -4622,8 +4949,8 @@
     {
         "opcode": 23,
         "mnemonic": "RL A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4632,6 +4959,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RL",
         "operands": [
             "A"
         ],
@@ -4641,8 +4969,8 @@
     {
         "opcode": 24,
         "mnemonic": "RR B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4651,6 +4979,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "B"
         ],
@@ -4660,8 +4989,8 @@
     {
         "opcode": 25,
         "mnemonic": "RR C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4670,6 +4999,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "C"
         ],
@@ -4679,8 +5009,8 @@
     {
         "opcode": 26,
         "mnemonic": "RR D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4689,6 +5019,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "D"
         ],
@@ -4698,8 +5029,8 @@
     {
         "opcode": 27,
         "mnemonic": "RR E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4708,6 +5039,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "E"
         ],
@@ -4717,8 +5049,8 @@
     {
         "opcode": 28,
         "mnemonic": "RR H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4727,6 +5059,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "H"
         ],
@@ -4736,8 +5069,8 @@
     {
         "opcode": 29,
         "mnemonic": "RR L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4746,6 +5079,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "L"
         ],
@@ -4755,8 +5089,8 @@
     {
         "opcode": 30,
         "mnemonic": "RR (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4765,6 +5099,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "(HL)"
         ],
@@ -4774,8 +5109,8 @@
     {
         "opcode": 31,
         "mnemonic": "RR A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4784,6 +5119,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "RR",
         "operands": [
             "A"
         ],
@@ -4793,8 +5129,8 @@
     {
         "opcode": 32,
         "mnemonic": "SLA B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4803,6 +5139,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "B"
         ],
@@ -4812,8 +5149,8 @@
     {
         "opcode": 33,
         "mnemonic": "SLA C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4822,6 +5159,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "C"
         ],
@@ -4831,8 +5169,8 @@
     {
         "opcode": 34,
         "mnemonic": "SLA D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4841,6 +5179,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "D"
         ],
@@ -4850,8 +5189,8 @@
     {
         "opcode": 35,
         "mnemonic": "SLA E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4860,6 +5199,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "E"
         ],
@@ -4869,8 +5209,8 @@
     {
         "opcode": 36,
         "mnemonic": "SLA H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4879,6 +5219,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "H"
         ],
@@ -4888,8 +5229,8 @@
     {
         "opcode": 37,
         "mnemonic": "SLA L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4898,6 +5239,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "L"
         ],
@@ -4907,8 +5249,8 @@
     {
         "opcode": 38,
         "mnemonic": "SLA (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4917,6 +5259,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "(HL)"
         ],
@@ -4926,8 +5269,8 @@
     {
         "opcode": 39,
         "mnemonic": "SLA A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4936,6 +5279,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SLA",
         "operands": [
             "A"
         ],
@@ -4945,8 +5289,8 @@
     {
         "opcode": 40,
         "mnemonic": "SRA B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4955,6 +5299,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "B"
         ],
@@ -4964,8 +5309,8 @@
     {
         "opcode": 41,
         "mnemonic": "SRA C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4974,6 +5319,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "C"
         ],
@@ -4983,8 +5329,8 @@
     {
         "opcode": 42,
         "mnemonic": "SRA D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -4993,6 +5339,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "D"
         ],
@@ -5002,8 +5349,8 @@
     {
         "opcode": 43,
         "mnemonic": "SRA E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5012,6 +5359,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "E"
         ],
@@ -5021,8 +5369,8 @@
     {
         "opcode": 44,
         "mnemonic": "SRA H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5031,6 +5379,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "H"
         ],
@@ -5040,8 +5389,8 @@
     {
         "opcode": 45,
         "mnemonic": "SRA L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5050,6 +5399,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "L"
         ],
@@ -5059,8 +5409,8 @@
     {
         "opcode": 46,
         "mnemonic": "SRA (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5069,6 +5419,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "(HL)"
         ],
@@ -5078,8 +5429,8 @@
     {
         "opcode": 47,
         "mnemonic": "SRA A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5088,6 +5439,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRA",
         "operands": [
             "A"
         ],
@@ -5097,8 +5449,8 @@
     {
         "opcode": 48,
         "mnemonic": "SWAP B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5107,6 +5459,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "B"
         ],
@@ -5116,8 +5469,8 @@
     {
         "opcode": 49,
         "mnemonic": "SWAP C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5126,6 +5479,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "C"
         ],
@@ -5135,8 +5489,8 @@
     {
         "opcode": 50,
         "mnemonic": "SWAP D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5145,6 +5499,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "D"
         ],
@@ -5154,8 +5509,8 @@
     {
         "opcode": 51,
         "mnemonic": "SWAP E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5164,6 +5519,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "E"
         ],
@@ -5173,8 +5529,8 @@
     {
         "opcode": 52,
         "mnemonic": "SWAP H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5183,6 +5539,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "H"
         ],
@@ -5192,8 +5549,8 @@
     {
         "opcode": 53,
         "mnemonic": "SWAP L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5202,6 +5559,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "L"
         ],
@@ -5211,8 +5569,8 @@
     {
         "opcode": 54,
         "mnemonic": "SWAP (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5221,6 +5579,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "(HL)"
         ],
@@ -5230,8 +5589,8 @@
     {
         "opcode": 55,
         "mnemonic": "SWAP A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5240,6 +5599,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SWAP",
         "operands": [
             "A"
         ],
@@ -5249,8 +5609,8 @@
     {
         "opcode": 56,
         "mnemonic": "SRL B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5259,6 +5619,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "B"
         ],
@@ -5268,8 +5629,8 @@
     {
         "opcode": 57,
         "mnemonic": "SRL C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5278,6 +5639,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "C"
         ],
@@ -5287,8 +5649,8 @@
     {
         "opcode": 58,
         "mnemonic": "SRL D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5297,6 +5659,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "D"
         ],
@@ -5306,8 +5669,8 @@
     {
         "opcode": 59,
         "mnemonic": "SRL E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5316,6 +5679,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "E"
         ],
@@ -5325,8 +5689,8 @@
     {
         "opcode": 60,
         "mnemonic": "SRL H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5335,6 +5699,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "H"
         ],
@@ -5344,8 +5709,8 @@
     {
         "opcode": 61,
         "mnemonic": "SRL L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5354,6 +5719,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "L"
         ],
@@ -5363,8 +5729,8 @@
     {
         "opcode": 62,
         "mnemonic": "SRL (HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5373,6 +5739,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "(HL)"
         ],
@@ -5382,8 +5749,8 @@
     {
         "opcode": 63,
         "mnemonic": "SRL A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5392,6 +5759,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "SRL",
         "operands": [
             "A"
         ],
@@ -5401,8 +5769,8 @@
     {
         "opcode": 64,
         "mnemonic": "BIT 0,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5411,6 +5779,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "B"
@@ -5421,8 +5790,8 @@
     {
         "opcode": 65,
         "mnemonic": "BIT 0,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5431,6 +5800,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "C"
@@ -5441,8 +5811,8 @@
     {
         "opcode": 66,
         "mnemonic": "BIT 0,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5451,6 +5821,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "D"
@@ -5461,8 +5832,8 @@
     {
         "opcode": 67,
         "mnemonic": "BIT 0,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5471,6 +5842,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "E"
@@ -5481,8 +5853,8 @@
     {
         "opcode": 68,
         "mnemonic": "BIT 0,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5491,6 +5863,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "H"
@@ -5501,8 +5874,8 @@
     {
         "opcode": 69,
         "mnemonic": "BIT 0,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5511,6 +5884,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "L"
@@ -5521,8 +5895,8 @@
     {
         "opcode": 70,
         "mnemonic": "BIT 0,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5531,6 +5905,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "(HL)"
@@ -5541,8 +5916,8 @@
     {
         "opcode": 71,
         "mnemonic": "BIT 0,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5551,6 +5926,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "0",
             "A"
@@ -5561,8 +5937,8 @@
     {
         "opcode": 72,
         "mnemonic": "BIT 1,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5571,6 +5947,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "B"
@@ -5581,8 +5958,8 @@
     {
         "opcode": 73,
         "mnemonic": "BIT 1,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5591,6 +5968,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "C"
@@ -5601,8 +5979,8 @@
     {
         "opcode": 74,
         "mnemonic": "BIT 1,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5611,6 +5989,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "D"
@@ -5621,8 +6000,8 @@
     {
         "opcode": 75,
         "mnemonic": "BIT 1,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5631,6 +6010,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "E"
@@ -5641,8 +6021,8 @@
     {
         "opcode": 76,
         "mnemonic": "BIT 1,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5651,6 +6031,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "H"
@@ -5661,8 +6042,8 @@
     {
         "opcode": 77,
         "mnemonic": "BIT 1,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5671,6 +6052,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "L"
@@ -5681,8 +6063,8 @@
     {
         "opcode": 78,
         "mnemonic": "BIT 1,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5691,6 +6073,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "(HL)"
@@ -5701,8 +6084,8 @@
     {
         "opcode": 79,
         "mnemonic": "BIT 1,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5711,6 +6094,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "1",
             "A"
@@ -5721,8 +6105,8 @@
     {
         "opcode": 80,
         "mnemonic": "BIT 2,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5731,6 +6115,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "B"
@@ -5741,8 +6126,8 @@
     {
         "opcode": 81,
         "mnemonic": "BIT 2,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5751,6 +6136,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "C"
@@ -5761,8 +6147,8 @@
     {
         "opcode": 82,
         "mnemonic": "BIT 2,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5771,6 +6157,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "D"
@@ -5781,8 +6168,8 @@
     {
         "opcode": 83,
         "mnemonic": "BIT 2,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5791,6 +6178,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "E"
@@ -5801,8 +6189,8 @@
     {
         "opcode": 84,
         "mnemonic": "BIT 2,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5811,6 +6199,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "H"
@@ -5821,8 +6210,8 @@
     {
         "opcode": 85,
         "mnemonic": "BIT 2,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5831,6 +6220,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "L"
@@ -5841,8 +6231,8 @@
     {
         "opcode": 86,
         "mnemonic": "BIT 2,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5851,6 +6241,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "(HL)"
@@ -5861,8 +6252,8 @@
     {
         "opcode": 87,
         "mnemonic": "BIT 2,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5871,6 +6262,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "2",
             "A"
@@ -5881,8 +6273,8 @@
     {
         "opcode": 88,
         "mnemonic": "BIT 3,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5891,6 +6283,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "B"
@@ -5901,8 +6294,8 @@
     {
         "opcode": 89,
         "mnemonic": "BIT 3,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5911,6 +6304,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "C"
@@ -5921,8 +6315,8 @@
     {
         "opcode": 90,
         "mnemonic": "BIT 3,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5931,6 +6325,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "D"
@@ -5941,8 +6336,8 @@
     {
         "opcode": 91,
         "mnemonic": "BIT 3,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5951,6 +6346,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "E"
@@ -5961,8 +6357,8 @@
     {
         "opcode": 92,
         "mnemonic": "BIT 3,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5971,6 +6367,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "H"
@@ -5981,8 +6378,8 @@
     {
         "opcode": 93,
         "mnemonic": "BIT 3,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -5991,6 +6388,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "L"
@@ -6001,8 +6399,8 @@
     {
         "opcode": 94,
         "mnemonic": "BIT 3,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6011,6 +6409,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "(HL)"
@@ -6021,8 +6420,8 @@
     {
         "opcode": 95,
         "mnemonic": "BIT 3,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6031,6 +6430,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "3",
             "A"
@@ -6041,8 +6441,8 @@
     {
         "opcode": 96,
         "mnemonic": "BIT 4,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6051,6 +6451,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "B"
@@ -6061,8 +6462,8 @@
     {
         "opcode": 97,
         "mnemonic": "BIT 4,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6071,6 +6472,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "C"
@@ -6081,8 +6483,8 @@
     {
         "opcode": 98,
         "mnemonic": "BIT 4,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6091,6 +6493,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "D"
@@ -6101,8 +6504,8 @@
     {
         "opcode": 99,
         "mnemonic": "BIT 4,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6111,6 +6514,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "E"
@@ -6121,8 +6525,8 @@
     {
         "opcode": 100,
         "mnemonic": "BIT 4,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6131,6 +6535,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "H"
@@ -6141,8 +6546,8 @@
     {
         "opcode": 101,
         "mnemonic": "BIT 4,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6151,6 +6556,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "L"
@@ -6161,8 +6567,8 @@
     {
         "opcode": 102,
         "mnemonic": "BIT 4,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6171,6 +6577,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "(HL)"
@@ -6181,8 +6588,8 @@
     {
         "opcode": 103,
         "mnemonic": "BIT 4,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6191,6 +6598,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "4",
             "A"
@@ -6201,8 +6609,8 @@
     {
         "opcode": 104,
         "mnemonic": "BIT 5,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6211,6 +6619,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "B"
@@ -6221,8 +6630,8 @@
     {
         "opcode": 105,
         "mnemonic": "BIT 5,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6231,6 +6640,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "C"
@@ -6241,8 +6651,8 @@
     {
         "opcode": 106,
         "mnemonic": "BIT 5,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6251,6 +6661,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "D"
@@ -6261,8 +6672,8 @@
     {
         "opcode": 107,
         "mnemonic": "BIT 5,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6271,6 +6682,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "E"
@@ -6281,8 +6693,8 @@
     {
         "opcode": 108,
         "mnemonic": "BIT 5,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6291,6 +6703,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "H"
@@ -6301,8 +6714,8 @@
     {
         "opcode": 109,
         "mnemonic": "BIT 5,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6311,6 +6724,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "L"
@@ -6321,8 +6735,8 @@
     {
         "opcode": 110,
         "mnemonic": "BIT 5,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6331,6 +6745,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "(HL)"
@@ -6341,8 +6756,8 @@
     {
         "opcode": 111,
         "mnemonic": "BIT 5,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6351,6 +6766,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "5",
             "A"
@@ -6361,8 +6777,8 @@
     {
         "opcode": 112,
         "mnemonic": "BIT 6,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6371,6 +6787,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "B"
@@ -6381,8 +6798,8 @@
     {
         "opcode": 113,
         "mnemonic": "BIT 6,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6391,6 +6808,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "C"
@@ -6401,8 +6819,8 @@
     {
         "opcode": 114,
         "mnemonic": "BIT 6,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6411,6 +6829,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "D"
@@ -6421,8 +6840,8 @@
     {
         "opcode": 115,
         "mnemonic": "BIT 6,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6431,6 +6850,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "E"
@@ -6441,8 +6861,8 @@
     {
         "opcode": 116,
         "mnemonic": "BIT 6,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6451,6 +6871,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "H"
@@ -6461,8 +6882,8 @@
     {
         "opcode": 117,
         "mnemonic": "BIT 6,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6471,6 +6892,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "L"
@@ -6481,8 +6903,8 @@
     {
         "opcode": 118,
         "mnemonic": "BIT 6,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6491,6 +6913,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "(HL)"
@@ -6501,8 +6924,8 @@
     {
         "opcode": 119,
         "mnemonic": "BIT 6,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6511,6 +6934,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "6",
             "A"
@@ -6521,8 +6945,8 @@
     {
         "opcode": 120,
         "mnemonic": "BIT 7,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6531,6 +6955,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "B"
@@ -6541,8 +6966,8 @@
     {
         "opcode": 121,
         "mnemonic": "BIT 7,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6551,6 +6976,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "C"
@@ -6561,8 +6987,8 @@
     {
         "opcode": 122,
         "mnemonic": "BIT 7,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6571,6 +6997,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "D"
@@ -6581,8 +7008,8 @@
     {
         "opcode": 123,
         "mnemonic": "BIT 7,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6591,6 +7018,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "E"
@@ -6601,8 +7029,8 @@
     {
         "opcode": 124,
         "mnemonic": "BIT 7,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6611,6 +7039,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "H"
@@ -6621,8 +7050,8 @@
     {
         "opcode": 125,
         "mnemonic": "BIT 7,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6631,6 +7060,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "L"
@@ -6641,8 +7071,8 @@
     {
         "opcode": 126,
         "mnemonic": "BIT 7,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6651,6 +7081,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "(HL)"
@@ -6661,8 +7092,8 @@
     {
         "opcode": 127,
         "mnemonic": "BIT 7,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": {
             "z": "Z",
             "n": "0",
@@ -6671,6 +7102,7 @@
         },
         "width": 1,
         "prefix": 203,
+        "operation": "BIT",
         "operands": [
             "7",
             "A"
@@ -6681,11 +7113,12 @@
     {
         "opcode": 128,
         "mnemonic": "RES 0,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "B"
@@ -6696,11 +7129,12 @@
     {
         "opcode": 129,
         "mnemonic": "RES 0,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "C"
@@ -6711,11 +7145,12 @@
     {
         "opcode": 130,
         "mnemonic": "RES 0,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "D"
@@ -6726,11 +7161,12 @@
     {
         "opcode": 131,
         "mnemonic": "RES 0,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "E"
@@ -6741,11 +7177,12 @@
     {
         "opcode": 132,
         "mnemonic": "RES 0,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "H"
@@ -6756,11 +7193,12 @@
     {
         "opcode": 133,
         "mnemonic": "RES 0,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "L"
@@ -6771,11 +7209,12 @@
     {
         "opcode": 134,
         "mnemonic": "RES 0,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "(HL)"
@@ -6786,11 +7225,12 @@
     {
         "opcode": 135,
         "mnemonic": "RES 0,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "0",
             "A"
@@ -6801,11 +7241,12 @@
     {
         "opcode": 136,
         "mnemonic": "RES 1,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "B"
@@ -6816,11 +7257,12 @@
     {
         "opcode": 137,
         "mnemonic": "RES 1,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "C"
@@ -6831,11 +7273,12 @@
     {
         "opcode": 138,
         "mnemonic": "RES 1,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "D"
@@ -6846,11 +7289,12 @@
     {
         "opcode": 139,
         "mnemonic": "RES 1,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "E"
@@ -6861,11 +7305,12 @@
     {
         "opcode": 140,
         "mnemonic": "RES 1,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "H"
@@ -6876,11 +7321,12 @@
     {
         "opcode": 141,
         "mnemonic": "RES 1,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "L"
@@ -6891,11 +7337,12 @@
     {
         "opcode": 142,
         "mnemonic": "RES 1,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "(HL)"
@@ -6906,11 +7353,12 @@
     {
         "opcode": 143,
         "mnemonic": "RES 1,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "1",
             "A"
@@ -6921,11 +7369,12 @@
     {
         "opcode": 144,
         "mnemonic": "RES 2,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "B"
@@ -6936,11 +7385,12 @@
     {
         "opcode": 145,
         "mnemonic": "RES 2,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "C"
@@ -6951,11 +7401,12 @@
     {
         "opcode": 146,
         "mnemonic": "RES 2,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "D"
@@ -6966,11 +7417,12 @@
     {
         "opcode": 147,
         "mnemonic": "RES 2,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "E"
@@ -6981,11 +7433,12 @@
     {
         "opcode": 148,
         "mnemonic": "RES 2,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "H"
@@ -6996,11 +7449,12 @@
     {
         "opcode": 149,
         "mnemonic": "RES 2,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "L"
@@ -7011,11 +7465,12 @@
     {
         "opcode": 150,
         "mnemonic": "RES 2,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "(HL)"
@@ -7026,11 +7481,12 @@
     {
         "opcode": 151,
         "mnemonic": "RES 2,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "2",
             "A"
@@ -7041,11 +7497,12 @@
     {
         "opcode": 152,
         "mnemonic": "RES 3,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "B"
@@ -7056,11 +7513,12 @@
     {
         "opcode": 153,
         "mnemonic": "RES 3,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "C"
@@ -7071,11 +7529,12 @@
     {
         "opcode": 154,
         "mnemonic": "RES 3,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "D"
@@ -7086,11 +7545,12 @@
     {
         "opcode": 155,
         "mnemonic": "RES 3,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "E"
@@ -7101,11 +7561,12 @@
     {
         "opcode": 156,
         "mnemonic": "RES 3,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "H"
@@ -7116,11 +7577,12 @@
     {
         "opcode": 157,
         "mnemonic": "RES 3,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "L"
@@ -7131,11 +7593,12 @@
     {
         "opcode": 158,
         "mnemonic": "RES 3,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "(HL)"
@@ -7146,11 +7609,12 @@
     {
         "opcode": 159,
         "mnemonic": "RES 3,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "3",
             "A"
@@ -7161,11 +7625,12 @@
     {
         "opcode": 160,
         "mnemonic": "RES 4,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "B"
@@ -7176,11 +7641,12 @@
     {
         "opcode": 161,
         "mnemonic": "RES 4,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "C"
@@ -7191,11 +7657,12 @@
     {
         "opcode": 162,
         "mnemonic": "RES 4,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "D"
@@ -7206,11 +7673,12 @@
     {
         "opcode": 163,
         "mnemonic": "RES 4,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "E"
@@ -7221,11 +7689,12 @@
     {
         "opcode": 164,
         "mnemonic": "RES 4,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "H"
@@ -7236,11 +7705,12 @@
     {
         "opcode": 165,
         "mnemonic": "RES 4,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "L"
@@ -7251,11 +7721,12 @@
     {
         "opcode": 166,
         "mnemonic": "RES 4,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "(HL)"
@@ -7266,11 +7737,12 @@
     {
         "opcode": 167,
         "mnemonic": "RES 4,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "4",
             "A"
@@ -7281,11 +7753,12 @@
     {
         "opcode": 168,
         "mnemonic": "RES 5,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "B"
@@ -7296,11 +7769,12 @@
     {
         "opcode": 169,
         "mnemonic": "RES 5,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "C"
@@ -7311,11 +7785,12 @@
     {
         "opcode": 170,
         "mnemonic": "RES 5,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "D"
@@ -7326,11 +7801,12 @@
     {
         "opcode": 171,
         "mnemonic": "RES 5,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "E"
@@ -7341,11 +7817,12 @@
     {
         "opcode": 172,
         "mnemonic": "RES 5,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "H"
@@ -7356,11 +7833,12 @@
     {
         "opcode": 173,
         "mnemonic": "RES 5,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "L"
@@ -7371,11 +7849,12 @@
     {
         "opcode": 174,
         "mnemonic": "RES 5,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "(HL)"
@@ -7386,11 +7865,12 @@
     {
         "opcode": 175,
         "mnemonic": "RES 5,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "5",
             "A"
@@ -7401,11 +7881,12 @@
     {
         "opcode": 176,
         "mnemonic": "RES 6,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "B"
@@ -7416,11 +7897,12 @@
     {
         "opcode": 177,
         "mnemonic": "RES 6,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "C"
@@ -7431,11 +7913,12 @@
     {
         "opcode": 178,
         "mnemonic": "RES 6,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "D"
@@ -7446,11 +7929,12 @@
     {
         "opcode": 179,
         "mnemonic": "RES 6,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "E"
@@ -7461,11 +7945,12 @@
     {
         "opcode": 180,
         "mnemonic": "RES 6,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "H"
@@ -7476,11 +7961,12 @@
     {
         "opcode": 181,
         "mnemonic": "RES 6,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "L"
@@ -7491,11 +7977,12 @@
     {
         "opcode": 182,
         "mnemonic": "RES 6,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "(HL)"
@@ -7506,11 +7993,12 @@
     {
         "opcode": 183,
         "mnemonic": "RES 6,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "6",
             "A"
@@ -7521,11 +8009,12 @@
     {
         "opcode": 184,
         "mnemonic": "RES 7,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "B"
@@ -7536,11 +8025,12 @@
     {
         "opcode": 185,
         "mnemonic": "RES 7,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "C"
@@ -7551,11 +8041,12 @@
     {
         "opcode": 186,
         "mnemonic": "RES 7,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "D"
@@ -7566,11 +8057,12 @@
     {
         "opcode": 187,
         "mnemonic": "RES 7,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "E"
@@ -7581,11 +8073,12 @@
     {
         "opcode": 188,
         "mnemonic": "RES 7,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "H"
@@ -7596,11 +8089,12 @@
     {
         "opcode": 189,
         "mnemonic": "RES 7,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "L"
@@ -7611,11 +8105,12 @@
     {
         "opcode": 190,
         "mnemonic": "RES 7,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "(HL)"
@@ -7626,11 +8121,12 @@
     {
         "opcode": 191,
         "mnemonic": "RES 7,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "RES",
         "operands": [
             "7",
             "A"
@@ -7641,11 +8137,12 @@
     {
         "opcode": 192,
         "mnemonic": "SET 0,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "B"
@@ -7656,11 +8153,12 @@
     {
         "opcode": 193,
         "mnemonic": "SET 0,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "C"
@@ -7671,11 +8169,12 @@
     {
         "opcode": 194,
         "mnemonic": "SET 0,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "D"
@@ -7686,11 +8185,12 @@
     {
         "opcode": 195,
         "mnemonic": "SET 0,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "E"
@@ -7701,11 +8201,12 @@
     {
         "opcode": 196,
         "mnemonic": "SET 0,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "H"
@@ -7716,11 +8217,12 @@
     {
         "opcode": 197,
         "mnemonic": "SET 0,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "L"
@@ -7731,11 +8233,12 @@
     {
         "opcode": 198,
         "mnemonic": "SET 0,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "(HL)"
@@ -7746,11 +8249,12 @@
     {
         "opcode": 199,
         "mnemonic": "SET 0,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "0",
             "A"
@@ -7761,11 +8265,12 @@
     {
         "opcode": 200,
         "mnemonic": "SET 1,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "B"
@@ -7776,11 +8281,12 @@
     {
         "opcode": 201,
         "mnemonic": "SET 1,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "C"
@@ -7791,11 +8297,12 @@
     {
         "opcode": 202,
         "mnemonic": "SET 1,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "D"
@@ -7806,11 +8313,12 @@
     {
         "opcode": 203,
         "mnemonic": "SET 1,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "E"
@@ -7821,11 +8329,12 @@
     {
         "opcode": 204,
         "mnemonic": "SET 1,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "H"
@@ -7836,11 +8345,12 @@
     {
         "opcode": 205,
         "mnemonic": "SET 1,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "L"
@@ -7851,11 +8361,12 @@
     {
         "opcode": 206,
         "mnemonic": "SET 1,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "(HL)"
@@ -7866,11 +8377,12 @@
     {
         "opcode": 207,
         "mnemonic": "SET 1,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "1",
             "A"
@@ -7881,11 +8393,12 @@
     {
         "opcode": 208,
         "mnemonic": "SET 2,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "B"
@@ -7896,11 +8409,12 @@
     {
         "opcode": 209,
         "mnemonic": "SET 2,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "C"
@@ -7911,11 +8425,12 @@
     {
         "opcode": 210,
         "mnemonic": "SET 2,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "D"
@@ -7926,11 +8441,12 @@
     {
         "opcode": 211,
         "mnemonic": "SET 2,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "E"
@@ -7941,11 +8457,12 @@
     {
         "opcode": 212,
         "mnemonic": "SET 2,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "H"
@@ -7956,11 +8473,12 @@
     {
         "opcode": 213,
         "mnemonic": "SET 2,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "L"
@@ -7971,11 +8489,12 @@
     {
         "opcode": 214,
         "mnemonic": "SET 2,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "(HL)"
@@ -7986,11 +8505,12 @@
     {
         "opcode": 215,
         "mnemonic": "SET 2,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "2",
             "A"
@@ -8001,11 +8521,12 @@
     {
         "opcode": 216,
         "mnemonic": "SET 3,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "B"
@@ -8016,11 +8537,12 @@
     {
         "opcode": 217,
         "mnemonic": "SET 3,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "C"
@@ -8031,11 +8553,12 @@
     {
         "opcode": 218,
         "mnemonic": "SET 3,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "D"
@@ -8046,11 +8569,12 @@
     {
         "opcode": 219,
         "mnemonic": "SET 3,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "E"
@@ -8061,11 +8585,12 @@
     {
         "opcode": 220,
         "mnemonic": "SET 3,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "H"
@@ -8076,11 +8601,12 @@
     {
         "opcode": 221,
         "mnemonic": "SET 3,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "L"
@@ -8091,11 +8617,12 @@
     {
         "opcode": 222,
         "mnemonic": "SET 3,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "(HL)"
@@ -8106,11 +8633,12 @@
     {
         "opcode": 223,
         "mnemonic": "SET 3,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "3",
             "A"
@@ -8121,11 +8649,12 @@
     {
         "opcode": 224,
         "mnemonic": "SET 4,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "B"
@@ -8136,11 +8665,12 @@
     {
         "opcode": 225,
         "mnemonic": "SET 4,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "C"
@@ -8151,11 +8681,12 @@
     {
         "opcode": 226,
         "mnemonic": "SET 4,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "D"
@@ -8166,11 +8697,12 @@
     {
         "opcode": 227,
         "mnemonic": "SET 4,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "E"
@@ -8181,11 +8713,12 @@
     {
         "opcode": 228,
         "mnemonic": "SET 4,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "H"
@@ -8196,11 +8729,12 @@
     {
         "opcode": 229,
         "mnemonic": "SET 4,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "L"
@@ -8211,11 +8745,12 @@
     {
         "opcode": 230,
         "mnemonic": "SET 4,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "(HL)"
@@ -8226,11 +8761,12 @@
     {
         "opcode": 231,
         "mnemonic": "SET 4,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "4",
             "A"
@@ -8241,11 +8777,12 @@
     {
         "opcode": 232,
         "mnemonic": "SET 5,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "B"
@@ -8256,11 +8793,12 @@
     {
         "opcode": 233,
         "mnemonic": "SET 5,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "C"
@@ -8271,11 +8809,12 @@
     {
         "opcode": 234,
         "mnemonic": "SET 5,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "D"
@@ -8286,11 +8825,12 @@
     {
         "opcode": 235,
         "mnemonic": "SET 5,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "E"
@@ -8301,11 +8841,12 @@
     {
         "opcode": 236,
         "mnemonic": "SET 5,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "H"
@@ -8316,11 +8857,12 @@
     {
         "opcode": 237,
         "mnemonic": "SET 5,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "L"
@@ -8331,11 +8873,12 @@
     {
         "opcode": 238,
         "mnemonic": "SET 5,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "(HL)"
@@ -8346,11 +8889,12 @@
     {
         "opcode": 239,
         "mnemonic": "SET 5,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "5",
             "A"
@@ -8361,11 +8905,12 @@
     {
         "opcode": 240,
         "mnemonic": "SET 6,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "B"
@@ -8376,11 +8921,12 @@
     {
         "opcode": 241,
         "mnemonic": "SET 6,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "C"
@@ -8391,11 +8937,12 @@
     {
         "opcode": 242,
         "mnemonic": "SET 6,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "D"
@@ -8406,11 +8953,12 @@
     {
         "opcode": 243,
         "mnemonic": "SET 6,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "E"
@@ -8421,11 +8969,12 @@
     {
         "opcode": 244,
         "mnemonic": "SET 6,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "H"
@@ -8436,11 +8985,12 @@
     {
         "opcode": 245,
         "mnemonic": "SET 6,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "L"
@@ -8451,11 +9001,12 @@
     {
         "opcode": 246,
         "mnemonic": "SET 6,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "(HL)"
@@ -8466,11 +9017,12 @@
     {
         "opcode": 247,
         "mnemonic": "SET 6,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "6",
             "A"
@@ -8481,11 +9033,12 @@
     {
         "opcode": 248,
         "mnemonic": "SET 7,B",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "B"
@@ -8496,11 +9049,12 @@
     {
         "opcode": 249,
         "mnemonic": "SET 7,C",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "C"
@@ -8511,11 +9065,12 @@
     {
         "opcode": 250,
         "mnemonic": "SET 7,D",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "D"
@@ -8526,11 +9081,12 @@
     {
         "opcode": 251,
         "mnemonic": "SET 7,E",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "E"
@@ -8541,11 +9097,12 @@
     {
         "opcode": 252,
         "mnemonic": "SET 7,H",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "H"
@@ -8556,11 +9113,12 @@
     {
         "opcode": 253,
         "mnemonic": "SET 7,L",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "L"
@@ -8571,11 +9129,12 @@
     {
         "opcode": 254,
         "mnemonic": "SET 7,(HL)",
-        "bytes": "2",
-        "cycles": "16",
+        "bytes": 2,
+        "cycles": 16,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "(HL)"
@@ -8586,11 +9145,12 @@
     {
         "opcode": 255,
         "mnemonic": "SET 7,A",
-        "bytes": "2",
-        "cycles": "8",
+        "bytes": 2,
+        "cycles": 8,
         "flags": null,
         "width": 1,
         "prefix": 203,
+        "operation": "SET",
         "operands": [
             "7",
             "A"

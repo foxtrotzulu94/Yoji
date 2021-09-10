@@ -58,13 +58,17 @@ class RefinedInstruction:
         self.__dict__ = txt_instr.__dict__
         self.prefix = prefix
         # BUT override some values and compute others
-        self.operands = tokenize_mnemonic(txt_instr)[1:]
+        tokens = tokenize_mnemonic(txt_instr)
+        self.operation = tokens[0]
+        self.operands = tokens[1:]
+        self.bytes = int(self.bytes)
+        self.cycles = int(self.cycles) if type(self.cycles) is int or not '/' in self.cycles else [int(x) for x in self.cycles.split('/')]
         temp_flags = self.flags
         if temp_flags is not None:
             self.flags = None if all(x == '-' for x in temp_flags) else temp_flags
         if self.flags is not None:
             self.flags = dict(zip(['z', 'n', 'h', 'c'], self.flags))
-            
+
         self.opcode_bin = bin(self.opcode)
         self.opcode_hex = hex(self.opcode)
 
